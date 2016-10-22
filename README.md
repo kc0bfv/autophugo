@@ -32,7 +32,8 @@ You can see it in action on [Hugo Themes site](http://themes.gohugo.io/theme/phu
 - [Configuration](#configuration)
 - [Posting](#posting)
 - [Test your site](#test-your-site)
-- [Build your site](#build-your-site)
+- [Building the site](#building-the-site)
+- [Roadmap](#roadmap)
 - [Contributing](#contributing)
 - [License](#license)
 
