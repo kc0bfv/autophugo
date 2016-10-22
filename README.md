@@ -4,7 +4,7 @@ Phugo [ˈfjuːgəʊ] is a gallery/photoblog theme for Hugo. It is a port of HTML
 
 ## Screenshot
 
-![Orbit screenshot](https://raw.githubusercontent.com/aerohub/phugo/master/images/demo.png)
+![Orbit screenshot](https://raw.githubusercontent.com/aerohub/phugo/master/images/screenshot.png)
 
 ## Features
 
