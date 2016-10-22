@@ -1,0 +1,17 @@
+name = "Phugo"
+license = "CCA 3.0 Unported"
+licenselink = "//github.com/aerohub/phugo/LICENSE.md"
+description = "Image gallery/Photoblog Theme for Hugo."
+homepage = "//github.com/aerohub/phugo"
+tags = ["image gallery", "photoblog", "shortcode"]
+features = ["albums", "contact form", "breadcrumbs", "GA"]
+min_version = 0.16
+
+[author]
+  name = "Pavel Kanyshev"
+  homepage = "//github.com/aerohub"
+
+# If porting an existing theme
+[original]
+  name = "Multiverse"
+  homepage = "//html5up.net/multiverse"

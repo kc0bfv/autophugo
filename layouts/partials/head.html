@@ -1,0 +1,18 @@
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="description" content="{{ with .Site.Params.description }}{{ . }}{{ end }}">
+    <meta name="author" content="{{ with .Site.Params.author }}{{ . }}{{ end }}">
+    <meta name="keywords" content="{{ with .Site.Params.keywords }}{{ . }}{{ end }}">
+    {{ .Hugo.Generator }}
+    {{ "<!--[if lte IE 8]>" | safeHTML }}
+    <script src="{{ .Site.BaseURL }}assets/js/ie/html5shiv.js"></script>
+    {{ "<![endif]-->" | safeHTML }}
+    <link rel="stylesheet" href="{{ .Site.BaseURL }}assets/css/main.css" />
+    {{ "<!--[if lte IE 9]>" | safeHTML }}
+    <link rel="stylesheet" href="{{ .Site.BaseURL }}assets/css/ie9.css" />
+    {{ "<![endif]-->" | safeHTML }}
+    {{ "<!--[if lte IE 8]>" | safeHTML }}
+    <link rel="stylesheet" href="{{ .Site.BaseURL }}assets/css/ie8.css" />
+    {{ "<![endif]-->" | safeHTML }}
+    <link rel="shortcut icon" href="{{ .Site.BaseURL }}favicon.ico">
+    {{ template "_internal/google_analytics_async.html" . }}

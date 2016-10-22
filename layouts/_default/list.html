@@ -1,0 +1,10 @@
+{{ define "main" }}
+    <div id="main">
+        {{ range .Data.Pages.ByDate.Reverse }}
+            <article class="thumb">
+                <a href="{{ .Permalink }}" class="link"><img src="{{ .Params.albumthumb }}" alt="{{ .Title }}" /></a>
+                <h2>{{ .Title }}</h2>
+            </article>
+        {{ end }}
+    </div>
+{{ end }}

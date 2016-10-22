@@ -1,0 +1,42 @@
+{{ "<!-- Footer -->" | safeHTML }}
+    <footer id="footer" class="panel">
+        <div class="inner split">
+            <div>
+                <section>
+                    <h2>{{ with .Site.Params.footer.paragraph.headline }}{{ . | markdownify }}{{ end }}</h2>
+                    <p>{{ with .Site.Params.footer.paragraph.text }}{{ . | markdownify }}{{ end }}</p>
+                </section>
+                <section>
+                    <h2>{{ with .Site.Params.footer.social.headline }}{{ . | markdownify }}{{ end }}</h2>
+                    <ul class="icons">
+                    {{ range .Site.Params.footer.social.links }}
+                        <li><a href="{{ .url }}" class="icon {{ .icon }}"><span class="label">{{ .label }}</span></a></li>
+                    {{ end }}
+                    </ul>
+                </section>
+                <p class="copyright">
+                    &copy; {{ with .Site.Params.footer.copyright.name }}{{ . | markdownify }}{{ end }}. Design: <a href="http://html5up.net">HTML5 UP</a>. Ported to Hugo by <a href="//github.com/aerohub">AEROHUB</a>.
+                </p>
+            </div>
+            <div>
+                <section>
+                    <h2>{{ with .Site.Params.footer.contact.headline }}{{ . | markdownify }}{{ end }}</h2>
+                    <form method="post" action="//formspree.io/{{ with .Site.Params.footer.contact.realEmail }}{{.}}{{ end }}" novalidate>
+                        <div class="field half first">
+                            <input type="text" name="name" required data-validation-required-message="{{ with .Site.Params.footer.contact.name.warning }}{{ . | markdownify}}{{ end }}" id="name" placeholder="{{ with .Site.Params.footer.contact.name.text }}{{ .  | markdownify }}{{ end }}" />
+                        </div>
+                        <div class="field half">
+                            <input type="email" name="email" required data-validation-required-message="{{ with .Site.Params.footer.contact.email.warning }}{{ . | markdownify }}{{ end }}" id="email" placeholder="{{ with .Site.Params.footer.contact.email.text }}{{ . | markdownify }}{{ end }}" />
+                        </div>
+                        <div class="field">
+                            <textarea name="message" required data-validation-required-message="{{ with .Site.Params.footer.contact.message.warning }}{{ . | markdownify }}{{ end }}" id="message" rows="4" placeholder="{{ with .Site.Params.footer.contact.message.text }}{{ . | markdownify }}{{ end }}"></textarea>
+                        </div>
+                        <ul class="actions">
+                            <li><input type="submit" value="{{ .Site.Params.footer.contact.buttonText }}" class="special" /></li>
+                            <li><input type="reset" value="{{ .Site.Params.footer.contact.resetText }}" /></li>
+                        </ul>
+                    </form>
+                </section>
+            </div>
+        </div>
+    </footer>
