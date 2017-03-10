@@ -5,7 +5,7 @@ description = "Image gallery/Photoblog Theme for Hugo."
 homepage = "//github.com/aerohub/phugo"
 tags = ["image gallery", "photoblog", "shortcode"]
 features = ["albums", "contact form", "breadcrumbs", "GA"]
-min_version = 0.16
+min_version = 0.18
 
 [author]
   name = "Pavel Kanyshev"
