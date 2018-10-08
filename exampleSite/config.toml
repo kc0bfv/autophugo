@@ -75,6 +75,7 @@ googleAnalytics = "UA-XXXXXXX-Y"
     # - you're done. Happy mailing!
     
     [params.footer.contact]
+    hide = false # Set this to true if you don't want to have a contact form on your site
     realEmail = "example@examle.org"
     headline = "Get in touch"
     buttonText = "Send"
