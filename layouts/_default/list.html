@@ -1,10 +1,16 @@
 {{ define "main" }}
     <div id="main">
-       {{ range (where .Site.Pages "Kind" "section").ByDate.Reverse }}
-            <article class="thumb">
-                <a href="{{ .Permalink }}" class="link"><img src="{{ .Params.albumthumb }}" alt="{{ .Title }}" /></a>
-                <h2>{{ .Title }}</h2>
-            </article>
+        <div class="flexrow">
+        {{ range (where .Site.Pages "Kind" "section").GroupByParam "column" }}
+            <div class="flexcol">
+            {{ range .ByDate }}
+                <article class="thumb">
+                    <a href="{{ .Permalink }}" class="link"><img src="{{ .Params.albumthumb }}" alt="{{ .Title }}" /></a>
+                    <h2>{{ .Title }}</h2>
+                </article>
+            {{ end }}
+            </div>
         {{ end }}
+        </div>
     </div>
 {{ end }}

@@ -3,7 +3,7 @@
     <meta name="description" content="{{ with .Site.Params.description }}{{ . }}{{ end }}">
     <meta name="author" content="{{ with .Site.Params.author }}{{ . }}{{ end }}">
     <meta name="keywords" content="{{ with .Site.Params.keywords }}{{ . }}{{ end }}">
-    {{ .Hugo.Generator }}
+    {{ hugo.Generator }}
     {{ "<!--[if lte IE 8]>" | safeHTML }}
     <script src="{{ .Site.BaseURL }}assets/js/ie/html5shiv.js"></script>
     {{ "<![endif]-->" | safeHTML }}
