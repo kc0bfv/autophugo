@@ -2,9 +2,79 @@
 {{ .Title }} - {{ .Site.Title }}
 {{ end }}
 {{ define "main" }}
-<div id="main">
+<div id="main" comment="TNW">
     <div class="flexrow">
-    {{ .Content }}
+
+    {{- /* Things in site config */}}
+    {{- $column_count := default 2 ($.Param "column_count") }}
+    {{- $thumb_width := default 480 ($.Param "thumb_width") }}
+    {{- $full_width := default 960 ($.Param "full_width") }}
+
+    {{- $thumb_size := printf "%dx q50" $thumb_width }}
+    {{- $full_size := printf "%dx q90" $full_width }}
+
+    {{- /* Get and reorder the list of images */}}
+    {{- $images_dir := .GetPage "images" }}
+    {{- $images := $images_dir.Resources.ByType "image" }}
+
+    {{- /* Initialize the column storage */}}
+    {{- range $column_ind := seq $column_count }}
+        {{- $st_name := printf "col-%d" $column_ind }}
+        {{- $st_height_name := printf "col-height-%d" $column_ind }}
+        {{- $.Scratch.Set $st_name (slice) }}
+        {{- $.Scratch.Set $st_height_name 0 }}
+    {{- end }}
+
+    {{- /* Set the columns */}}
+    {{- range $elem_index, $elem_val := $images}}
+
+        {{- /* Find the least-filled column */}}
+        {{- $.Scratch.Set "min_height" -1 }}
+        {{- $.Scratch.Set "min_col" -1 }}
+        {{- range $column_ind := seq $column_count }}
+            {{- $st_height_name := printf "col-height-%d" $column_ind }}
+            {{- $col_height := $.Scratch.Get $st_height_name }}
+            {{- $min_height := $.Scratch.Get "min_height" }}
+            {{- if (or (eq $min_height -1) (lt $col_height $min_height)) }}
+                {{- $.Scratch.Set "min_height" $col_height }}
+                {{- $.Scratch.Set "min_col" $column_ind }}
+            {{- end }}
+        {{- end }}
+
+        {{- /* column_ind becomes the least-filled column */}}
+        {{- $column_ind := $.Scratch.Get "min_col" }}
+        {{- if eq $column_ind -1 }}
+            {{- errorf "Failed to find a least-filled column!"}}
+        {{- end }}
+        {{- $st_name := printf "col-%d" $column_ind }}
+        {{- $st_height_name := printf "col-height-%d" $column_ind }}
+
+        {{- $column := $.Scratch.Get $st_name }}
+        {{- $column := $column | append $elem_val }}
+        {{- $.Scratch.Set $st_name $column }}
+
+        {{- $thumb := $elem_val.Resize $thumb_size }}
+        {{- $.Scratch.Set $st_height_name (add ($.Scratch.Get $st_height_name) $thumb.Height) }}
+    {{- end }}
+
+
+    {{- /* Output the images in columns */}}
+    {{- range $column_ind := seq $column_count }}
+        {{- $st_name := printf "col-%d" $column_ind }}
+        {{- $column := $.Scratch.Get $st_name }}
+
+        <div class="flexcol">
+        {{- range $column }}
+            {{- $thumb := .Resize $thumb_size }}
+            {{- $full := .Resize $full_size }}
+            <article class="thumb">
+                <a href="{{ $full.RelPermalink }}" class="image"><img src="{{ $thumb.RelPermalink }}"/></a>
+                <h2></h2>
+                <p></p>
+            </article>
+        {{- end }}
+        </div>
+    {{- end }}
     </div>
 </div>
 {{ end }}

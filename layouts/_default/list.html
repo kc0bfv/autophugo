@@ -1,16 +1,82 @@
 {{ define "main" }}
+
+    {{- /* Things in site config */}}
+    {{- $column_count := default 2 ($.Param "column_count") }}
+    {{- $thumb_width := default 480 ($.Param "thumb_width") }}
+
+    {{- $thumb_size := printf "%dx q50" $thumb_width }}
+
+    {{- /* Build the list of sections and thumbnails */}}
+    {{- $.Scratch.Set "sections" (slice) }}
+    {{- range (where .Site.Pages "Kind" "section").ByDate }}
+        {{- $title := .Title }}
+        {{- $link := .Permalink }}
+        {{- $images_dir := .GetPage "images" }}
+        {{- $image := $images_dir.Resources.GetMatch .Params.albumthumb }}
+        {{- $thumb := $image.Resize $thumb_size }}
+        {{- $new_sect := dict "title" $title "link" $link "thumb" $thumb }}
+
+        {{- $sections := $.Scratch.Get "sections" }}
+        {{- $sections := $sections | append $new_sect }}
+        {{- $.Scratch.Set "sections" $sections }}
+    {{- end }}
+    {{- $sections := $.Scratch.Get "sections" }}
+
+    {{- /* Initialize the column storage */}}
+    {{- range $column_ind := seq $column_count }}
+        {{- $st_name := printf "col-%d" $column_ind }}
+        {{- $st_height_name := printf "col-height-%d" $column_ind }}
+        {{- $.Scratch.Set $st_name (slice) }}
+        {{- $.Scratch.Set $st_height_name 0 }}
+    {{- end }}
+
+    {{- /* Set the columns */}}
+    {{- range $elem_index, $elem_val := $sections}}
+        {{- /* Find the least-filled column */}}
+        {{- $.Scratch.Set "min_height" -1 }}
+        {{- $.Scratch.Set "min_col" -1 }}
+        {{- range $column_ind := seq $column_count }}
+            {{- $st_height_name := printf "col-height-%d" $column_ind }}
+            {{- $col_height := $.Scratch.Get $st_height_name }}
+            {{- $min_height := $.Scratch.Get "min_height" }}
+            {{- if (or (eq $min_height -1) (lt $col_height $min_height)) }}
+                {{- $.Scratch.Set "min_height" $col_height }}
+                {{- $.Scratch.Set "min_col" $column_ind }}
+            {{- end }}
+        {{- end }}
+
+        {{- /* column_ind becomes the least-filled column */}}
+        {{- $column_ind := $.Scratch.Get "min_col" }}
+        {{- if eq $column_ind -1 }}
+            {{- errorf "Failed to find a least-filled column!"}}
+        {{- end }}
+        {{- $st_name := printf "col-%d" $column_ind }}
+        {{- $st_height_name := printf "col-height-%d" $column_ind }}
+
+        {{- $column := $.Scratch.Get $st_name }}
+        {{- $column := $column | append $elem_val }}
+        {{- $.Scratch.Set $st_name $column }}
+
+        {{- $.Scratch.Set $st_height_name (add ($.Scratch.Get $st_height_name) $elem_val.thumb.Height) }}
+    {{- end }}
+
     <div id="main">
         <div class="flexrow">
-        {{ range (where .Site.Pages "Kind" "section").GroupByParam "column" }}
+
+        {{- /* Output the images in columns */}}
+        {{- range $column_ind := seq $column_count }}
+            {{- $st_name := printf "col-%d" $column_ind }}
+            {{- $column := $.Scratch.Get $st_name }}
+
             <div class="flexcol">
-            {{ range .ByDate }}
+            {{- range $column }}
                 <article class="thumb">
-                    <a href="{{ .Permalink }}" class="link"><img src="{{ .Params.albumthumb }}" alt="{{ .Title }}" /></a>
-                    <h2>{{ .Title }}</h2>
+                    <a href="{{ .link }}" class="link"><img src="{{ .thumb.RelPermalink }}" alt="{{ .title }}" /></a>
+                    <h2>{{ .title }}</h2>
                 </article>
-            {{ end }}
+            {{- end }}
             </div>
-        {{ end }}
-        </div>
+        {{- end }}
+
     </div>
 {{ end }}
