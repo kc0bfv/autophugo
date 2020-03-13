@@ -15,7 +15,11 @@
 
     {{- /* Get and reorder the list of images */}}
     {{- $images_dir := .GetPage "images" }}
-    {{- $images := $images_dir.Resources.ByType "image" }}
+    {{- /* $images := $images_dir.Resources.ByType "image" */}}
+
+    {{- $imgglob := printf "*%s" (path.Join .File.Dir "*.jpg") }}
+    {{- $imageresources := resources.Match $imgglob }}
+    {{- $images := $imageresources }}
 
     {{- /* Initialize the column storage */}}
     {{- range $column_ind := seq $column_count }}

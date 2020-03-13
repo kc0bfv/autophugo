@@ -12,7 +12,12 @@
         {{- $title := .Title }}
         {{- $link := .Permalink }}
         {{- $images_dir := .GetPage "images" }}
-        {{- $image := $images_dir.Resources.GetMatch .Params.albumthumb }}
+
+        {{- /* $image := $images_dir.Resources.GetMatch .Params.albumthumb */}}
+
+        {{- $imgpath := path.Join .File.Dir .Params.albumthumb }}
+        {{- $image := resources.Get $imgpath }}
+
         {{- $thumb := $image.Resize $thumb_size }}
         {{- $new_sect := dict "title" $title "link" $link "thumb" $thumb }}
 
