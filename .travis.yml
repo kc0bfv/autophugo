@@ -1,0 +1,15 @@
+language: generic
+install:
+  - sudo snap install hugo
+
+script:
+  - make
+
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN
+  keep_history: true
+  local_dir: exampleSite/public
+  on:
+    branch: master
