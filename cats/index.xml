@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Cats on AutoPhugo</title>
+    <link>https://kc0bfv.github.io/autophugo/cats/</link>
+    <description>Recent content in Cats on AutoPhugo</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <managingEditor>kc0bfv@gmail.com (Karl Sickendick)</managingEditor>
+    <webMaster>kc0bfv@gmail.com (Karl Sickendick)</webMaster>
+    <lastBuildDate>Sun, 15 Mar 2020 14:06:11 -0600</lastBuildDate>
+    
+	<atom:link href="https://kc0bfv.github.io/autophugo/cats/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+  </channel>
+</rss>

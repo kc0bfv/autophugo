@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>AutoPhugo</title>
+    <link>https://kc0bfv.github.io/autophugo/</link>
+    <description>Recent content on AutoPhugo</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <managingEditor>kc0bfv@gmail.com (Karl Sickendick)</managingEditor>
+    <webMaster>kc0bfv@gmail.com (Karl Sickendick)</webMaster>
+    <lastBuildDate>Sun, 15 Mar 2020 17:12:50 -0600</lastBuildDate>
+    
+	<atom:link href="https://kc0bfv.github.io/autophugo/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+  </channel>
+</rss>
