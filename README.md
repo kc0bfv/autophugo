@@ -62,6 +62,8 @@ albumthumb: ""
 
 Change the title of your album if you wish, and set the filename of album's cover thumbnail.  The filename is relative to the album folder in assets, so if one of your images there is named `dog_01.jpg` you can just put `dog_01.jpg` in `albumthumb` to select it.
 
+In addition to those frontmatter options, you can also specify metadata for some or all of your images.  Do that by creating a `resources` array, with map elements.  The maps specify the image they apply to with the `src` key, as `src: album/image.jpg`.  You can then specify some or all of the following items: `alt`, `phototitle`, and `description`.  Demonstration of this is in the `exampleSite` directory albums.
+
 ## Building the Site
 
 Run `hugo` to build your site.  Output will be placed in the `public` directory.  The original images will not be included - only the resized versions.
