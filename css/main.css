@@ -49,7 +49,7 @@ body, input, select, textarea { color: #a0a0a1; font-family: "Source Sans Pro", 
 @media screen and (max-width: 1680px) { body, input, select, textarea { font-size: 11pt; } }
 
 a { -moz-transition: color 0.2s ease-in-out, border-bottom-color 0.2s ease-in-out; -webkit-transition: color 0.2s ease-in-out, border-bottom-color 0.2s ease-in-out; -ms-transition: color 0.2s ease-in-out, border-bottom-color 0.2s ease-in-out; transition: color 0.2s ease-in-out, border-bottom-color 0.2s ease-in-out; border-bottom: dotted 1px; color: #7293A0; text-decoration: none; }
-a:hover { border-bottom-color: transparent; color: #7293A0 !important; }
+a:hover { border-bottom-color: transparent; }
 
 strong, b { color: #ffffff; font-weight: 300; }
 
