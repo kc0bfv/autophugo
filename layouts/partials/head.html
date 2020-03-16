@@ -1,18 +1,26 @@
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-    <meta name="description" content="{{ with .Site.Params.description }}{{ . }}{{ end }}">
-    <meta name="author" content="{{ with .Site.Params.author }}{{ . }}{{ end }}">
-    <meta name="keywords" content="{{ with .Site.Params.keywords }}{{ . }}{{ end }}">
-    {{ hugo.Generator }}
-    {{ "<!--[if lte IE 8]>" | safeHTML }}
-    <script src="{{ .Site.BaseURL }}assets/js/ie/html5shiv.js"></script>
-    {{ "<![endif]-->" | safeHTML }}
-    <link rel="stylesheet" href="{{ .Site.BaseURL }}assets/css/main.css" />
-    {{ "<!--[if lte IE 9]>" | safeHTML }}
-    <link rel="stylesheet" href="{{ .Site.BaseURL }}assets/css/ie9.css" />
-    {{ "<![endif]-->" | safeHTML }}
-    {{ "<!--[if lte IE 8]>" | safeHTML }}
-    <link rel="stylesheet" href="{{ .Site.BaseURL }}assets/css/ie8.css" />
-    {{ "<![endif]-->" | safeHTML }}
-    <link rel="shortcut icon" href="{{ .Site.BaseURL }}favicon.ico">
-    {{ template "_internal/google_analytics_async.html" . }}
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="keywords" content="{{ with .Site.Params.keywords }}{{ . }}{{ end }}">
+
+{{ $description := $.Param "description" }}
+{{- with $description }}<meta name="description" content="{{ . }}">{{ end }}
+{{ $author := .Params.author.name | default .Site.Author.name }}
+{{- with $author }}<meta name="author" content="{{ . }}">{{ end }}
+<link rel="icon" href="{{ .Site.Params.favicon | relURL }}">
+<link rel="shortcut icon" href="{{ .Site.Params.favicon | relURL }}">
+
+{{- template "_internal/opengraph.html" . }}
+{{- template "_internal/twitter_cards.html" . }}
+<meta name="robots" content="index,follow">
+<meta name="referrer" content="origin-when-cross-origin">
+{{ with .Site.Params.googlesiteverification }}<meta name="google-site-verification" content="{{ . }}">{{ end }}
+{{ with .Site.Params.msvalidate }}<meta name="msvalidate.01" content="{{ . }}">{{ end }}
+{{ hugo.Generator }}
+{{ with .OutputFormats.Get "RSS" }}
+<link href="{{ .RelPermalink }}" rel="alternate" type="application/rss+xml" title="{{ $.Site.Title }}" />
+<link href="{{ .RelPermalink }}" rel="feed" type="application/rss+xml" title="{{ $.Site.Title }}" />
+{{ end }}
+
+{{ template "_internal/google_analytics_async.html" . }}
+
+<link rel="stylesheet" href="{{ "css/main.css" | relURL }}" />

@@ -11,19 +11,36 @@
     {{- range (where .Site.Pages "Kind" "section").ByDate }}
         {{- $title := .Title }}
         {{- $link := .Permalink }}
-        {{- $images_dir := .GetPage "images" }}
 
-        {{- /* $image := $images_dir.Resources.GetMatch .Params.albumthumb */}}
-
+        {{- /* The path we need under the assets directory */}}
         {{- $imgpath := path.Join .File.Dir .Params.albumthumb }}
-        {{- $image := resources.Get $imgpath }}
 
-        {{- $thumb := $image.Resize $thumb_size }}
-        {{- $new_sect := dict "title" $title "link" $link "thumb" $thumb }}
+        {{- $.Scratch.Delete "image" }}
 
-        {{- $sections := $.Scratch.Get "sections" }}
-        {{- $sections := $sections | append $new_sect }}
-        {{- $.Scratch.Set "sections" $sections }}
+        {{- /* If no albumthumb is set, get the first image*/}}
+        {{- if or (not (isset .Params "albumthumb")) (eq .Params.albumthumb "") }}
+            {{- $imgglob := printf "*%s" (path.Join .File.Dir "**") }}
+            {{- $imageresources := where (resources.Match $imgglob) "ResourceType" "image" }}
+            {{- $.Scratch.Set "image" (index $imageresources 0) }}
+        {{- end }}
+
+        {{- /* Otherwise get the albumthumb*/}}
+        {{- with .Params.albumthumb }}
+            {{- $image := resources.Get $imgpath }}
+            {{- $.Scratch.Set "image" $image }}
+        {{- end }}
+
+        {{- $image := $.Scratch.Get "image" }}
+        {{- if not $image }}
+            {{- errorf (printf "No thumbnail image found for: %s" $title) }}
+        {{- else }}
+            {{- $thumb := $image.Resize $thumb_size }}
+            {{- $new_sect := dict "title" $title "link" $link "thumb" $thumb }}
+
+            {{- $sections := $.Scratch.Get "sections" }}
+            {{- $sections := $sections | append $new_sect }}
+            {{- $.Scratch.Set "sections" $sections }}
+        {{- end }}
     {{- end }}
     {{- $sections := $.Scratch.Get "sections" }}
 

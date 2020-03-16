@@ -1,30 +1,19 @@
-# Phugo
+# AutoPhugo
 
-Phugo [ˈfjuːgəʊ] is a gallery/photoblog theme for Hugo. It is a port of HTML5 UP [Multiverse template](https://html5up.net/multiverse).
+AutoPhugo [ˌɔtoʊˈfjuːgəʊ] is a gallery/photoblog theme for Hugo that's a little more automatic than [Phugo](https://github.com/kc0bfv/phugo/).  It is a port of HTML5 UP [Multiverse template](https://html5up.net/multiverse).  Phugo was originally created by Aerohub, Pavel Kanyshev.
 
-## Screenshot
-
-![Orbit screenshot](https://raw.githubusercontent.com/aerohub/phugo/master/images/screenshot.png)
+Preview at <https://kc0bfv.github.io/autophugo>
 
 ## Features
 
-### Original
-
 - Fully Responsive
 - HTML5 + CSS3
-- FontAwesome icons
-- Compatible with all modern browsers
-
-### Added
-
-- One level albums support
+- FontAwesome Icons
+- One-level Albums Support
 - Google Analytics
-- Basic breadcrumbs
-- Working contact form
-
-## Demo
-
-You can see it in action on [Hugo Themes site](http://themes.gohugo.io/theme/phugo/).
+- Basic Breadcrumbs
+- Contact Form
+- Automated Image Scaling
 
 ## Contents
 
@@ -38,70 +27,48 @@ You can see it in action on [Hugo Themes site](http://themes.gohugo.io/theme/phu
 - [License](#license)
 
 
-## Installation
-
-- [Install Hugo](//gohugo.io/overview/installing/) and create a new site.
-- Install Phugo. Inside your new Hugo project run:
-
-```
-$ git clone https://github.com/aerohub/phugo themes/phugo
-```
-
-- Take a look inside the [`exampleSite`](//github.com/aerohub/phugo/tree/master/exampleSite) folder of this theme. You'll find a file called [`config.toml`](//github.com/aerohub/phugo/blob/master/exampleSite/config.toml). Copy the `config.toml` into the root folder of your Hugo site.
-
 ## Configuration
 
-Open just-copied `config.toml` and fill it with your data. Pay attention on instructions for the contact form.
+The exampleSite demonstrates the features unique to this theme.  In your site config params section the following extra parameters are supported:
 
-Now you are ready to create your first photopost/album.
+* `favicon` - the favicon URL, relative to your site (placed in header meta tag)
+* `description` - the description for the header meta tag
+* `msvalidate` - MS validation tag
+* `googlesiteverification` - Google site verification tag
+* `thumb_width` - thumbnail width after resizing (default 480 pixels)
+* `full_width` - display-sized image width after resizing (default 960 pixels)
 
-## Posting
+Additionally, `Author.name` and `Author.email` in the site config will display as the author and webmaster email.
+
+## Album Construction
+
+Inside your project create the directory `assets/NAME-OF-YOUR-ALBUM`.  Place all of one album's photos inside that directory.
 
 Inside your project run:
 
 ```
 $ hugo new NAME-OF-YOUR-ALBUM/_index.md
 ```
-It will create an index file of your first album. Open `content/NAME-OF-YOUR-ALBUM/_index.md` with your text editor. You'll see something like this:
+
+It will create an index file for your first album.  Open `content/NAME-OF-YOUR-ALBUM/_index.md` with your text editor. You'll see something like this:
 
 ```
-+++
-albumthumb = "path/to/album/cover/image"
-date = "2016-10-21T19:07:17+03:00"
-title = "index"
-+++
-
-{{< photo full="path/to/first/FULL-SIZE/image/in/your/gallery.jpg" thumb="path/to/its/THUMBNAIL/image.jpg" alt="" phototitle="SOME TITLE" description="SOME SHORT DESCRIPTION. MARKDOWN **SUPPORTED**. REPEAT THIS SHORTCODE FOR EVERY IMAGE YOU HAVE IN THIS GALLERY">}}
-
+---
+title: "NAME-OF-YOUR-ALBUM"
+date: "2020-03-15T00:00:00+00:00"
+albumthumb: ""
+---
 ```
-Change the title of your album and set the url of album's cover. Then fill the shortcode fields with the first image data. Repeat the shortcode for every image in the gallery. You may use both local and remote images.
 
-Create needed albums and then 
+Change the title of your album if you wish, and set the filename of album's cover thumbnail.  The filename is relative to the album folder in assets, so if one of your images there is named `dog_01.jpg` you can just put `dog_01.jpg` in `albumthumb` to select it.
 
-## Test your site
+## Building the Site
 
-In order to see your site in action, run Hugo's built-in local server. 
+Run `hugo` to build your site.  Output will be placed in the `public` directory.  The original images will not be included - only the resized versions.
 
-    $ hugo server -w
+When building your site, hugo must build thumbnails and distribution-sized images.  This process can take some time, especially if you have many pictures...  It stores versions of the images in the `resources` directory, so it doesn't have to redo the process every build.
 
-Now enter `localhost:1313` in the address bar of your browser.
-
-## Building the site
-
-Just run
-
-	$ hugo
-
-You'll find your resume files in `public` folder in the root of Hugo project.
-
-## Roadmap
-
-- [ ] Pagination support
-- [ ] Taxonomies
-
-## Contributing
-
-Did you found a bug or got an idea? Feel free to use the [issue tracker](//github.com/aerohub/hugo-orbit-theme/issues).
+Therefore - after adding an album your next build may take minutes.  Future ones will be quicker.
 
 ## License
 

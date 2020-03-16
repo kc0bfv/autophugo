@@ -1,16 +1,13 @@
 <header id="header">
-{{ $url := replace .Permalink ( printf "%s" .Site.BaseURL) "" }}
-{{ $.Scratch.Add "path" .Site.BaseURL }}
+    {{ $url := .RelPermalink }}
     <h1>
     <a href="{{ .Site.BaseURL }}"><strong>{{ .Site.Title }}</strong></a>
     {{ range $index, $element := split $url "/" }}
-    {{ $.Scratch.Add "path" $element }}
-    {{ if ne $element "" }}
-    / {{ . | humanize }}
-    {{ $.Scratch.Add "path" "/" }}
-    {{ end }}
+        {{ if ne $element "" }}
+            / {{ . | humanize }}
+        {{ end }}
     {{ end }}
     </h1>
-{{ partial "navigation.html" . }}
+    {{ partial "navigation.html" . }}
 
 </header>

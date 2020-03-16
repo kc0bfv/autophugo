@@ -1,17 +1,18 @@
-name = "Phugo"
+name = "AutoPhugo"
 license = "CCA 3.0 Unported"
-licenselink = "//github.com/aerohub/phugo/LICENSE.md"
+licenselink = "https://github.com/kc0bfv/autophugo/blob/master/LICENSE.md"
 description = "Image gallery/Photoblog Theme for Hugo."
-homepage = "//github.com/aerohub/phugo"
-tags = ["image gallery", "photoblog", "shortcode"]
-features = ["albums", "contact form", "breadcrumbs", "GA"]
-min_version = 0.18
+homepage = "https://github.com/kc0bfv/autophugo/"
+tags = ["gallery", "photoblog", "responsive", "mobile", "dark", "creative", "images"]
+features = ["albums", "contact form", "breadcrumbs"]
+min_version = "0.58.0"
 
-[author]
-  name = "Pavel Kanyshev"
-  homepage = "//github.com/aerohub"
+authors = [
+    {name = "Karl Sickendick", homepage = "https://notmet.net"}.
+    {name = "Pavel Kanyshev", homepage = "https://github.com/aerohub"},
+]
 
 # If porting an existing theme
 [original]
   name = "Multiverse"
-  homepage = "//html5up.net/multiverse"
+  homepage = "https://html5up.net/multiverse"

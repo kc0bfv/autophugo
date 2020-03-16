@@ -1,16 +1,23 @@
 # Settings
 baseurl = "http://example.org/"
 languageCode = "en-us"
-title = "Phugo"
-theme = "phugo"
-googleAnalytics = "UA-XXXXXXX-Y"
+title = "AutoPhugo"
+theme = "autophugo"
+#googleAnalytics = ""
+disableKinds = ["taxonomy", "taxonomyTerm"]
+
+[Author]
+    name = "Karl Sickendick"
+    email = "kc0bfv@gmail.com"
 
 [params]
-
     # Meta
-    description = "Phugo - Photo Gallery on Hugo"
-    author = "aerohub"
+    description = "AutoPhugo - Photo Gallery on Hugo"
     keywords = "phugo, hugo, photogallery, photoblog, hugo theme"
+    #msvalidate = ""
+    #googlesiteverification = ""
+    #thumb_width = 480
+    #full_width = 960
     
     # Headerbar links
     # Do not put here too many links,
@@ -51,11 +58,6 @@ googleAnalytics = "UA-XXXXXXX-Y"
     icon = "fa-github"
 
     [[params.footer.social.links]]
-    label = "Dribbble"
-    url = "#"
-    icon = "fa-dribbble"
-
-    [[params.footer.social.links]]
     label = "LinkedIn"
     url = "#"
     icon = "fa-linkedin"
@@ -76,7 +78,7 @@ googleAnalytics = "UA-XXXXXXX-Y"
     
     [params.footer.contact]
     hide = false # Set this to true if you don't want to have a contact form on your site
-    realEmail = "example@examle.org"
+    realEmail = "example@example.org"
     headline = "Get in touch"
     buttonText = "Send"
     resetText = "Reset"

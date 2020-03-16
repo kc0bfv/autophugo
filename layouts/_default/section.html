@@ -14,11 +14,8 @@
     {{- $full_size := printf "%dx q90" $full_width }}
 
     {{- /* Get and reorder the list of images */}}
-    {{- $images_dir := .GetPage "images" }}
-    {{- /* $images := $images_dir.Resources.ByType "image" */}}
-
-    {{- $imgglob := printf "*%s" (path.Join .File.Dir "*.jpg") }}
-    {{- $imageresources := resources.Match $imgglob }}
+    {{- $imgglob := printf "*%s" (path.Join .File.Dir "**") }}
+    {{- $imageresources := where (resources.Match $imgglob) "ResourceType" "image" }}
     {{- $images := $imageresources }}
 
     {{- /* Initialize the column storage */}}
@@ -69,12 +66,29 @@
 
         <div class="flexcol">
         {{- range $column }}
+            {{- $img_dat := newScratch }}
+            {{- $img_dat.Set "alt" "" }}
+            {{- $img_dat.Set "phototitle" "" }}
+            {{- $img_dat.Set "description" "" }}
+
+            {{- $img_path := .Name }}
+            {{- with $.Params.resources }}
+                {{- range first 1 (where . "src" $img_path) }}
+                    {{- if isset . "alt" }}{{ $img_dat.Set "alt" .alt }}{{ end }}
+                    {{- if isset . "phototitle" }}{{ $img_dat.Set "phototitle" .phototitle }}{{ end }}
+                    {{- if isset . "description" }}{{ $img_dat.Set "description" .description }}{{ end }}
+                {{- end }}
+            {{- end }}
+
             {{- $thumb := .Resize $thumb_size }}
             {{- $full := .Resize $full_size }}
             <article class="thumb">
-                <a href="{{ $full.RelPermalink }}" class="image"><img src="{{ $thumb.RelPermalink }}"/></a>
-                <h2></h2>
-                <p></p>
+                <a href="{{ $full.RelPermalink }}" class="image"><img src="{{ $thumb.RelPermalink }}" alt="{{ $img_dat.Get "alt" }}"/></a>
+                <h2 class="hide-when-small">{{ $img_dat.Get "phototitle" }}</h2>
+                <p>
+                    <span class="hide-when-small">{{ $img_dat.Get "description" | markdownify }}</span>
+                    <span class="download_button"><a href="{{ $full.RelPermalink }}" download><i class="fa fa-download"></i></a></span>
+                </p>
             </article>
         {{- end }}
         </div>
