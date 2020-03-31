@@ -8,7 +8,7 @@ features = ["albums", "contact form", "breadcrumbs"]
 min_version = "0.58.0"
 
 authors = [
-    {name = "Karl Sickendick", homepage = "https://notmet.net"}.
+    {name = "Karl Sickendick", homepage = "https://notmet.net"},
     {name = "Pavel Kanyshev", homepage = "https://github.com/aerohub"},
 ]
 

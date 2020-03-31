@@ -72,6 +72,10 @@ When building your site, hugo must build thumbnails and distribution-sized image
 
 Therefore - after adding an album your next build may take minutes.  Future ones will be quicker.
 
+## Comparison to Phugo
+
+Unfortunately the [original Phugo](https://github.com/aerohub/phugo) hasn't been updated in a while, and was dropped from common theme lists.  Autophugo implements the pull requests over on Phugo, causing it to work error-free on modern Hugo.  Further, it sets standardized column layout (currently set at two, only), automatically builds albums based on files alone (Phugo required entering each filename as a shortcode), and automatically resizes photos for display and thumbnail.
+
 ## License
 
 The original template is released under the Creative Commons Attribution 3.0 License. Please keep the original attribution link when using for your own project.
