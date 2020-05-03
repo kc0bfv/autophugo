@@ -16,7 +16,8 @@ Preview at <https://kc0bfv.github.io/autophugo>
 - Automated Image Scaling
 
 ## Installation
-TODO
+
+Follow [Hugo's standard instructions](https://gohugo.io/getting-started/quick-start/#step-3-add-a-theme) for adding a theme to your site.
 
 ## Configuration
 
