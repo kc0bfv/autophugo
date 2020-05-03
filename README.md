@@ -36,7 +36,9 @@ The exampleSite demonstrates the features unique to this theme.  In your site co
 * `msvalidate` - MS validation tag
 * `googlesiteverification` - Google site verification tag
 * `thumb_width` - thumbnail width after resizing (default 480 pixels)
+* `thumb_quality` - thumbnail encoding quality percentage after resizing (default 50%)
 * `full_width` - display-sized image width after resizing (default 960 pixels)
+* `full_quality` - display-sized image encoding quality after resizing (default 90%)
 
 Additionally, `Author.name` and `Author.email` in the site config will display as the author and webmaster email.
 

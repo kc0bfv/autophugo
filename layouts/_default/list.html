@@ -3,8 +3,9 @@
     {{- /* Things in site config */}}
     {{- $column_count := default 2 ($.Param "column_count") }}
     {{- $thumb_width := default 480 ($.Param "thumb_width") }}
+    {{- $thumb_quality := default 50 ($.Param "thumb_quality") }}
 
-    {{- $thumb_size := printf "%dx q50" $thumb_width }}
+    {{- $thumb_size := printf "%dx q%d" $thumb_width $thumb_quality }}
 
     {{- /* Build the list of sections and thumbnails */}}
     {{- $.Scratch.Set "sections" (slice) }}

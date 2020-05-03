@@ -17,7 +17,9 @@ disableKinds = ["taxonomy", "taxonomyTerm"]
     #msvalidate = ""
     #googlesiteverification = ""
     #thumb_width = 480
+    #thumb_quality = 50
     #full_width = 960
+    #full_quality = 90
     
     # Headerbar links
     # Do not put here too many links,

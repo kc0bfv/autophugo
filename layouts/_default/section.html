@@ -9,9 +9,11 @@
     {{- $column_count := default 2 ($.Param "column_count") }}
     {{- $thumb_width := default 480 ($.Param "thumb_width") }}
     {{- $full_width := default 960 ($.Param "full_width") }}
+    {{- $thumb_quality := default 50 ($.Param "thumb_quality") }}
+    {{- $full_quality := default 90 ($.Param "full_quality") }}
 
-    {{- $thumb_size := printf "%dx q50" $thumb_width }}
-    {{- $full_size := printf "%dx q90" $full_width }}
+    {{- $thumb_size := printf "%dx q%d" $thumb_width $thumb_quality }}
+    {{- $full_size := printf "%dx q%d" $full_width $full_quality }}
 
     {{- /* Get and reorder the list of images */}}
     {{- $imgglob := printf "*%s" (path.Join .File.Dir "**") }}
