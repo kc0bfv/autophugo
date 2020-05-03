@@ -15,17 +15,8 @@ Preview at <https://kc0bfv.github.io/autophugo>
 - Contact Form
 - Automated Image Scaling
 
-## Contents
-
-- [Installation](#installation)
-- [Configuration](#configuration)
-- [Posting](#posting)
-- [Test your site](#test-your-site)
-- [Building the site](#building-the-site)
-- [Roadmap](#roadmap)
-- [Contributing](#contributing)
-- [License](#license)
-
+## Installation
+TODO
 
 ## Configuration
 
@@ -73,6 +64,12 @@ Run `hugo` to build your site.  Output will be placed in the `public` directory.
 When building your site, hugo must build thumbnails and distribution-sized images.  This process can take some time, especially if you have many pictures...  It stores versions of the images in the `resources` directory, so it doesn't have to redo the process every build.
 
 Therefore - after adding an album your next build may take minutes.  Future ones will be quicker.
+
+## Development Notes
+
+If you try multiple sizes or quality settings for your images, you'll start to amass large numbers of images in your `resources` directory.  Once you settle on a quality and size you like you should consider deleting the resources and rebuilding to eliminate the unused images.
+
+Regardless of the number of resources you have, Hugo will only deploy the ones actually used in a build.  Unused image resources will not be deployed.
 
 ## Comparison to Phugo
 
