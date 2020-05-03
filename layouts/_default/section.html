@@ -87,7 +87,7 @@
                 <h2 class="hide-when-small">{{ $img_dat.Get "phototitle" }}</h2>
                 <p>
                     <span class="hide-when-small">{{ $img_dat.Get "description" | markdownify }}</span>
-                    <span class="download_button"><a href="{{ $full.RelPermalink }}" download><i class="fa fa-download"></i></a></span>
+                    <span class="download_button"><a href="{{ $full.RelPermalink }}" download="{{ path.Base .Name }}"><i class="fa fa-download"></i></a></span>
                 </p>
             </article>
         {{- end }}
