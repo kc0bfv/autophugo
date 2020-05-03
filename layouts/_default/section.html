@@ -85,7 +85,7 @@
             {{- $thumb := .Resize $thumb_size }}
             {{- $full := .Resize $full_size }}
             <article class="thumb">
-                <a href="{{ $full.RelPermalink }}" class="image"><img src="{{ $thumb.RelPermalink }}" alt="{{ $img_dat.Get "alt" }}"/></a>
+                <a href="{{ $full.RelPermalink }}" class="image" tabindex="0"><img src="{{ $thumb.RelPermalink }}" alt="{{ $img_dat.Get "alt" }}"/></a>
                 <h2 class="hide-when-small">{{ $img_dat.Get "phototitle" }}</h2>
                 <p>
                     <span class="hide-when-small">{{ $img_dat.Get "description" | markdownify }}</span>

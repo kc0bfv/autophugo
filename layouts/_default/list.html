@@ -94,7 +94,7 @@
             <div class="flexcol">
             {{- range $column }}
                 <article class="thumb">
-                    <a href="{{ .link }}" class="link"><img src="{{ .thumb.RelPermalink }}" alt="{{ .title }}" /></a>
+                    <a href="{{ .link }}" class="link" tabindex="0"><img src="{{ .thumb.RelPermalink }}" alt="{{ .title }}" /></a>
                     <h2>{{ .title }}</h2>
                 </article>
             {{- end }}
