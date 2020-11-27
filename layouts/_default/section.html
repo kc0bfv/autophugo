@@ -84,7 +84,7 @@
 
             {{- $thumb := .Resize $thumb_size }}
             {{- $full := .Resize $full_size }}
-            <article class="thumb">
+<!--            <article class="thumb">
                 <a href="{{ $full.RelPermalink }}" class="image" tabindex="0"><img src="{{ $thumb.RelPermalink }}" alt="{{ $img_dat.Get "alt" }}"/></a>
                 <h2 class="hide-when-small">{{ $img_dat.Get "phototitle" }}</h2>
                 <p>
@@ -92,6 +92,20 @@
                     <span class="download_button"><a href="{{ $full.RelPermalink }}" download="{{ path.Base .Name }}"><i class="fa fa-download"></i></a></span>
                 </p>
             </article>
+            -->
+
+            <article class="thumb">
+                <a data-fancybox="gallery" data-caption='
+<h2>{{ $img_dat.Get "phototitle" }}</h2>
+<p>
+  <span class="hide-when-small">{{ $img_dat.Get "description" | markdownify }}</span>
+</p>
+'
+                    href="{{ $full.RelPermalink }}">
+                    <img src="{{ $thumb.RelPermalink }}" alt="{{ $img_dat.Get "alt" }}">
+                </a>
+            </article>
+
         {{- end }}
         </div>
     {{- end }}
