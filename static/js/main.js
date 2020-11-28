@@ -306,7 +306,7 @@
                     },
                     gallery:{
                         enabled:true,
-                        arrowMarkup: '<div title="%title%" class="nav-%dir%"></div>',
+                        arrowMarkup: '<button title="%title%" class="nav-%dir%"></button>',
                     },
                 });
 
