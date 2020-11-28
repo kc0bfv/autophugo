@@ -89,7 +89,7 @@ var _mfpOn = function(name, f) {
 	},
 	_getCloseBtn = function(type) {
 		if(type !== _currPopupType || !mfp.currTemplate.closeBtn) {
-			mfp.currTemplate.closeBtn = $( mfp.st.closeMarkup.replace('%title%', mfp.st.tClose ) );
+			mfp.currTemplate.closeBtn = $( mfp.st.closeMarkup.replace(/%title%/g, mfp.st.tClose ) );
 			_currPopupType = type;
 		}
 		return mfp.currTemplate.closeBtn;
@@ -351,6 +351,16 @@ MagnificPopup.prototype = {
 
 		// remove scrollbar, add margin e.t.c
 		$('html').css(windowStyles);
+
+        // Add aria-hidden attributes to page elements, so that they are not
+        // accessible for as long as the popup is on.
+        // The original aria-hidden attributes (if any) are saved as
+        // data-aria-hidden, and resumed afterwards.
+        mfp._ariaHiddenElements = $('body').children();
+        $(mfp._ariaHiddenElements).each(function() {
+                $(this).attr('data-aria-hidden', $(this).attr('aria-hidden'));
+                $(this).attr('aria-hidden', 'true');
+        });
 		
 		// add everything to DOM
 		mfp.bgOverlay.add(mfp.wrap).prependTo( mfp.st.prependTo || $(document.body) );
@@ -435,6 +445,17 @@ MagnificPopup.prototype = {
 		mfp.wrap.attr('class', 'mfp-wrap').removeAttr('style');
 		mfp.bgOverlay.attr('class', 'mfp-bg');
 		mfp.container.attr('class', 'mfp-container');
+
+        // Remove aria-hidden attributes from page elements
+        $(mfp._ariaHiddenElements).each(function() {
+                if(typeof $(this).attr('data-aria-hidden') === 'undefined') {
+                        $(this).removeAttr('aria-hidden');
+                } else {
+                        $(this).attr('aria-hidden', $(this).attr('data-aria-hidden'));
+                }
+                $(this).removeAttr('data-aria-hidden');
+        });
+        mfp._ariaHiddenElements = [];
 
 		// remove close button from target element
 		if(mfp.st.showCloseBtn &&
@@ -712,7 +733,7 @@ MagnificPopup.prototype = {
 	// "target" is an element that was clicked
 	_checkIfClose: function(target) {
 
-		if($(target).hasClass(PREVENT_CLOSE_CLASS)) {
+        if($(target).closest('.' + PREVENT_CLOSE_CLASS).length) {
 			return;
 		}
 
@@ -724,7 +745,8 @@ MagnificPopup.prototype = {
 		} else {
 
 			// We close the popup if click is on close button or on preloader. Or if there is no content.
-			if(!mfp.content || $(target).hasClass('mfp-close') || (mfp.preloader && target === mfp.preloader[0]) ) {
+            if(!mfp.content || $(target).closest('.mfp-close').length ||
+                    (mfp.preloader && target === mfp.preloader[0]) ) {
 				return true;
 			}
 
@@ -893,7 +915,7 @@ $.magnificPopup = {
 
 		overflowY: 'auto',
 
-		closeMarkup: '<button title="%title%" type="button" class="mfp-close">&#215;</button>',
+		closeMarkup: '<button title="%title%" type="button" class="mfp-close" aria-label="%title%">&#215;</button>',
 
 		tClose: 'Close (Esc)',
 
@@ -1300,7 +1322,8 @@ $.magnificPopup.registerModule('image', {
 			if(el.length) {
 				var img = document.createElement('img');
 				img.className = 'mfp-img';
-				if(item.el && item.el.find('img').length) {
+				if(item.el && item.el.find('img').length &&
+                        item.el.find('img').attr('alt')) {
 					img.alt = item.el.find('img').attr('alt');
 				}
 				item.img = $(img).on('load.mfploader', onLoadComplete).on('error.mfploader', onLoadError);
@@ -1706,11 +1729,13 @@ $.magnificPopup.registerModule('gallery', {
 				}
 
 				_document.on('keydown'+ns, function(e) {
-					if (e.keyCode === 37) {
-						mfp.prev();
-					} else if (e.keyCode === 39) {
-						mfp.next();
-					}
+                    if (!e.altKey && !e.ctrlKey && !e.shiftKey) {
+                        if (e.keyCode === 37) {
+                            mfp.prev();
+                        } else if (e.keyCode === 39) {
+                            mfp.next();
+                        }
+                    }
 				});
 			});
 
