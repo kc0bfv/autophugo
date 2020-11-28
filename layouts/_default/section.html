@@ -89,7 +89,8 @@
                         description="{{ $img_dat.Get "description" }}"
                         orig_name="{{ path.Base .Name }}"
                         href="{{ $full.RelPermalink }}">
-                    <img src="{{ $thumb.RelPermalink }}" alt="{{ $img_dat.Get "alt" }}">
+                    <img src="{{ $thumb.RelPermalink }}"
+                        {{ with $img_dat.Get "alt" }} alt="{{ . }}"{{ end }}>
                 </a>
             </article>
         {{- end }}
