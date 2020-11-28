@@ -217,8 +217,8 @@ table.alt thead { border-bottom: 0; }
 table.alt tfoot { border-top: 0; }
 
 /* Panel */
-.panel { padding: 4em 4em 2em 4em ; -moz-transform: translateY(100vh); -webkit-transform: translateY(100vh); -ms-transform: translateY(100vh); transform: translateY(100vh); -moz-transition: -moz-transform 0.5s ease; -webkit-transition: -webkit-transform 0.5s ease; -ms-transition: -ms-transform 0.5s ease; transition: transform 0.5s ease; -webkit-overflow-scrolling: touch; background: rgba(36, 38, 41, 0.975); bottom: 4em; left: 0; max-height: calc(80vh - 4em); overflow-y: auto; position: fixed; width: 100%; z-index: 101; }
-.panel.active { -moz-transform: translateY(1px); -webkit-transform: translateY(1px); -ms-transform: translateY(1px); transform: translateY(1px); }
+.panel { padding: 4em 4em 2em 4em ; -moz-transform: translateY(100vh); -webkit-transform: translateY(100vh); -ms-transform: translateY(100vh); transform: translateY(100vh); -moz-transition: -moz-transform 0.5s ease; -webkit-transition: -webkit-transform 0.5s ease; -ms-transition: -ms-transform 0.5s ease; transition: transform 0.5s ease, visibility 0.5s ease; -webkit-overflow-scrolling: touch; background: rgba(36, 38, 41, 0.975); bottom: 4em; left: 0; max-height: calc(80vh - 4em); overflow-y: auto; position: fixed; width: 100%; z-index: 101; visibility: hidden; }
+.panel.active { -moz-transform: translateY(1px); -webkit-transform: translateY(1px); -ms-transform: translateY(1px); transform: translateY(1px); visibility: visible; }
 .panel > .inner { margin: 0 auto; max-width: 100%; width: 75em; }
 .panel > .inner.split { display: -moz-flex; display: -webkit-flex; display: -ms-flex; display: flex; }
 .panel > .inner.split > div { margin-left: 4em; width: 50%; }
@@ -317,4 +317,3 @@ body.loading #main .thumb { -moz-pointer-events: none; -webkit-pointer-events: n
 .mfp-bottom-bar .download-button a:hover, .mfp-figure .mfp-close:hover { opacity: 1; }
 
 article.thumb a:focus img { border: solid 1px #ffffff; }
-
