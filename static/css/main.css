@@ -315,3 +315,5 @@ body.loading #main .thumb { -moz-pointer-events: none; -webkit-pointer-events: n
 .mfp-bottom-bar .download-button a { border-bottom: none; }
 .mfp-bottom-bar .download-button a, .mfp-figure .mfp-close { opacity: .65; color: #ffffff; }
 .mfp-bottom-bar .download-button a:hover, .mfp-figure .mfp-close:hover { opacity: 1; }
+
+a.gallery-item:focus img { border: solid 1px #ffffff; }
