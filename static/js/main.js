@@ -283,47 +283,32 @@
 
 				});
 			
-			// Poptrox.
-				$main.poptrox({
-					baseZIndex: 20000,
-					caption: function($a) {
-
-						var s = '';
-
-						$a.nextAll().each(function() {
-							s += this.outerHTML;
-						});
-
-						return s;
-
-					},
-					fadeSpeed: 300,
-					onPopupClose: function() { $body.removeClass('modal-active'); },
-					onPopupOpen: function() { $body.addClass('modal-active'); },
-					overlayOpacity: 0,
-					popupCloserText: '',
-					popupHeight: 150,
-					popupLoaderText: '',
-					popupSpeed: 300,
-					popupWidth: 150,
-					selector: '.thumb > a.image',
-					usePopupCaption: true,
-					usePopupCloser: true,
-					usePopupDefaultStyling: false,
-					usePopupForceClose: true,
-					usePopupLoader: true,
-					usePopupNav: true,
-					windowMargin: 50
-				});
-
-				// Hack: Set margins to 0 when 'xsmall' activates.
-					skel
-						.on('-xsmall', function() {
-							$main[0]._poptrox.windowMargin = 50;
-						})
-						.on('+xsmall', function() {
-							$main[0]._poptrox.windowMargin = 0;
-						});
+                $(".gallery-item").magnificPopup({
+                    type: "image",
+                    image: {
+                        titleSrc: function(item) {
+                            let caption = '<div title="Download" ' +
+                                'class="download-button"><a href=' +
+                                item.el.attr("href") + " download=" +
+                                item.el.attr("orig_name") +
+                                '><i class="fa fa-download"></i></a></div>' +
+                                '<div class="caption-surround">';
+                            if( item.el.attr("phototitle") ) {
+                                caption += "<h2>" + item.el.attr("phototitle") + "</h2>";
+                            }
+                            if( item.el.attr("description") ) {
+                                caption += '<p class="description">' +
+                                    item.el.attr("description") + "</p>";
+                            }
+                            caption += "</div>";
+                            return caption;
+                        },
+                    },
+                    gallery:{
+                        enabled:true,
+                        arrowMarkup: '<div title="%title%" class="nav-%dir%"></div>',
+                    },
+                });
 
 	});
 

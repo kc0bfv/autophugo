@@ -1,6 +1,6 @@
 # AutoPhugo
 
-AutoPhugo [ˌɔtoʊˈfjuːgəʊ] is a gallery/photoblog theme for Hugo that's a little more automatic than [Phugo](https://github.com/kc0bfv/phugo/).  It is a port of HTML5 UP [Multiverse template](https://html5up.net/multiverse).  Phugo was originally created by Aerohub, Pavel Kanyshev.
+AutoPhugo [ˌɔtoʊˈfjuːgəʊ] is a gallery/photoblog theme for Hugo that's a little more automatic than [Phugo](https://github.com/kc0bfv/phugo/).  It is a port of HTML5 UP [Multiverse template](https://html5up.net/multiverse).  Phugo was originally created by Aerohub, Pavel Kanyshev.  AutoPhugo uses the [Magnific Popup lightbox](https://dimsemenov.com/plugins/magnific-popup/) by Dmitry Semenov.
 
 Preview at <https://kc0bfv.github.io/autophugo>
 
@@ -79,3 +79,5 @@ Unfortunately the [original Phugo](https://github.com/aerohub/phugo) hasn't been
 ## License
 
 The original template is released under the Creative Commons Attribution 3.0 License. Please keep the original attribution link when using for your own project.
+
+The Magnific Popup lightbox is available under the MIT license, more info at their website linked above.

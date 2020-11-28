@@ -8,7 +8,7 @@ resources:
   phototitle: Some Photo Metadata
   description: More Photo Metadata
 - src: dogs/dog_02.jpg
-  description: Some fields may be specified and some left off
+  description: Some fields may be specified and some left off, and some might end up fairly long for any specified window size, but this just has to deal with it and still display nicely so that folks like it
 - src: dogs/dog_03.jpg
   alt: Another example of just some fields specified
 ---
