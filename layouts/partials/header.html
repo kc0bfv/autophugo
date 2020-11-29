@@ -1,13 +1,26 @@
 <header id="header">
     {{ $url := .RelPermalink }}
     <h1>
-    <a href="{{ .Site.BaseURL }}"><strong>{{ .Site.Title }}</strong></a>
-    {{ range $index, $element := split $url "/" }}
-        {{ if ne $element "" }}
-            / {{ . | humanize }}
-        {{ end }}
+
+    {{ $url = (trim $url "/") }}
+    {{ $words := (split $url "/") }}
+    {{ $elems := (len $words) }}
+    {{ if gt $elems 1 }}
+        {{ $path := first (sub $elems 1) $words }}
+        {{ $path = delimit $path "/" }}
+
+        <a href="{{ .Site.BaseURL }}"><strong>{{ .Site.Title }}</strong></a>
+        <a href="{{ .Site.BaseURL }}{{ $path }}"><strong> / {{ $path | humanize }}</strong></a>
+        / {{ index $words (sub $elems 1) }}
+    {{ else }}
+        <a href="{{ .Site.BaseURL }}"><strong>{{ .Site.Title }}</strong></a>
+        {{ range $index, $element := split $url "/" }}
+            {{ if ne $element "" }}
+                / {{ . | humanize }}
+            {{ end }}
+        {{ end }}        
     {{ end }}
+
     </h1>
     {{ partial "navigation.html" . }}
-
 </header>

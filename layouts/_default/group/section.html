@@ -9,7 +9,7 @@
 
     {{- /* Build the list of sections and thumbnails */}}
     {{- $.Scratch.Set "sections" (slice) }}
-    {{- range .Site.Sections.ByDate }}
+    {{- range .Page.Pages.ByDate }}
         {{- $title := .Title }}
         {{- $link := .Permalink }}
 
@@ -82,7 +82,7 @@
 
         {{- $.Scratch.Set $st_height_name (add ($.Scratch.Get $st_height_name) $elem_val.thumb.Height) }}
     {{- end }}
-
+    <div id="debug" />
     <div id="main">
         <div class="flexrow">
 
@@ -90,7 +90,6 @@
         {{- range $column_ind := seq $column_count }}
             {{- $st_name := printf "col-%d" $column_ind }}
             {{- $column := $.Scratch.Get $st_name }}
-
             <div class="flexcol">
             {{- range $column }}
                 <article class="thumb">
