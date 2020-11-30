@@ -1,4 +1,5 @@
-{{ define "main" }}
+<div id="main">
+    <div class="flexrow">
 
     {{- /* Things in site config */}}
     {{- $column_count := default 2 ($.Param "column_count") }}
@@ -9,7 +10,7 @@
 
     {{- /* Build the list of sections and thumbnails */}}
     {{- $.Scratch.Set "sections" (slice) }}
-    {{- range .Page.Pages.ByDate }}
+    {{- range .Sections.ByDate }}
         {{- $title := .Title }}
         {{- $link := .Permalink }}
 
@@ -53,6 +54,13 @@
         {{- $.Scratch.Set $st_height_name 0 }}
     {{- end }}
 
+    {{- if not .IsHome }}
+        {{- /* Check for an empty group and warn the user */}}
+        {{- if lt (len $sections) 1 }}
+            {{- errorf (printf "No sections found in group, is it supposed to be a group? %s" .Title) }}
+        {{- end }}
+    {{- end }}
+
     {{- /* Set the columns */}}
     {{- range $elem_index, $elem_val := $sections}}
         {{- /* Find the least-filled column */}}
@@ -82,23 +90,20 @@
 
         {{- $.Scratch.Set $st_height_name (add ($.Scratch.Get $st_height_name) $elem_val.thumb.Height) }}
     {{- end }}
-    <div id="debug" />
-    <div id="main">
-        <div class="flexrow">
 
-        {{- /* Output the images in columns */}}
-        {{- range $column_ind := seq $column_count }}
-            {{- $st_name := printf "col-%d" $column_ind }}
-            {{- $column := $.Scratch.Get $st_name }}
-            <div class="flexcol">
-            {{- range $column }}
-                <article class="thumb">
-                    <a href="{{ .link }}" class="link" tabindex="0"><img src="{{ .thumb.RelPermalink }}" alt="{{ .title }}" /></a>
-                    <h2>{{ .title }}</h2>
-                </article>
-            {{- end }}
-            </div>
+
+    {{- /* Output the images in columns */}}
+    {{- range $column_ind := seq $column_count }}
+        {{- $st_name := printf "col-%d" $column_ind }}
+        {{- $column := $.Scratch.Get $st_name }}
+        <div class="flexcol">
+        {{- range $column }}
+            <article class="thumb">
+                <a href="{{ .link }}" class="link" tabindex="0"><img src="{{ .thumb.RelPermalink }}" alt="{{ .title }}" /></a>
+                <h2>{{ .title }}</h2>
+            </article>
         {{- end }}
         </div>
+    {{- end }}
     </div>
-{{ end }}
+</div>

@@ -9,7 +9,7 @@ Preview at <https://kc0bfv.github.io/autophugo>
 - Fully Responsive
 - HTML5 + CSS3
 - FontAwesome Icons
-- One-level Albums Support
+- Multi-level Albums Support
 - Google Analytics
 - Basic Breadcrumbs
 - Contact Form
@@ -57,6 +57,41 @@ albumthumb: ""
 Change the title of your album if you wish, and set the filename of album's cover thumbnail.  The filename is relative to the album folder in assets, so if one of your images there is named `dog_01.jpg` you can just put `dog_01.jpg` in `albumthumb` to select it.
 
 In addition to those frontmatter options, you can also specify metadata for some or all of your images.  Do that by creating a `resources` array, with map elements.  The maps specify the image they apply to with the `src` key, as `src: album/image.jpg`.  You can then specify some or all of the following items: `alt`, `phototitle`, and `description`.  Demonstration of this is in the `exampleSite` directory albums.
+
+### Sub-Albums
+
+If you'd like to create an album that contains other albums - you can do that!  The way Autophugo handles this is by allowing you to create "groups" of albums.  The following command creates an album group called "dogs", for instance:
+
+```
+hugo -t ../../ new dogs/_index.md -k group
+```
+
+The resulting `content/dogs/_index.md` file looks like:
+
+```
+---
+title: "Dogs"
+date: 2020-03-15T14:00:00-06:00
+albumthumb: ""
+type: "group"
+---
+```
+
+The "group" is distinguished from a regular album from the `type` that's specified in there, and by the albums it contains...  Make sure to specify an albumthumb!
+
+Now you would create albums inside that album group just like before...
+
+```
+hugo -t ../../ new dogs/pensive-dogs/_index.md
+```
+
+Your `assets` directory layout should mirror the directory layout in `content`.
+
+See the `exampleSite` and the `dogs` folder and subfolders specifically.
+
+### Note: About Subalbums
+
+You can have subalbums in subalbums, just make sure to keep your `type`s straight.  The `exampleSite` has the `dogs` album group which two things in it: a `happy-dogs` album group, and a `pensive-dogs` subalbum.  The `happy-dogs` album group has two things in it: a `running-dogs` subalbum and a `stationary-dogs` subalbum.  Check out the way the `type` is specified in those groups and subalbums and compare it to what you're trying to do, if you're having trouble.
 
 ## Building the Site
 

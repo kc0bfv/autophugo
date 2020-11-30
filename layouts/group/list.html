@@ -1,3 +1,6 @@
+{{ define "title" }}
+    {{ .Title }} - {{ .Site.Title }}
+{{ end }}
 {{ define "main" }}
     {{ partial "section_list.html" . }}
 {{ end }}

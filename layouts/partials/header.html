@@ -2,24 +2,21 @@
     {{ $url := .RelPermalink }}
     <h1>
 
-    {{ $url = (trim $url "/") }}
-    {{ $words := (split $url "/") }}
-    {{ $elems := (len $words) }}
-    {{ if gt $elems 1 }}
-        {{ $path := first (sub $elems 1) $words }}
-        {{ $path = delimit $path "/" }}
+    {{ $trimmed_url := (trim $url "/") }}
+    {{ $url_parts := (split $trimmed_url "/") }}
+    {{ $part_count := (len $url_parts) }}
 
-        <a href="{{ .Site.BaseURL }}"><strong>{{ .Site.Title }}</strong></a>
-        <a href="{{ .Site.BaseURL }}{{ $path }}"><strong> / {{ $path | humanize }}</strong></a>
-        / {{ index $words (sub $elems 1) }}
-    {{ else }}
-        <a href="{{ .Site.BaseURL }}"><strong>{{ .Site.Title }}</strong></a>
-        {{ range $index, $element := split $url "/" }}
-            {{ if ne $element "" }}
-                / {{ . | humanize }}
-            {{ end }}
+    {{ $last_part := index $url_parts (sub $part_count 1) }}
+    {{ $use_part_cnt := cond (eq (trim $last_part " ") "") (sub $part_count 1) $part_count}}
+
+    <a href="{{ .Site.BaseURL }}"><strong>{{ .Site.Title }}</strong></a>
+    {{ if gt $use_part_cnt 0 }}
+        {{ range $cur_ind, $element := first (sub $use_part_cnt 1) $url_parts }}
+            {{ $path := delimit (first (add $cur_ind 1) $url_parts) "/" }}
+            / <a href="{{ $.Site.BaseURL }}{{ $path }}"><strong>{{ $element | humanize }}</strong></a>
         {{ end }}        
-    {{ end }}
+        / {{ (index $url_parts (sub $use_part_cnt 1)) | humanize }}
+    {{ end }}        
 
     </h1>
     {{ partial "navigation.html" . }}
