@@ -1,23 +1,34 @@
 <header id="header">
-    {{ $url := .RelPermalink }}
     <h1>
 
-    {{ $trimmed_url := (trim $url "/") }}
-    {{ $url_parts := (split $trimmed_url "/") }}
-    {{ $part_count := (len $url_parts) }}
+    <!-- Grab the base URL, pull out the path, then count directories -->
+    {{- $base_url_parsed := urls.Parse .Site.BaseURL -}}
+    {{- $base_dir := trim $base_url_parsed.Path "/" -}}
+    {{- $base_part_cnt := cond (ne $base_dir "") (len (split $base_dir "/" )) 0 -}}
 
-    {{ $last_part := index $url_parts (sub $part_count 1) }}
-    {{ $use_part_cnt := cond (eq (trim $last_part " ") "") (sub $part_count 1) $part_count}}
+    <!-- Grab the current URL, separate it out -->
+    {{- $url := .RelPermalink -}}
+    {{- $trimmed_url := trim $url "/" -}}
+    {{- $pre_url_parts := split $trimmed_url "/" -}}
+    {{- $pre_part_count := len $pre_url_parts -}}
 
+    <!-- Drop the part of the current URL that's the base URL -->
+    {{- $url_parts := last (sub $pre_part_count $base_part_cnt) $pre_url_parts -}}
+    {{- $part_count := len $url_parts -}}
+
+    <!-- Determine how much of the URL to use (sometimes last part is blank -->
+    {{- $last_part := index $url_parts (sub $part_count 1) -}}
+    {{- $use_part_cnt := cond (eq (trim $last_part " ") "") (sub $part_count 1) $part_count -}}
+
+    <!-- Build the breadcrumb - base URL link, path links for each dir, cur location text -->
     <a href="{{ .Site.BaseURL }}"><strong>{{ .Site.Title }}</strong></a>
-    {{ if gt $use_part_cnt 0 }}
-        {{ range $cur_ind, $element := first (sub $use_part_cnt 1) $url_parts }}
-            {{ $path := delimit (first (add $cur_ind 1) $url_parts) "/" }}
+    {{- if gt $use_part_cnt 0 -}}
+        {{- range $cur_ind, $element := first (sub $use_part_cnt 1) $url_parts -}}
+            {{- $path := delimit (first (add $cur_ind 1) $url_parts) "/" }}
             / <a href="{{ $.Site.BaseURL }}{{ $path }}"><strong>{{ $element | humanize }}</strong></a>
-        {{ end }}        
+        {{- end }}        
         / {{ (index $url_parts (sub $use_part_cnt 1)) | humanize }}
-    {{ end }}        
-
+    {{- end }}        
     </h1>
     {{ partial "navigation.html" . }}
 </header>
