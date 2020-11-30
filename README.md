@@ -1,6 +1,6 @@
 # AutoPhugo
 
-AutoPhugo [ˌɔtoʊˈfjuːgəʊ] is a gallery/photoblog theme for Hugo that's a little more automatic than [Phugo](https://github.com/kc0bfv/phugo/).  It is a port of HTML5 UP [Multiverse template](https://html5up.net/multiverse).  Phugo was originally created by Aerohub, Pavel Kanyshev.  AutoPhugo uses the [Magnific Popup lightbox](https://dimsemenov.com/plugins/magnific-popup/) by Dmitry Semenov.
+AutoPhugo [ˌɔtoʊˈfjuːgəʊ] is a gallery/photoblog theme for Hugo that's a little more automatic than [Phugo](https://github.com/kc0bfv/phugo/).  It is a port of HTML5 UP [Multiverse template](https://html5up.net/multiverse).  Phugo was originally created by Aerohub, Pavel Kanyshev.
 
 Preview at <https://kc0bfv.github.io/autophugo>
 
@@ -110,6 +110,11 @@ Regardless of the number of resources you have, Hugo will only deploy the ones a
 ## Comparison to Phugo
 
 Unfortunately the [original Phugo](https://github.com/aerohub/phugo) hasn't been updated in a while, and was dropped from common theme lists.  AutoPhugo implements the pull requests over on Phugo, causing it to work error-free on modern Hugo.  Further, it sets standardized column layout (currently set at two, only), automatically builds albums based on files alone (Phugo required entering each filename as a shortcode), and automatically resizes photos for display and thumbnail.
+
+## Acknowledgements
+
+* Subgallery support - tfl0pz, Ognyan Nikolov
+* [Magnific Popup lightbox](https://dimsemenov.com/plugins/magnific-popup/) - Dmitry Semenov
 
 ## License
 
