@@ -92,6 +92,7 @@
                     <img src="{{ $thumb.RelPermalink }}"
                         {{ with $img_dat.Get "alt" }} alt="{{ . }}"{{ end }}>
                 </a>
+                <h2 class="hide-when-small">{{ $img_dat.Get "phototitle" }}</h2>
             </article>
         {{- end }}
         </div>
