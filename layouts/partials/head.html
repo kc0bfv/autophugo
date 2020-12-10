@@ -23,6 +23,6 @@
 
 {{ template "_internal/google_analytics_async.html" . }}
 
-<link rel="stylesheet" href="{{ "css/main.css" | relURL }}" />
-
+{{ $style := resources.Get "css/main.css" | resources.Fingerprint }}
+<link rel="stylesheet" href="{{ $style.RelPermalink }}" integrity="{{ $style.Data.Integrity }}"/>
 <link rel="stylesheet" href="{{ "magnific-popup/magnific-popup.css" | relURL }}">

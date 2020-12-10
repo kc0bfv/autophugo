@@ -1,5 +1,7 @@
 <script src="{{ "js/jquery.min.js" | relURL }}"></script>
 <script src="{{ "magnific-popup/jquery.magnific-popup.min.js" | relURL }}"></script>
 <script src="{{ "js/skel.min.js" | relURL }}"></script>
-<script src="{{ "js/util.js" | relURL }}"></script>
-<script src="{{ "js/main.js" | relURL }}"></script>
+{{ $main := resources.Get "js/main.js" }}
+{{ $util := resources.Get "js/util.js" }}
+{{ $custom := slice $main $util | resources.Concat "js/custom.js" | resources.Fingerprint }}
+<script src="{{ $custom.RelPermalink }}" integrity="{{ $custom.Data.Integrity }}"></script>
