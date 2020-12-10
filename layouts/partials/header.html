@@ -26,9 +26,9 @@
         {{- range $cur_ind, $element := first (sub $use_part_cnt 1) $url_parts -}}
             {{- $path := delimit (first (add $cur_ind 1) $url_parts) "/" }}
             / <a href="{{ $.Site.BaseURL }}{{ $path }}"><strong>{{ $element | humanize }}</strong></a>
-        {{- end }}        
+        {{- end }}
         / {{ (index $url_parts (sub $use_part_cnt 1)) | humanize }}
-    {{- end }}        
+    {{- end }}
     </h1>
     {{ partial "navigation.html" . }}
 </header>
