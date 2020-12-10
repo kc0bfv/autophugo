@@ -1,10 +1,10 @@
 {{ define "title" }}
-    {{ .Title }} - {{ .Site.Title }}
+    {{ .Site.Title }} - {{ .Data.Term }}
 {{ end }}
 {{ define "main" }}
     <div id="main">
         <div class="flexrow">
-            {{- range .Sections.ByDate.Reverse }}
+            {{- range .Data.Pages.ByDate.Reverse }}
                 {{ partial "album_thumb.html" (dict "Page" $ "Section" . )}}
             {{- end }}
         </div>

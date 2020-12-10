@@ -3,100 +3,105 @@
 {{ end }}
 {{ define "main" }}
 <div id="main">
-    <div class="flexrow">
-
     {{- /* Things in site config */}}
-    {{- $column_count := default 2 ($.Param "column_count") }}
-    {{- $thumb_width := default 480 ($.Param "thumb_width") }}
-    {{- $full_width := default 960 ($.Param "full_width") }}
-    {{- $thumb_quality := default 50 ($.Param "thumb_quality") }}
-    {{- $full_quality := default 90 ($.Param "full_quality") }}
+    {{- $thumb_height := $.Param "thumb_height" }}
+    {{- $thumb_quality := $.Param "thumb_quality" }}
+    {{- $full_height := $.Param "full_height" }}
+    {{- $full_quality := $.Param "full_quality" }}
 
-    {{- $thumb_size := printf "%dx q%d" $thumb_width $thumb_quality }}
-    {{- $full_size := printf "%dx q%d" $full_width $full_quality }}
+    {{- $thumb_size := printf "x%d q%d"  $thumb_height $thumb_quality }}
+    {{- $full_size := printf "x%d q%d" $full_height $full_quality }}
 
-    {{- /* Get and reorder the list of images */}}
-    {{- $imgglob := printf "*%s" (path.Join .File.Dir "**") }}
-    {{- $imageresources := where (resources.Match $imgglob) "ResourceType" "image" }}
-    {{- $images := $imageresources }}
-
-    {{- /* Initialize the column storage */}}
-    {{- range $column_ind := seq $column_count }}
-        {{- $st_name := printf "col-%d" $column_ind }}
-        {{- $st_height_name := printf "col-height-%d" $column_ind }}
-        {{- $.Scratch.Set $st_name (slice) }}
-        {{- $.Scratch.Set $st_height_name 0 }}
-    {{- end }}
-
-    {{- /* Set the columns */}}
-    {{- range $elem_index, $elem_val := $images}}
-
-        {{- /* Find the least-filled column */}}
-        {{- $.Scratch.Set "min_height" -1 }}
-        {{- $.Scratch.Set "min_col" -1 }}
-        {{- range $column_ind := seq $column_count }}
-            {{- $st_height_name := printf "col-height-%d" $column_ind }}
-            {{- $col_height := $.Scratch.Get $st_height_name }}
-            {{- $min_height := $.Scratch.Get "min_height" }}
-            {{- if (or (eq $min_height -1) (lt $col_height $min_height)) }}
-                {{- $.Scratch.Set "min_height" $col_height }}
-                {{- $.Scratch.Set "min_col" $column_ind }}
+    <div id="intro">
+        <h1>{{ .Title }}</h1>
+        <div class="byline">{{ .Params.Albumdate }}
+            {{ with .Params.Authors }} -
+            {{ range $key, $value := . -}}
+                {{- if $key -}}, {{ end -}}
+                {{- with $.Site.GetPage (printf "/authors/%s" $value) -}}
+                    <span class="tag"><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></span>
+                {{- end -}}
+            {{- end -}}
             {{- end }}
-        {{- end }}
-
-        {{- /* column_ind becomes the least-filled column */}}
-        {{- $column_ind := $.Scratch.Get "min_col" }}
-        {{- if eq $column_ind -1 }}
-            {{- errorf "Failed to find a least-filled column!"}}
-        {{- end }}
-        {{- $st_name := printf "col-%d" $column_ind }}
-        {{- $st_height_name := printf "col-height-%d" $column_ind }}
-
-        {{- $column := $.Scratch.Get $st_name }}
-        {{- $column := $column | append $elem_val }}
-        {{- $.Scratch.Set $st_name $column }}
-
-        {{- $thumb := $elem_val.Resize $thumb_size }}
-        {{- $.Scratch.Set $st_height_name (add ($.Scratch.Get $st_height_name) $thumb.Height) }}
-    {{- end }}
-
-
-    {{- /* Output the images in columns */}}
-    {{- range $column_ind := seq $column_count }}
-        {{- $st_name := printf "col-%d" $column_ind }}
-        {{- $column := $.Scratch.Get $st_name }}
-
-        <div class="flexcol">
-        {{- range $column }}
-            {{- $img_dat := newScratch }}
-            {{- $img_dat.Set "alt" "" }}
-            {{- $img_dat.Set "phototitle" "" }}
-            {{- $img_dat.Set "description" "" }}
-
-            {{- $img_path := .Name }}
-            {{- with $.Params.resources }}
-                {{- range first 1 (where . "src" $img_path) }}
-                    {{- if isset . "alt" }}{{ $img_dat.Set "alt" .alt }}{{ end }}
-                    {{- if isset . "phototitle" }}{{ $img_dat.Set "phototitle" .phototitle }}{{ end }}
-                    {{- if isset . "description" }}{{ $img_dat.Set "description" .description }}{{ end }}
-                {{- end }}
-            {{- end }}
-
-            {{- $thumb := .Resize $thumb_size }}
-            {{- $full := .Resize $full_size }}
-            <article class="thumb">
-                <a class="gallery-item" phototitle="{{ $img_dat.Get "phototitle" }}"
-                        description="{{ $img_dat.Get "description" }}"
-                        orig_name="{{ path.Base .Name }}"
-                        href="{{ $full.RelPermalink }}">
-                    <img src="{{ $thumb.RelPermalink }}"
-                        {{ with $img_dat.Get "alt" }} alt="{{ . }}"{{ end }}>
-                </a>
-                <h2 class="hide-when-small">{{ $img_dat.Get "phototitle" }}</h2>
-            </article>
-        {{- end }}
         </div>
-    {{- end }}
+        {{- with .Description }}
+        <div class="description">{{ . | safeHTML}}</div>
+        {{- end }}
+    </div>
+
+    <div class="flexrow">
+        {{- /* Iterate over resources ordered by weight */}}
+        {{- range  $index, $elem := ( sort $.Params.resources "weight" ) }}
+            {{- $filename := path.Base $elem.src }}
+
+            {{- $img_dat := newScratch }}
+            {{- $img_dat.Set "alt" ( printf "Photo #%d, %s" $index $filename ) }}
+            {{- $img_dat.Set "phototitle" $filename }}
+            {{- $img_dat.Set "description" "" }}
+            {{- $img_dat.Set "type" "image" }}
+
+            {{- if isset $elem "alt" }}{{ $img_dat.Set "alt" $elem.alt }}{{ end }}
+            {{- if isset $elem "phototitle" }}{{ $img_dat.Set "phototitle" $elem.phototitle }}{{ end }}
+            {{- if isset $elem "description" }}{{ $img_dat.Set "description" $elem.description }}{{ end }}
+
+            {{/* set object, thumb, full */}}
+            {{- $from_asset := resources.GetMatch ( printf "*%s" $elem.src ) }}
+            {{- $from_content := $.Resources.GetMatch ( printf "*%s" $filename ) }}
+            {{- $object := $from_asset | default $from_content }}
+
+            {{- if $object }}
+                {{/* this is comming from the assets folder */}}
+                {{ if (ne $object.ResourceType "image") }}
+                    {{/* This should cover all videos */}}
+                    {{ $img_dat.Set "type" "video" }}
+                {{- else }}
+                    {{/* Needs resizing */}}
+                    {{- $img_dat.Set "thumb" ($object.Resize $thumb_size) }}
+                    {{- $img_dat.Set "full" ($object.Resize $full_size) }}
+                {{- end }}
+            {{- else }}
+                {{- $ext := path.Ext $filename }}
+                {{- $stem := strings.TrimSuffix $ext $filename }}
+
+                {{- $thumbglob := (printf "*%s_*_0x320_resize_q50_box%s" $stem $ext) }}
+                {{- $fullglob := (printf "*%s_*_0x1060_resize_q90_box%s" $stem $ext) }}
+                {{- $img_dat.Set "thumb" ($.Resources.GetMatch $thumbglob) }}
+                {{- $img_dat.Set "full" ($.Resources.GetMatch $fullglob) }}
+            {{- end }}
+
+            {{- if eq ($img_dat.Get "type") "video" }}
+                {{/* Only need $object at this point */}}
+                <article class="thumb">
+                    <a class="gallery-item mfp-iframe"
+                    phototitle="{{ $img_dat.Get "phototitle" }}"
+                    description="{{ $img_dat.Get "description" }}"
+                    orig_name="{{ $filename }}"
+                    href="{{ $object.RelPermalink }}">
+                        <video autoplay="autoplay" loop="loop" preload="auto" muted>
+                            <source src="{{ $object.RelPermalink }}" type="video/mp4">
+                            <source src="{{ $object.RelPermalink }}" type="video/ogg">
+                            Your browser does not support the video tag.
+                        </video>
+                    </a>
+                    <h2 class="hide-when-small">{{ $img_dat.Get "phototitle" }}</h2>
+                </article>
+            {{- else }}
+                {{/* warnf "full %+v thumb %+v" ($img_dat.Get "full") ($img_dat.Get "thumb") */}}
+                {{/* Only need $full and $thumb at this point */}}
+                {{- $thumb := $img_dat.Get "thumb"}}
+                {{- $full := $img_dat.Get "full"}}
+                <article class="thumb">
+                    <a class="gallery-item"
+                    phototitle="{{ $img_dat.Get "phototitle" }}"
+                    description="{{ $img_dat.Get "description" }}"
+                    orig_name="{{ $filename }}"
+                    href="{{ $full.RelPermalink }}" >
+                        <img src="{{ $thumb.RelPermalink }}" alt="{{ $img_dat.Get "alt" }}"/>
+                    </a>
+                    <h2 class="hide-when-small">{{ $img_dat.Get "phototitle" }}</h2>
+                </article>
+            {{- end }}
+        {{- end }}
     </div>
 </div>
 {{ end }}

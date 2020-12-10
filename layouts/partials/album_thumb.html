@@ -1,0 +1,58 @@
+{{- /* Things in site config */}}
+{{- $thumb_height := .Page.Param "thumb_height" }}
+{{- $thumb_quality := .Page.Param "thumb_quality" }}
+{{- $thumb_size := printf "x%d q%d" $thumb_height $thumb_quality }}
+
+{{- $title := .Section.Title }}
+{{- $link := .Section.Permalink }}
+{{- $authors := .Section.Params.Authors | default slice }}
+{{- $resources := .Section.Resources }}
+{{- $scratch := newScratch }}
+
+{{- /* If no albumthumb is set, get the first image*/}}
+{{- if or (not (isset .Section.Params "albumthumb")) (eq .Section.Params.albumthumb "") }}
+    {{- $imgglob := printf "*%s" (path.Join .Section.File.Dir "**") }}
+
+    {{- $imageresources := where (resources.Match $imgglob) "ResourceType" "image" }}
+    {{- if gt (len $imageresources) 0 }}
+        {{/* from asset folder, needs resize */}}
+        {{- $image := (index $imageresources 0) }}
+        {{- $scratch.Set "thumb" ( $image.Resize $thumb_size ) }}
+    {{- else }}
+        {{/* from content folder, already in finished form */}}
+        {{- $scratch.Set "thumb" (.Section.Resources.GetMatch "**0x320_resize_q50_box*" ) }}
+    {{- end }}
+    {{- warnf "Will use default for '%s': %s" $title ($scratch.Get "thumb") }}
+{{- end }}
+
+{{- /* Otherwise get the albumthumb*/}}
+{{- with .Section.Params.albumthumb }}
+    {{- $image := resources.GetMatch ( printf "*%s" . ) }}
+    {{- if $image }}
+        {{/* from asset folder, needs resize */}}
+        {{- $scratch.Set "thumb" ( $image.Resize $thumb_size ) }}
+    {{- else }}
+        {{/* from content folder, already in finished form */}}
+        {{- $filename := path.Base . }}
+        {{- $ext := path.Ext $filename }}
+        {{- $stem := strings.TrimSuffix $ext $filename }}
+        {{- $imgglob := printf "**%s_*_0x320_resize_q50_box%s" $stem $ext }}
+        {{- $scratch.Set "thumb" ( $resources.GetMatch $imgglob ) }}
+    {{- end }}
+{{- end }}
+
+{{- $thumb := $scratch.Get "thumb" }}
+{{- if not $thumb }}
+    {{- errorf (printf "No thumbnail image found for album '%s'" $title) }}
+{{- end }}
+{{/*- warnf (printf "Found something for album '%s' %s" $title $thumb) */}}
+
+<article class="thumb">
+    <a href="{{ $link }}" class="link" tabindex="0"><img src="{{ $thumb.RelPermalink }}" alt="{{ $title }}" /></a>
+    <h2>{{ $title }}</h2>
+    <div class="tags">
+        {{- range $authors }}
+            <span class="tag">{{ . }}</span>
+        {{- end }}
+    </div>
+</article>
