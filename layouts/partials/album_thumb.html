@@ -2,6 +2,7 @@
 {{- $thumb_height := .Page.Param "thumb_height" }}
 {{- $thumb_quality := .Page.Param "thumb_quality" }}
 {{- $thumb_size := printf "x%d q%d" $thumb_height $thumb_quality }}
+{{- $thumb_glob := printf "0x%v_resize_q%v_box" $thumb_height $thumb_quality }}
 
 {{- $title := .Section.Title }}
 {{- $link := .Section.Permalink }}
@@ -20,7 +21,8 @@
         {{- $scratch.Set "thumb" ( $image.Resize $thumb_size ) }}
     {{- else }}
         {{/* from content folder, already in finished form */}}
-        {{- $scratch.Set "thumb" (.Section.Resources.GetMatch "**0x320_resize_q50_box*" ) }}
+        {{- $glob := printf "**%s*" $thumb_glob }}
+        {{- $scratch.Set "thumb" (.Section.Resources.GetMatch $glob ) }}
     {{- end }}
     {{- warnf "Will use default for '%s': %s" $title ($scratch.Get "thumb") }}
 {{- end }}
@@ -36,7 +38,7 @@
         {{- $filename := path.Base . }}
         {{- $ext := path.Ext $filename }}
         {{- $stem := strings.TrimSuffix $ext $filename }}
-        {{- $imgglob := printf "**%s_*_0x320_resize_q50_box%s" $stem $ext }}
+        {{- $imgglob := printf "**%s_*_%s%s" $stem $thumb_glob $ext }}
         {{- $scratch.Set "thumb" ( $resources.GetMatch $imgglob ) }}
     {{- end }}
 {{- end }}

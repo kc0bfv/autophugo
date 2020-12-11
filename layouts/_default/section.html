@@ -48,8 +48,8 @@
                 {{- $ext := path.Ext $filename }}
                 {{- $stem := strings.TrimSuffix $ext $filename }}
 
-                {{- $thumbglob := (printf "*%s_*_0x320_resize_q50_box%s" $stem $ext) }}
-                {{- $fullglob := (printf "*%s_*_0x1060_resize_q90_box%s" $stem $ext) }}
+                {{- $thumbglob := printf "*%s_*_0x%v_resize_q%v_box%s" $stem $thumb_height $thumb_quality $ext }}
+                {{- $fullglob := printf "*%s_*_0x%v_resize_q%v_box%s" $stem $full_height $full_quality $ext }}
                 {{- $img_dat.Set "thumb" ($.Resources.GetMatch $thumbglob) }}
                 {{- $img_dat.Set "full" ($.Resources.GetMatch $fullglob) }}
             {{- end }}
