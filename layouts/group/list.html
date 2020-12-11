@@ -3,6 +3,7 @@
 {{ end }}
 {{ define "main" }}
     <div id="main">
+        {{ partial "intro" . }}
         <div class="flexrow">
             {{- range .Sections.ByDate.Reverse }}
                 {{ partial "album_thumb.html" (dict "Page" $ "Section" . )}}

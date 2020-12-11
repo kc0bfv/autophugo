@@ -1,0 +1,21 @@
+{{ if not .IsHome }}
+    <div id="intro">
+        <h1>{{ .Title }}</h1>
+        <div class="byline">{{ .Params.Albumdate }}
+            {{- with .Params.Authors }} -
+            {{ range $key, $value := . }}
+                {{- if $key -}}, {{ end -}}
+                {{- with $.Site.GetPage (printf "/authors/%s" $value) -}}
+                    <span class="tag"><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></span>
+                {{- end -}}
+            {{- end -}}
+            {{- end }}
+            {{ with .Params.Resources }} -
+                {{ len . }} items
+            {{- end }}
+        </div>
+        {{- with .Description }}
+        <div class="description">{{ . | safeHTML}}</div>
+        {{- end }}
+    </div>
+{{- end }}
