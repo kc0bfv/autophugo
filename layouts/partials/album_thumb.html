@@ -10,25 +10,8 @@
 {{- $resources := .Section.Resources }}
 {{- $scratch := newScratch }}
 
-{{- /* If no albumthumb is set, get the first image*/}}
-{{- if or (not (isset .Section.Params "albumthumb")) (eq .Section.Params.albumthumb "") }}
-    {{- $imgglob := printf "*%s" (path.Join .Section.File.Dir "**") }}
-
-    {{- $imageresources := where (resources.Match $imgglob) "ResourceType" "image" }}
-    {{- if gt (len $imageresources) 0 }}
-        {{/* from asset folder, needs resize */}}
-        {{- $image := (index $imageresources 0) }}
-        {{- $scratch.Set "thumb" ( $image.Resize $thumb_size ) }}
-    {{- else }}
-        {{/* from content folder, already in finished form */}}
-        {{- $glob := printf "**%s*" $thumb_glob }}
-        {{- $scratch.Set "thumb" (.Section.Resources.GetMatch $glob ) }}
-    {{- end }}
-    {{- warnf "Will use default for '%s': %s" $title ($scratch.Get "thumb") }}
-{{- end }}
-
-{{- /* Otherwise get the albumthumb*/}}
 {{- with .Section.Params.albumthumb }}
+    {{- /* Get the specified albumthumb */}}
     {{- $image := resources.GetMatch ( printf "*%s" . ) }}
     {{- if $image }}
         {{/* from asset folder, needs resize */}}
@@ -41,6 +24,20 @@
         {{- $imgglob := printf "**%s_*_%s%s" $stem $thumb_glob $ext }}
         {{- $scratch.Set "thumb" ( $resources.GetMatch $imgglob ) }}
     {{- end }}
+{{- else }}
+    {{- /* No explicit albumthumb specified, so get the first image instead. */}}
+    {{- $imgglob := printf "*%s" (path.Join .Section.File.Dir "**") }}
+    {{- $imageresources := where (resources.Match $imgglob) "ResourceType" "image" }}
+    {{- if gt (len $imageresources) 0 }}
+        {{/* from asset folder, needs resize */}}
+        {{- $image := (index $imageresources 0) }}
+        {{- $scratch.Set "thumb" ( $image.Resize $thumb_size ) }}
+    {{- else }}
+        {{/* from content folder, already in finished form */}}
+        {{- $glob := printf "**%s*" $thumb_glob }}
+        {{- $scratch.Set "thumb" (.Section.Resources.GetMatch $glob ) }}
+    {{- end }}
+    {{- warnf "Will use default for '%s': %s" $title ($scratch.Get "thumb") }}
 {{- end }}
 
 {{- $thumb := $scratch.Get "thumb" }}
