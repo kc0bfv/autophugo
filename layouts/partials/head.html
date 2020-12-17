@@ -9,7 +9,9 @@
 <link rel="icon" href="{{ .Site.Params.favicon | relURL }}">
 <link rel="shortcut icon" href="{{ .Site.Params.favicon | relURL }}">
 
-{{ partial "google_analytics_gtag.html" . }}
+{{ if not (in (.Site.BaseURL | string) "localhost") }}
+    {{ partial "google_analytics_gtag.html" . }}
+{{- end }}
 
 {{- template "_internal/opengraph.html" . }}
 {{- template "_internal/twitter_cards.html" . }}

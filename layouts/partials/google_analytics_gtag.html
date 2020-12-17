@@ -3,7 +3,6 @@
 {{- $pc := .Site.Config.Privacy.GoogleAnalytics -}}
 {{- if not $pc.Disable -}}
 {{ with .Site.GoogleAnalytics }}
-{{ warnf "%+v" . }}
 <script async src="https://www.googletagmanager.com/gtag/js?id={{ . }}"></script>
 <script type="application/javascript">
 {{/* from buildin __ga_js_set_doNotTrack template */}}
