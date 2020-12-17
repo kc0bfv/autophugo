@@ -1,0 +1,53 @@
+<!-- Simplified version of Hugo's internal a google_analytics_gtags.html  template but it is currently still in review -->
+
+{{- $pc := .Site.Config.Privacy.GoogleAnalytics -}}
+{{- if not $pc.Disable -}}
+{{ with .Site.GoogleAnalytics }}
+{{ warnf "%+v" . }}
+<script async src="https://www.googletagmanager.com/gtag/js?id={{ . }}"></script>
+<script type="application/javascript">
+{{/* from buildin __ga_js_set_doNotTrack template */}}
+{{- if not $pc.RespectDoNotTrack -}}
+var doNotTrack = false;
+{{- else -}}
+var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+var doNotTrack = (dnt == "1" || dnt == "yes");
+{{- end -}}
+
+if (!doNotTrack) {
+  var config = { 'send_page_view': true };
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+
+  {{ if $pc.UseSessionStorage -}}
+  var GA_STORAGE_KEY = 'ga:clientId';
+  if (window.sessionStorage && sessionStorage.getItem(GA_STORAGE_KEY)) {
+    sessionStorage.setItem(GA_STORAGE_KEY);
+  }
+  config['client_storage'] = 'none';
+  config['client_id'] = sessionStorage.getItem(GA_STORAGE_KEY);
+  {{ end -}}
+
+  {{ if $pc.AnonymizeIP }}
+  config['anonymize_ip'] = true;
+  {{ end -}}
+
+  gtag('title', '{{ $.Title }}');
+  gtag('permalink', '{{ $.Permalink }}');
+  gtag('published_date', '{{ $.Date.Format "2006-01-22" }}');
+  gtag('modified_date', '{{ $.Lastmod.Format "2006-01-22" }}');
+  gtag('language', '{{ $.Language }}');
+  gtag('kind', '{{ $.Kind }}');
+  gtag('type', '{{ $.Type }}');
+  gtag('tags', {{ $.Params.tags }});
+  gtag('categories', {{ $.Params.categories }});
+
+  gtag('js', new Date());
+  gtag('config', '{{ . }}', config);
+}
+else {
+  window['ga-disable-{{ . }}'] = true;
+}
+</script>
+{{ end -}}
+{{- end -}}
