@@ -15,6 +15,12 @@ Preview at <https://kc0bfv.github.io/autophugo>
 - Contact Form
 - Automated Image Scaling
 
+## Recent Change
+
+**PLEASE NOTE**
+
+On 19 Dec 2020 `albumthumb` file paths work differently.  You must specify the path relative to the assets directory.  So - where before the `fish/_index.md` example content specified `fish_02.jpg` as the `albumthumb`, now it specifies `fish/fish_02.jpg`.  I apologize for the breaking change, but it really should've worked this way from the start.  It brings things in-line with the resources src, and the subalbum path specifications.
+
 ## Installation
 
 Follow [Hugo's standard instructions](https://gohugo.io/getting-started/quick-start/#step-3-add-a-theme) for adding a theme to your site.
@@ -50,20 +56,25 @@ It will create an index file for your first album.  Open `content/NAME-OF-YOUR-A
 ---
 title: "NAME-OF-YOUR-ALBUM"
 date: "2020-03-15T00:00:00+00:00"
-albumthumb: ""
+albumthumb: "NAME-OF-YOUR-ALBUM/photo00.jpg"
+draft: false
+resources:
+- src: "NAME-OF-YOUR-ALBUM/photo00.jpg"
+- src: "NAME-OF-YOUR-ALBUM/photo01.jpg"
+- src: "NAME-OF-YOUR-ALBUM/photo02.jpg"
 ---
 ```
 
-Change the title of your album if you wish, and set the filename of album's cover thumbnail.  The filename is relative to the album folder in assets, so if one of your images there is named `dog_01.jpg` you can just put `dog_01.jpg` in `albumthumb` to select it.
+Change the title of your album if you wish, and set the filename of album's cover thumbnail.  The filename is relative to the assets folder, so if your album is named `dogs` and one of your images there is named `dog_01.jpg` you can put `dogs/dog_01.jpg` in `albumthumb` to select it.
 
-In addition to those frontmatter options, you can also specify metadata for some or all of your images.  Do that by creating a `resources` array, with map elements.  The maps specify the image they apply to with the `src` key, as `src: album/image.jpg`.  You can then specify some or all of the following items: `alt`, `phototitle`, and `description`.  Demonstration of this is in the `exampleSite` directory albums.
+In addition to those frontmatter options, you can also specify metadata for some or all of your images.  Do that by modifying the `resources` array with map elements.  The maps specify the image they apply to with the `src` key, as `src: "album/image.jpg"`.  You can then specify some or all of the following items: `alt`, `phototitle`, and `description`.  Demonstration of this is in the `exampleSite` directory albums.
 
 ### Sub-Albums
 
 If you'd like to create an album that contains other albums - you can do that!  The way Autophugo handles this is by allowing you to create "groups" of albums.  The following command creates an album group called "dogs", for instance:
 
 ```
-hugo -t ../../ new dogs/_index.md -k group
+hugo new dogs/_index.md -k group
 ```
 
 The resulting `content/dogs/_index.md` file looks like:
@@ -72,7 +83,7 @@ The resulting `content/dogs/_index.md` file looks like:
 ---
 title: "Dogs"
 date: 2020-03-15T14:00:00-06:00
-albumthumb: ""
+albumthumb: "dogs/subalbum/photo_00.jpg"
 type: "group"
 ---
 ```
@@ -82,7 +93,7 @@ The "group" is distinguished from a regular album from the `type` that's specifi
 Now you would create albums inside that album group just like before...
 
 ```
-hugo -t ../../ new dogs/pensive-dogs/_index.md
+hugo new dogs/pensive-dogs/_index.md
 ```
 
 Your `assets` directory layout should mirror the directory layout in `content`.

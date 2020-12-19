@@ -15,7 +15,7 @@
         {{- $link := .Permalink }}
 
         {{- /* The path we need under the assets directory */}}
-        {{- $imgpath := path.Join .File.Dir .Params.albumthumb }}
+        {{- $imgpath := path.Join .Params.albumthumb }}
 
         {{- $.Scratch.Delete "image" }}
 

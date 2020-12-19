@@ -1,7 +1,7 @@
 ---
 title: "Stationary Dogs"
 date: 2020-11-29T16:40:00-06:00
-albumthumb: "dog_04.jpg"
+albumthumb: "dogs/happy-dogs/stationary-dogs/dog_04.jpg"
 resources:
 - src: dogs/happy-dogs/stationary-dogs/dog_04.jpg
   alt: Two dogs in a field looking to the left past the photographer.

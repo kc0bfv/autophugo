@@ -1,20 +1,16 @@
 ---
 {{- $imgglob := printf "*%s" (path.Join .File.Dir "**") -}}
-{{- $resources := resources.Match $imgglob }}
+{{- $resources := where (resources.Match $imgglob) "ResourceType" "image" }}
 title: "{{ replace .Name "-" " " | title }}"
 date: {{ .Date }}
-description: "<p></p>"
-authors: [ "Sylvia" ]
-albumdate: {{ dateFormat "January 2, 2006" .Date }}
-albumthumb: {{ index $resources 0 }}
+albumthumb: "{{ cond (gt (len $resources) 0) (index $resources 0) "" }}"
 draft: false
 ## Optional additional meta info for resources list
-#  alt: Same tag
-#  phototitle: My title
-#  description: My description
+#  alt: Image alternative and screen-reader text
+#  phototitle: A title for the photo
+#  description: A sub-title or description for the photo
 resources:
 {{ range $elem_index, $elem_val := $resources -}}
-- src: {{ . }}
-  weight: {{ mul $elem_index 10 }}
+- src: "{{ . }}"
 {{ end -}}
 ---

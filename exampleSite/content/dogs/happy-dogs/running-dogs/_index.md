@@ -1,7 +1,7 @@
 ---
 title: "Running Dogs"
 date: 2020-11-29T16:34:40-06:00
-albumthumb: "dog_05.jpg"
+albumthumb: "dogs/happy-dogs/running-dogs/dog_05.jpg"
 resources:
 - src: dogs/happy-dogs/running-dogs/dog_05.jpg
   alt: Two dogs running down a grassy trail towards the photographer

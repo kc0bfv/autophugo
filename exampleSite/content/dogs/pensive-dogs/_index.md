@@ -1,7 +1,7 @@
 ---
 title: "Pensive Dogs"
 date: 2020-03-14T19:43:59-06:00
-albumthumb: "dog_01.jpg"
+albumthumb: "dogs/pensive-dogs/dog_01.jpg"
 resources:
 - src: dogs/pensive-dogs/dog_01.jpg
   alt: A little scotty dog
