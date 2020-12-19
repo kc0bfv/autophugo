@@ -288,8 +288,8 @@
                     image: {
                         titleSrc: function(item) {
                             let caption = '<div title="Download" ' +
-                                'class="download-button"><a href=' +
-                                item.el.attr("href") + ' download="' +
+                                'class="download-button"><a href="' +
+                                item.el.attr("href") + '" download="' +
                                 item.el.attr("orig_name") +
                                 '"><i class="fa fa-download"></i></a></div>' +
                                 '<div class="caption-surround">';
