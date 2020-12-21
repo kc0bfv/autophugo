@@ -37,6 +37,7 @@ The exampleSite demonstrates the features unique to this theme.  In your site co
 * `thumb_quality` - thumbnail encoding quality percentage after resizing (default 50%)
 * `full_width` - display-sized image width after resizing (default 960 pixels)
 * `full_quality` - display-sized image encoding quality after resizing (default 90%)
+* `column_count` - the number of columns in which to display images (default 2)
 
 Additionally, `Author.name` and `Author.email` in the site config will display as the author and webmaster email.
 
