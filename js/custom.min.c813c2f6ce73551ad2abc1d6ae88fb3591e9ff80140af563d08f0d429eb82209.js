@@ -131,7 +131,8 @@ $image.css('background-position',x);$image_img.hide();if(skel.vars.IEVersion<11)
 $this.css('cursor','pointer').on('click',function(){$image.trigger('click');});});$main.children('.thumb').each(function(){var $this=$(this),$link=$this.find('.link'),$link_img=$link.children('img'),x;if($link.length==0)
 return;$link.css('background-image','url('+$link_img.attr('src')+')');if(x=$link_img.data('position'))
 $link.css('background-position',x);$link_img.hide();if(skel.vars.IEVersion<11)
-$this.css('cursor','pointer').on('click',function(){$link.trigger('click');});});$(".gallery-item").magnificPopup({type:"image",image:{titleSrc:function(item){let caption='<div title="Download" '+
+$this.css('cursor','pointer').on('click',function(){$link.trigger('click');});});var gallery_items=$(".gallery-item").sort(function(item_a,item_b){return item_a.getAttribute("gallery_index")-
+item_b.getAttribute("gallery_index");});gallery_items.magnificPopup({type:"image",image:{titleSrc:function(item){let caption='<div title="Download" '+
 'class="download-button"><a href="'+
 item.el.attr("href")+'" download="'+
 item.el.attr("orig_name")+
