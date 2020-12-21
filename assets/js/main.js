@@ -283,7 +283,13 @@
 
                 });
 
-                $(".gallery-item").magnificPopup({
+                var gallery_items = $(".gallery-item").sort(
+                        function(item_a, item_b){
+                            return item_a.getAttribute("gallery_index") - 
+                                    item_b.getAttribute("gallery_index");
+                            }
+                    );
+                gallery_items.magnificPopup({
                     type: "image",
                     image: {
                         titleSrc: function(item) {
