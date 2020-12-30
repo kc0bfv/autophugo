@@ -9,6 +9,9 @@ public:
 server:
 	hugo -s ${EXAMPLE_SITE} --themesDir ${THEMES} server
 
+serverNoAlbum:
+	hugo -s exampleSiteNoAlbum --themesDir ${THEMES} server
+
 no_canonify_server_long_url_test:
 	hugo -s ${EXAMPLE_SITE} --themesDir ${THEMES} server -b http://localhost:1313/themes/autophugo/
 

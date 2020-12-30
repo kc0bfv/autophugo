@@ -27,7 +27,7 @@ Follow [Hugo's standard instructions](https://gohugo.io/getting-started/quick-st
 
 ## Configuration
 
-The exampleSite demonstrates the features unique to this theme.  In your site config params section the following extra parameters are supported:
+The `exampleSite` demonstrates the features unique to this theme.  In your site config params section the following extra parameters are supported:
 
 * `favicon` - the favicon URL, relative to your site (placed in header meta tag)
 * `description` - the description for the header meta tag
@@ -40,6 +40,8 @@ The exampleSite demonstrates the features unique to this theme.  In your site co
 * `column_count` - the number of columns in which to display images (default 2)
 
 Additionally, `Author.name` and `Author.email` in the site config will display as the author and webmaster email.
+
+The `exampleSiteNoAlbum` directory demonstrates a no-album layout, where all photos show up on the front page.
 
 ## Album Construction
 
@@ -104,6 +106,12 @@ See the `exampleSite` and the `dogs` folder and subfolders specifically.
 ### Note: About Subalbums
 
 You can have subalbums in subalbums, just make sure to keep your `type`s straight.  The `exampleSite` has the `dogs` album group which two things in it: a `happy-dogs` album group, and a `pensive-dogs` subalbum.  The `happy-dogs` album group has two things in it: a `running-dogs` subalbum and a `stationary-dogs` subalbum.  Check out the way the `type` is specified in those groups and subalbums and compare it to what you're trying to do, if you're having trouble.
+
+## No-Album Support
+
+This theme also supports having all photos displayed at the home page - having no albums.  Implement this by creating a `content/_index.md` file that specifies `type: "noalbum"`.  This may contain `resources` specifying image properties just like inside an album.
+
+See the `exampleSiteNoAlbum` directory for an example.
 
 ## Building the Site
 

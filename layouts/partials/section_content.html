@@ -1,0 +1,105 @@
+<div id="main">
+    <div class="flexrow">
+
+    {{- /* Things in site config */}}
+    {{- $column_count := default 2 ($.Param "column_count") }}
+    {{- $thumb_width := default 480 ($.Param "thumb_width") }}
+    {{- $full_width := default 960 ($.Param "full_width") }}
+    {{- $thumb_quality := default 50 ($.Param "thumb_quality") }}
+    {{- $full_quality := default 90 ($.Param "full_quality") }}
+
+    {{- $thumb_size := printf "%dx q%d" $thumb_width $thumb_quality }}
+    {{- $full_size := printf "%dx q%d" $full_width $full_quality }}
+
+    {{- /* Get and reorder the list of images */}}
+    {{- $imgglob := printf "%s" (path.Join .File.Dir "**") }}
+    {{- $imageresources := where (resources.Match $imgglob) "ResourceType" "image" }}
+    {{- $images := $imageresources }}
+
+    {{- /* Initialize the column storage */}}
+    {{- range $column_ind := seq $column_count }}
+        {{- $st_name := printf "col-%d" $column_ind }}
+        {{- $st_height_name := printf "col-height-%d" $column_ind }}
+        {{- $.Scratch.Set $st_name (slice) }}
+        {{- $.Scratch.Set $st_height_name 0 }}
+    {{- end }}
+
+    {{- /* Set the columns */}}
+    {{- range $elem_index, $elem_val := $images}}
+
+        {{- /* Save off the index for gallery ordering later */ -}}
+        {{- $elem_to_save := slice $elem_index $elem_val -}}
+
+        {{- /* Find the least-filled column */}}
+        {{- $.Scratch.Set "min_height" -1 }}
+        {{- $.Scratch.Set "min_col" -1 }}
+        {{- range $column_ind := seq $column_count }}
+            {{- $st_height_name := printf "col-height-%d" $column_ind }}
+            {{- $col_height := $.Scratch.Get $st_height_name }}
+            {{- $min_height := $.Scratch.Get "min_height" }}
+            {{- if (or (eq $min_height -1) (lt $col_height $min_height)) }}
+                {{- $.Scratch.Set "min_height" $col_height }}
+                {{- $.Scratch.Set "min_col" $column_ind }}
+            {{- end }}
+        {{- end }}
+
+        {{- /* column_ind becomes the least-filled column */}}
+        {{- $column_ind := $.Scratch.Get "min_col" }}
+        {{- if eq $column_ind -1 }}
+            {{- errorf "Failed to find a least-filled column!"}}
+        {{- end }}
+        {{- $st_name := printf "col-%d" $column_ind }}
+        {{- $st_height_name := printf "col-height-%d" $column_ind }}
+
+        {{- $column := $.Scratch.Get $st_name }}
+        {{- $column := $column | append (slice $elem_to_save) }}
+        {{- $.Scratch.Set $st_name $column }}
+
+        {{- $thumb := $elem_val.Resize $thumb_size }}
+        {{- $.Scratch.Set $st_height_name (add ($.Scratch.Get $st_height_name) $thumb.Height) }}
+    {{- end }}
+
+
+    {{- /* Output the images in columns */}}
+    {{- range $column_ind := seq $column_count }}
+        {{- $st_name := printf "col-%d" $column_ind }}
+        {{- $column := $.Scratch.Get $st_name }}
+
+        <div class="flexcol">
+        {{- range $column }}
+            {{- /* Pull out the image and image index */ -}}
+            {{- $img_ind := (index . 0) -}}
+            {{- $img := (index . 1) -}}
+
+            {{- $img_dat := newScratch }}
+            {{- $img_dat.Set "alt" "" }}
+            {{- $img_dat.Set "phototitle" "" }}
+            {{- $img_dat.Set "description" "" }}
+
+            {{- $img_path := $img.Name }}
+            {{- with $.Params.resources }}
+                {{- range first 1 (where . "src" $img_path) }}
+                    {{- if isset . "alt" }}{{ $img_dat.Set "alt" .alt }}{{ end }}
+                    {{- if isset . "phototitle" }}{{ $img_dat.Set "phototitle" .phototitle }}{{ end }}
+                    {{- if isset . "description" }}{{ $img_dat.Set "description" .description }}{{ end }}
+                {{- end }}
+            {{- end }}
+
+            {{- $thumb := $img.Resize $thumb_size }}
+            {{- $full := $img.Resize $full_size }}
+            <article class="thumb">
+                <a class="gallery-item" phototitle="{{ $img_dat.Get "phototitle" }}"
+                        description="{{ $img_dat.Get "description" }}"
+                        orig_name="{{ path.Base $img.Name }}"
+                        gallery_index="{{ $img_ind }}"
+                        href="{{ $full.RelPermalink }}">
+                    <img src="{{ $thumb.RelPermalink }}"
+                        {{ with $img_dat.Get "alt" }} alt="{{ . }}"{{ end }}>
+                </a>
+                <h2 class="hide-when-small">{{ $img_dat.Get "phototitle" }}</h2>
+            </article>
+        {{- end }}
+        </div>
+    {{- end }}
+    </div>
+</div>
