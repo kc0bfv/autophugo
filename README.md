@@ -41,6 +41,14 @@ The `exampleSite` demonstrates the features unique to this theme.  In your site 
 
 Additionally, `Author.name` and `Author.email` in the site config will display as the author and webmaster email.
 
+Header and footer customization is possible with the following site parameters.  These are a little more complex to implement in TOML - check out the `exampleSite` configuration for a demonstration and comments:
+
+* `header.links` - a list of maps with keys `name`, `url`, and `icon`, describing links that will be visible in the navigation bar
+* `footer.paragraph` - a map with keys `headline` and `text` specifying the content to display in the `footer` popout (labeled "About" on the example site)
+* `footer.social` - a map with keys `headline` (text) and `links` (list of maps). `links` entries can have `label`, `url`, and `icon` for each.  These are intended to be social media links with a "Follow Me"-ish headline.
+* `footer.contact` - a map with keys `hide`, `realEmail`, `headline`, `buttonText`, and `resetText`, `name`, `email`, and `message`,specifying the properties of the contact form (or hiding it).  See the `exampleSite` config for details about how to set this up.
+* `footer.copyright` - copyright info for your site
+
 The `exampleSiteNoAlbum` directory demonstrates a no-album layout, where all photos show up on the front page.
 
 ## Album Construction

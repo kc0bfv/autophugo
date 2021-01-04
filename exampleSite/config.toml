@@ -23,7 +23,7 @@ disableKinds = ["taxonomy", "taxonomyTerm"]
     #column_count = 2
     
     # Headerbar links
-    # Do not put here too many links,
+    # Do not put too many links here,
     # it will break mobile appearance
 
     [[params.header.links]]
