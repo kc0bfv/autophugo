@@ -46,7 +46,7 @@
         {{- /* column_ind becomes the least-filled column */}}
         {{- $column_ind := $.Scratch.Get "min_col" }}
         {{- if eq $column_ind -1 }}
-            {{- errorf "Failed to find a least-filled column!"}}
+            {{- errorf (printf "When processing '%s', failed to find a least-filled column!" $.Page.File.Dir) }}
         {{- end }}
         {{- $st_name := printf "col-%d" $column_ind }}
         {{- $st_height_name := printf "col-height-%d" $column_ind }}

@@ -34,7 +34,7 @@
 
         {{- $image := $.Scratch.Get "image" }}
         {{- if not $image }}
-            {{- errorf (printf "No thumbnail image found for: %s" $title) }}
+            {{- errorf (printf "When processing '%s', no thumbnail image found for: %s" $.Page.File.Path $title) }}
         {{- else }}
             {{- $thumb := $image.Resize $thumb_size }}
             {{- $new_sect := dict "title" $title "link" $link "thumb" $thumb }}
@@ -57,7 +57,7 @@
     {{- if not .IsHome }}
         {{- /* Check for an empty group and warn the user */}}
         {{- if lt (len $sections) 1 }}
-            {{- errorf (printf "No sections found in group, is it supposed to be a group? %s" .Title) }}
+            {{- errorf (printf "When processing '%s' no sections found in group, is it supposed to be a group? %s" $.Page.File.Path .Title) }}
         {{- end }}
     {{- end }}
 
@@ -79,7 +79,7 @@
         {{- /* column_ind becomes the least-filled column */}}
         {{- $column_ind := $.Scratch.Get "min_col" }}
         {{- if eq $column_ind -1 }}
-            {{- errorf "Failed to find a least-filled column!"}}
+            {{- errorf (printf "When processing '%s', failed to find a least-filled column!" $.Page.File.Path) }}
         {{- end }}
         {{- $st_name := printf "col-%d" $column_ind }}
         {{- $st_height_name := printf "col-height-%d" $column_ind }}
