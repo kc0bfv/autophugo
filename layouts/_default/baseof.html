@@ -1,7 +1,11 @@
 <!DOCTYPE HTML>
 {{ partial "lang.html" . }}
 <head>
-    <title>{{ block "title" . }}{{ .Site.Title }}{{ end }}</title>
+    <title>
+    {{- block "title" . }}
+        {{- with .Title }}{{ . }} - {{ end }}{{ .Site.Title -}}
+    {{- end -}}
+    </title>
 {{ partial "head.html" . }}
 </head>
 <body class="loading">
@@ -11,7 +15,7 @@
     {{ partial "header.html" . }}
         
         {{ block "main" . }}
-
+            {{ partial "sect_and_img_content.html" . }}
         {{ end }}
 
     {{ partial "footer.html" . }}

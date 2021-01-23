@@ -19,3 +19,11 @@ dog_09 https://www.flickr.com/photos/11335395@N06/1259928036/
 dog_10 https://www.flickr.com/photos/trojanllama/8667749191/
 
 dog_11 https://www.flickr.com/photos/66176388@N00/26494408736/
+
+jumping_dog_01 https://www.flickr.com/photos/ragingloon/49260684983/
+
+jumping_dog_02 https://www.flickr.com/photos/mr-outdoorguy/2782350251/
+
+jumping_dog_03 https://www.flickr.com/photos/nitros/36342530/
+
+jumping_dog_04 https://www.flickr.com/photos/186781681@N03/49587221992/

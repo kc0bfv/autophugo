@@ -1,6 +1,5 @@
 ---
 date: 2020-03-15T14:06:11-06:00
-type: "noalbum"
 resources:
 - src: cat_01.jpg
   alt: Cat in the grass
