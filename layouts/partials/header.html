@@ -23,11 +23,11 @@
     <!-- Build the breadcrumb - base URL link, path links for each dir, cur location text -->
     <a href="{{ .Site.BaseURL }}"><strong>{{ .Site.Title }}</strong></a>
     {{- if gt $use_part_cnt 0 -}}
-        {{- range $cur_ind, $element := first (sub $use_part_cnt 1) $url_parts -}}
-            {{- $path := delimit (first (add $cur_ind 1) $url_parts) "/" }}
-            / <a href="{{ $.Site.BaseURL }}{{ $path }}"><strong>{{ $element | humanize }}</strong></a>
+        {{- range $cur_ind, $_ := first (sub $use_part_cnt 1) $url_parts -}}
+            {{- $path := string (delimit (first (add $cur_ind 1) $url_parts) "/") }}
+            / <a href="{{ $.Site.BaseURL }}{{ $path }}"><strong>{{ with $.Site.GetPage $path }}{{ .Title }}{{ end }}</strong></a>
         {{- end }}
-        / {{ (index $url_parts (sub $use_part_cnt 1)) | humanize }}
+        / {{ .Title }}
     {{- end }}
     </h1>
     {{ partial "navigation.html" . }}
