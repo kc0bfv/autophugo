@@ -11,6 +11,23 @@
     {{- $thumb_size := printf "%dx q%d" $thumb_width $thumb_quality }}
     {{- $full_size := printf "%dx q%d" $full_width $full_quality }}
 
+    {{- /* Build the list of texts */}}
+    {{- $.Scratch.Set "texts" (slice) }}
+
+    {{- /* Compose the gallery description */}}
+    {{- if or (isset .Params "description") (isset .Params "subdescription") }}
+        {{- $title := .Title }}
+        {{- $description := default "" ($.Param "description") }}
+        {{- $subdescription := default "" ($.Param "subdescription") }}
+        {{- $new_text := dict "type" "text" "title" $title "description" $description "subdescription" $subdescription }}
+
+        {{- /* Append to the texts list */}}
+        {{- $texts := $.Scratch.Get "texts" }}
+        {{- $texts := $texts | append $new_text }}
+        {{- $.Scratch.Set "texts" $texts }}
+    {{- end }}
+    {{- $texts := $.Scratch.Get "texts" }}
+
     {{- /* Build the list of sections and thumbnails */}}
     {{- $.Scratch.Set "sections" (slice) }}
     {{- range .Sections.ByDate }}
@@ -99,7 +116,7 @@
 
 
     {{- /* Add the sections into the columns followed by images */}}
-    {{- range $elem_index, $elem_val := ($sections | append $images)}}
+    {{- range $elem_index, $elem_val := ($sections | append $images | append $texts)}}
         {{- /* Find the least-filled column */}}
         {{- $.Scratch.Set "min_height" -1 }}
         {{- $.Scratch.Set "min_col" -1 }}
@@ -125,7 +142,9 @@
         {{- $column := $column | append $elem_val }}
         {{- $.Scratch.Set $st_name $column }}
 
-        {{- $.Scratch.Set $st_height_name (add ($.Scratch.Get $st_height_name) $elem_val.thumb.Height) }}
+        {{- if isset $elem_val "thumb" }}
+            {{- $.Scratch.Set $st_height_name (add ($.Scratch.Get $st_height_name) $elem_val.thumb.Height) }}
+        {{- end }}
     {{- end }}
 
     {{- /* Output the images in columns */}}
@@ -139,6 +158,12 @@
                 {{- if (eq .type "sect") }}
                     <a href="{{ .link }}" class="link" tabindex="0"><img src="{{ .thumb.RelPermalink }}" alt="{{ .title }}" /></a>
                     <h2>{{ .title }}</h2>
+                {{- else if (eq .type "text") }}
+                    <div class="text-item" >
+                        <h1>{{ .title }}</h1>
+                        <h2>{{ .description }}</h2>
+                        <h3>{{ .subdescription }}</h3>
+                    </div>
                 {{- else }}
                     <a class="gallery-item" phototitle="{{ .phototitle }}"
                             description="{{ .description }}"

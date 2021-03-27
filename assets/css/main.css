@@ -261,12 +261,17 @@ body.loading #header { -moz-transform: translateY(4em); -webkit-transform: trans
   body.loading #header { -moz-transform: translateY(-3.4em); -webkit-transform: translateY(-3.4em); -ms-transform: translateY(-3.4em); transform: translateY(-3.4em); }
   #header h1 { font-size: 0.9em; }
   #header nav > ul > li a { font-size: 0.9em; padding: 0 1.15em; } }
+
 /* Main */
 #main { -moz-transition: -moz-filter 0.5s ease, -webkit-filter 0.5s ease, -ms-filter 0.5s ease, -moz-filter 0.5s ease; -webkit-transition: -moz-filter 0.5s ease, -webkit-filter 0.5s ease, -ms-filter 0.5s ease, -webkit-filter 0.5s ease; -ms-transition: -moz-filter 0.5s ease, -webkit-filter 0.5s ease, -ms-filter 0.5s ease, -ms-filter 0.5s ease; transition: -moz-filter 0.5s ease, -webkit-filter 0.5s ease, -ms-filter 0.5s ease, filter 0.5s ease; display: -moz-flex; display: -webkit-flex; display: -ms-flex; display: flex; -moz-flex-wrap: wrap; -webkit-flex-wrap: wrap; -ms-flex-wrap: wrap; flex-wrap: wrap; -webkit-tap-highlight-color: rgba(255, 255, 255, 0); }
 #main .thumb { -moz-transition: opacity 1.25s ease-in-out; -webkit-transition: opacity 1.25s ease-in-out; -ms-transition: opacity 1.25s ease-in-out; transition: opacity 1.25s ease-in-out; -moz-pointer-events: auto; -webkit-pointer-events: auto; -ms-pointer-events: auto; pointer-events: auto; -webkit-tap-highlight-color: rgba(255, 255, 255, 0); opacity: 1; overflow: hidden; position: relative; }
 #main .thumb:after { background-image: -moz-linear-gradient(to top, rgba(10,17,25,0.35) 5%, rgba(10,17,25,0) 35%); background-image: -webkit-linear-gradient(to top, rgba(10,17,25,0.35) 5%, rgba(10,17,25,0) 35%); background-image: -ms-linear-gradient(to top, rgba(10,17,25,0.35) 5%, rgba(10,17,25,0) 35%); background-image: linear-gradient(to top, rgba(10,17,25,0.35) 5%, rgba(10,17,25,0) 35%); -moz-pointer-events: none; -webkit-pointer-events: none; -ms-pointer-events: none; pointer-events: none; background-size: cover; content: ''; display: block; height: 100%; left: 0; position: absolute; top: 0; width: 100%; }
 #main .thumb > .image { -webkit-tap-highlight-color: rgba(255, 255, 255, 0); background-position: center; background-repeat: no-repeat; background-size: cover; border: 0; width: 100%; }
 #main .thumb > .link { -webkit-tap-highlight-color: rgba(255, 255, 255, 0); background-position: center; background-repeat: no-repeat; background-size: cover; border: 0; width: 100%; }
+#main .text-item { -moz-pointer-events: none; -webkit-pointer-events: none; -ms-pointer-events: none; pointer-events: none; padding: 3%; }
+#main .text-item > h1 { font-size: 1.4em; left: 2.1875em; margin: 0; z-index: 1; }
+#main .text-item > h2 { font-size: 1.0em; left: 2.1875em; margin: 0; z-index: 1; }
+#main .text-item > h3 { font-size: 0.8em; left: 2.1875em; margin: 0; z-index: 1; }
 #main .thumb > h2 { -moz-pointer-events: none; -webkit-pointer-events: none; -ms-pointer-events: none; pointer-events: none; bottom: 1.875em; font-size: 0.8em; left: 2.1875em; margin: 0; position: absolute; z-index: 1; }
 #main .thumb > p { display: none; }
 #main:after { -moz-pointer-events: none; -webkit-pointer-events: none; -ms-pointer-events: none; pointer-events: none; -moz-transition: opacity 0.5s ease, visibility 0.5s; -webkit-transition: opacity 0.5s ease, visibility 0.5s; -ms-transition: opacity 0.5s ease, visibility 0.5s; transition: opacity 0.5s ease, visibility 0.5s; background: rgba(36, 38, 41, 0.25); content: ''; display: block; height: 100%; left: 0; opacity: 1; position: absolute; top: 0; visibility: hidden; width: 100%; z-index: 1; }
@@ -289,6 +294,11 @@ body.loading #main .thumb { -moz-pointer-events: none; -webkit-pointer-events: n
 #main .thumb:nth-child(10) { -moz-transition-delay: 2s; -webkit-transition-delay: 2s; -ms-transition-delay: 2s; transition-delay: 2s; }
 #main .thumb:nth-child(11) { -moz-transition-delay: 2.15s; -webkit-transition-delay: 2.15s; -ms-transition-delay: 2.15s; transition-delay: 2.15s; }
 #main .thumb:nth-child(12) { -moz-transition-delay: 2.3s; -webkit-transition-delay: 2.3s; -ms-transition-delay: 2.3s; transition-delay: 2.3s; }
+
+@media screen and (max-width: 736px) { body { padding: 4em 0 0 0; }
+  #main .text-item > h1 { font-size: 1.0em; }
+  #main .text-item > h2 { font-size: 0.8em; }
+  #main .text-item > h3 { font-size: 0.6em; }
 
 /* Footer */
 #footer .copyright { color: #505051; font-size: 0.9em; }
