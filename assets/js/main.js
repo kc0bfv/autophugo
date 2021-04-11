@@ -293,12 +293,15 @@
                     type: "image",
                     image: {
                         titleSrc: function(item) {
-                            let caption = '<div title="Download" ' +
+                            let caption = '';
+                            if(item.el.attr("downloadable") ){
+                                caption += '<div title="Download" ' +
                                 'class="download-button"><a href="' +
                                 item.el.attr("href") + '" download="' +
                                 item.el.attr("orig_name") +
                                 '"><i class="fa fa-download"></i></a></div>' +
                                 '<div class="caption-surround">';
+                            }
                             if( item.el.attr("phototitle") ) {
                                 caption += "<h2>" + item.el.attr("phototitle") + "</h2>";
                             }
