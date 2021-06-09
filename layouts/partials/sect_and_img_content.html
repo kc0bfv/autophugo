@@ -61,7 +61,7 @@
         {{- /* Build some scratch for upcoming search... */}}
         {{- $img_dat := newScratch }}
         {{- $img_dat.Set "alt" "" }}
-        {{- $img_dat.Set "phototitle" "" }}
+        {{- $img_dat.Set "phototitle" (humanize (replace (path.Base $elem_val.Name) (path.Ext $elem_val.Name) "")) }}
         {{- $img_dat.Set "description" "" }}
 
         {{- /* Search the resources for a matching image src, save off details */}}
