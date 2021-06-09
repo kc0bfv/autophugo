@@ -15,7 +15,7 @@
     {{- $.Scratch.Set "sections" (slice) }}
     {{- range .Sections.ByDate }}
         {{- $title := .Title }}
-        {{- $link := .Permalink }}
+        {{- $link := .RelPermalink }}
 
         {{- /* The path we need under the assets directory */}}
         {{- $imgpath := path.Join .Params.albumthumb }}
