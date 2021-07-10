@@ -155,35 +155,6 @@
 
                     });
 
-        // Header.
-            var $header = $('#header');
-
-            // Links.
-                $header.find('a').each(function() {
-
-                    var $this = $(this),
-                        href = $this.attr('href');
-
-                    // Internal link? Skip.
-                        if (!href
-                        ||  href.charAt(0) == '#')
-                            return;
-
-                    // Redirect on click.
-                        $this
-                            .removeAttr('href')
-                            .css('cursor', 'pointer')
-                            .on('click', function(event) {
-
-                                event.preventDefault();
-                                event.stopPropagation();
-
-                                window.location.href = href;
-
-                            });
-
-                });
-
         // Footer.
             var $footer = $('#footer');
 
