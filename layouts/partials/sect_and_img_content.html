@@ -1,0 +1,180 @@
+<div id="main">
+    <div class="flexrow">
+
+    {{- /* Things in site config */}}
+    {{- $column_count := default 2 ($.Param "column_count") }}
+    {{- $thumb_width := default 480 ($.Param "thumb_width") }}
+    {{- $full_width := default 960 ($.Param "full_width") }}
+    {{- $thumb_quality := default 50 ($.Param "thumb_quality") }}
+    {{- $full_quality := default 90 ($.Param "full_quality") }}
+    {{- $filename_as_phototitle := default false ($.Param "filename_as_phototitle") }}
+    {{- $downloadable := default true ($.Param "images_downloadable") }}
+
+    {{- $thumb_size := printf "%dx q%d" $thumb_width $thumb_quality }}
+    {{- $full_size := printf "%dx q%d" $full_width $full_quality }}
+
+    {{- /* Build the list of sections and thumbnails */}}
+    {{- $.Scratch.Set "sections" (slice) }}
+    {{- range .Sections.ByDate }}
+        {{- $title := .Title }}
+        {{- $link := .RelPermalink }}
+
+        {{- /* The path we need under the assets directory */}}
+        {{- $imgpath := path.Join .Params.albumthumb }}
+
+        {{- $.Scratch.Delete "image" }}
+
+        {{- /* If no albumthumb is set, get the first image*/}}
+        {{- if or (not (isset .Params "albumthumb")) (eq .Params.albumthumb "") }}
+            {{- $imgglob := printf "%s" (path.Join .File.Dir "**") }}
+            {{- $imageresources := where (resources.Match $imgglob) "ResourceType" "image" }}
+            {{- $.Scratch.Set "image" (index $imageresources 0) }}
+        {{- end }}
+
+        {{- /* Otherwise get the albumthumb*/}}
+        {{- with .Params.albumthumb }}
+            {{- $image := resources.Get $imgpath }}
+            {{- $.Scratch.Set "image" $image }}
+        {{- end }}
+
+        {{- $image := $.Scratch.Get "image" }}
+        {{- if not $image }}
+            {{- errorf (printf "When processing '%s', no thumbnail image found for: %s" $.Page.File.Path $title) }}
+        {{- else }}
+            {{- $thumb := $image.Resize $thumb_size }}
+            {{- $new_sect := dict "type" "sect" "title" $title "link" $link "thumb" $thumb }}
+
+            {{- $sections := $.Scratch.Get "sections" }}
+            {{- $sections := $sections | append $new_sect }}
+            {{- $.Scratch.Set "sections" $sections }}
+        {{- end }}
+    {{- end }}
+    {{- $sections := $.Scratch.Get "sections" }}
+
+    {{- /* Get and reorder the list of images */}}
+    {{- $imgglob := printf "%s" (path.Join .File.Dir "*") }}
+    {{- $imageresources := where (resources.Match $imgglob) "ResourceType" "image" }}
+    {{- $TODO_DELETE_images := $imageresources }}
+
+    {{- /* Build some image objects */}}
+    {{- $.Scratch.Set "images" (slice) }}
+    {{- range $elem_index, $elem_val := $imageresources }}
+
+        {{- /* Build some scratch for upcoming search... */}}
+        {{- $img_dat := newScratch }}
+        {{- $img_dat.Set "alt" "" }}
+        {{- $img_dat.Set "description" "" }}
+
+        {{- if $filename_as_phototitle }}
+            {{- $filename := replace (path.Base $elem_val.Name) (path.Ext $elem_val.Name) "" }}
+            {{- $img_dat.Set "phototitle" (humanize $filename) }}
+        {{- else }}
+            {{- $img_dat.Set "phototitle" "" }}
+        {{- end }}
+
+        {{- /* Search the resources for a matching image src, save off details */}}
+        {{- $img_path := $elem_val.Name }}
+        {{- with $.Params.resources }}
+            {{- range first 1 (where . "src" $img_path) }}
+                {{- if isset . "alt" }}{{ $img_dat.Set "alt" .alt }}{{ end }}
+                {{- if isset . "phototitle" }}{{ $img_dat.Set "phototitle" .phototitle }}{{ end }}
+                {{- if isset . "description" }}{{ $img_dat.Set "description" .description }}{{ end }}
+            {{- end }}
+        {{- end }}
+
+        {{- /* Save off the image object */}}
+        {{- $alt := $img_dat.Get "alt" }}
+        {{- $phototitle := $img_dat.Get "phototitle" }}
+        {{- $description := $img_dat.Get "description" }}
+        {{- $thumb := $elem_val.Resize $thumb_size }}
+        {{- $full := $elem_val.Resize $full_size }}
+
+        {{- $new_img := dict "type" "image" "index" $elem_index "image" $elem_val "thumb" $thumb "full" $full "alt" $alt "phototitle" $phototitle "description" $description }}
+
+        {{- $images := $.Scratch.Get "images" }}
+        {{- $images := $images | append $new_img }}
+        {{- $.Scratch.Set "images" $images }}
+    {{- end }}
+    {{- $images := $.Scratch.Get "images" }}
+
+    {{- /* Initialize the column storage */}}
+    {{- range $column_ind := seq $column_count }}
+        {{- $st_name := printf "col-%d" $column_ind }}
+        {{- $st_height_name := printf "col-height-%d" $column_ind }}
+        {{- $.Scratch.Set $st_name (slice) }}
+        {{- $.Scratch.Set $st_height_name 0 }}
+    {{- end }}
+
+
+    {{- /* Add the sections into the columns followed by images */}}
+    {{- range $elem_index, $elem_val := ($sections | append $images)}}
+        {{- /* Find the least-filled column */}}
+        {{- $.Scratch.Set "min_height" -1 }}
+        {{- $.Scratch.Set "min_col" -1 }}
+        {{- range $column_ind := seq $column_count }}
+            {{- $st_height_name := printf "col-height-%d" $column_ind }}
+            {{- $col_height := $.Scratch.Get $st_height_name }}
+            {{- $min_height := $.Scratch.Get "min_height" }}
+            {{- if (or (eq $min_height -1) (lt $col_height $min_height)) }}
+                {{- $.Scratch.Set "min_height" $col_height }}
+                {{- $.Scratch.Set "min_col" $column_ind }}
+            {{- end }}
+        {{- end }}
+
+        {{- /* column_ind becomes the least-filled column */}}
+        {{- $column_ind := $.Scratch.Get "min_col" }}
+        {{- if eq $column_ind -1 }}
+            {{- errorf (printf "When processing '%s', failed to find a least-filled column!" $.Page.File.Path) }}
+        {{- end }}
+        {{- $st_name := printf "col-%d" $column_ind }}
+        {{- $st_height_name := printf "col-height-%d" $column_ind }}
+
+        {{- $column := $.Scratch.Get $st_name }}
+        {{- $column := $column | append $elem_val }}
+        {{- $.Scratch.Set $st_name $column }}
+
+        {{- $.Scratch.Set $st_height_name (add ($.Scratch.Get $st_height_name) $elem_val.thumb.Height) }}
+    {{- end }}
+
+    {{- /* Output the images in columns */}}
+    {{- range $column_ind := seq $column_count }}
+        {{- $st_name := printf "col-%d" $column_ind }}
+        {{- $column := $.Scratch.Get $st_name }}
+        <div class="flexcol">
+        {{- range $column }}
+
+            <article class="thumb">
+                {{- if (eq .type "sect") }}
+                    <a href="{{ .link }}" class="link" tabindex="0"><img src="{{ .thumb.RelPermalink }}" alt="{{ .title }}" /></a>
+                    <h2>{{ .title }}</h2>
+                {{- else }}
+                    <a class="gallery-item" phototitle="{{ .phototitle }}"
+                            description="{{ .description }}"
+                            gallery_index="{{ .index }}"
+                            id="image_number_{{ .index }}"
+                            downloadable="{{ cond $downloadable "true" "false" }}"
+                            orig_name="{{ path.Base .image.Name }}"
+                            href="{{ .full.RelPermalink }}">
+                        <img src="{{ .thumb.RelPermalink }}"
+                            {{ with .alt }} alt="{{ . }}"{{ end }}>
+                    </a>
+                    <h2>{{ .phototitle }}</h2>
+                {{- end }}
+            </article>
+        {{- end }}
+        </div>
+    {{- end }}
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+

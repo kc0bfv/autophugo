@@ -1,0 +1,31 @@
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="keywords" content="{{ with .Site.Params.keywords }}{{ . }}{{ end }}">
+
+{{ $description := $.Param "description" }}
+{{- with $description }}<meta name="description" content="{{ . }}">{{ end }}
+{{ $author := .Params.author.name | default .Site.Author.name }}
+{{- with $author }}<meta name="author" content="{{ . }}">{{ end }}
+<link rel="icon" href="{{ .Site.Params.favicon | relURL }}">
+<link rel="shortcut icon" href="{{ .Site.Params.favicon | relURL }}">
+
+{{- template "_internal/opengraph.html" . }}
+{{- template "_internal/twitter_cards.html" . }}
+<meta name="robots" content="index,follow">
+<meta name="referrer" content="origin-when-cross-origin">
+{{ with .Site.Params.googlesiteverification }}<meta name="google-site-verification" content="{{ . }}">{{ end }}
+{{ with .Site.Params.msvalidate }}<meta name="msvalidate.01" content="{{ . }}">{{ end }}
+{{ hugo.Generator }}
+{{ with .OutputFormats.Get "RSS" }}
+<link href="{{ .RelPermalink }}" rel="alternate" type="application/rss+xml" title="{{ $.Site.Title }}" />
+<link href="{{ .RelPermalink }}" rel="feed" type="application/rss+xml" title="{{ $.Site.Title }}" />
+{{ end }}
+
+{{ template "_internal/google_analytics_async.html" . }}
+
+{{- $font_awesome := resources.Get "css/font-awesome.min.css" -}}
+{{- $google_font := resources.Get "css/source-sans-pro.css" -}}
+{{- $main_css := resources.Get "css/main.css" -}}
+{{- $mg_pop_css := resources.Get "css/magnific-popup.css" -}}
+{{- $custom_css := slice $font_awesome $google_font $main_css $mg_pop_css | resources.Concat "css/custom.css" | resources.Minify | resources.Fingerprint -}}
+<link rel="stylesheet" href="{{ $custom_css.RelPermalink }}" integrity="{{ $custom_css.Data.Integrity }}"/>

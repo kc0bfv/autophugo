@@ -1,0 +1,7 @@
+{{- $jquery := resources.Get "js/jquery.min.js" -}}
+{{- $mg_pop := resources.Get "js/jquery.magnific-popup.js" -}}
+{{- $skel := resources.Get "js/skel.min.js" -}}
+{{- $main := resources.Get "js/main.js" -}}
+{{- $util := resources.Get "js/util.js" -}}
+{{- $custom_js := slice $jquery $mg_pop $skel $main $util | resources.Concat "js/custom.js" | resources.Minify | resources.Fingerprint -}}
+<script src="{{ $custom_js.RelPermalink }}" integrity="{{ $custom_js.Data.Integrity }}"></script>
