@@ -19,6 +19,8 @@ Preview at <https://kc0bfv.github.io/autophugo>
 
 **PLEASE NOTE**
 
+On 10 Jul 2021 clicking an image now updates the location bar hash (fragment id).  That way, the URL represents the open image too...  This required some javascript changes.  If these cause a problem for you, please let me know so I can make changes to this functionality.
+
 On 23 Jan 2020 subalbum and noalbum support no longer requires specifying a `type` in the metadata.  Furthermore, images and subalbums can be mixed within albums - including on the homepage (although mixing can be confusing for users).  Simply build an `assets` directory structure by placing images and directories wherever you want, then mirror the directory structure in `content`.
 
 On 19 Dec 2020 `albumthumb` file paths work differently.  You must specify the path relative to the assets directory.  So - where before the `fish/_index.md` example content specified `fish_02.jpg` as the `albumthumb`, now it specifies `fish/fish_02.jpg`.  I apologize for the breaking change, but it really should've worked this way from the start.  It brings things in-line with the resources src, and the subalbum path specifications.
