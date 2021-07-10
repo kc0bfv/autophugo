@@ -302,10 +302,10 @@
                                     '"><i class="fa fa-download"></i></a></div>' +
                                     '<div class="caption-surround">';
                             }
-                            if( item.el.attr("phototitle") ) {
+                            if( item.el.attr("phototitle") != "" ) {
                                 caption += "<h2>" + item.el.attr("phototitle") + "</h2>";
                             }
-                            if( item.el.attr("description") ) {
+                            if( item.el.attr("description") != "" ) {
                                 caption += '<p class="description">' +
                                     item.el.attr("description") + "</p>";
                             }
