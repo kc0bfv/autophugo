@@ -151,6 +151,7 @@
                     <a class="gallery-item" phototitle="{{ .phototitle }}"
                             description="{{ .description }}"
                             gallery_index="{{ .index }}"
+                            id="image_number_{{ .index }}"
                             downloadable="{{ cond $downloadable "true" "false" }}"
                             orig_name="{{ path.Base .image.Name }}"
                             href="{{ .full.RelPermalink }}">

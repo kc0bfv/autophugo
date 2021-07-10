@@ -288,7 +288,45 @@
                         enabled:true,
                         arrowMarkup: '<button title="%title%" class="nav-%dir%"></button>',
                     },
+                    callbacks: {
+                        change: function() {
+                            window.location.hash = this.currItem.el.attr("id");
+                        },
+                        close: function() {
+                            window.location.hash = "";
+                        },
+                    },
                 });
+
+                // If there's a fragment id, see if it's an image index
+                // If it is, and it's really a gallery_item then click on it
+                let click_hash = function () {
+                    let fid = $(window.location.hash);
+                    if( fid.length == 1 && fid[0].classList.contains("gallery-item") ) {
+                        let curr_item = $.magnificPopup.instance.currItem;
+                        if( curr_item &&
+                            curr_item.el.attr("id") == fid[0].id )
+                        {
+                            // Nothing needs to happen in this case...
+                        } else
+                        {
+                            // Otherwise we need to update the popup, so click it
+                            fid.click();
+                        }
+                    } else {
+                        // Here there was an invalid hash...
+                        $.magnificPopup.close();
+                        window.location.hash = "";
+                    }
+                }
+
+                // Check the fragment id at load
+                if( window.location.hash != "" ) {
+                    click_hash();
+                }
+
+                // Check the fragment id on hashchange
+                $(window).on("hashchange", click_hash);
     });
 
 })(jQuery);
