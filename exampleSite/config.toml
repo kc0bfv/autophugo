@@ -22,6 +22,7 @@ disableKinds = ["taxonomy", "taxonomyTerm"]
     #full_quality = 90
     #column_count = 2
     #breadcrumb_use_title = false
+    #filename_as_phototitle = false
     
     # Headerbar links
     # Do not put too many links here,

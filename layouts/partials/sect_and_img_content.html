@@ -7,6 +7,7 @@
     {{- $full_width := default 960 ($.Param "full_width") }}
     {{- $thumb_quality := default 50 ($.Param "thumb_quality") }}
     {{- $full_quality := default 90 ($.Param "full_quality") }}
+    {{- $filename_as_phototitle := default false ($.Param "filename_as_phototitle") }}
 
     {{- $thumb_size := printf "%dx q%d" $thumb_width $thumb_quality }}
     {{- $full_size := printf "%dx q%d" $full_width $full_quality }}
@@ -61,8 +62,14 @@
         {{- /* Build some scratch for upcoming search... */}}
         {{- $img_dat := newScratch }}
         {{- $img_dat.Set "alt" "" }}
-        {{- $img_dat.Set "phototitle" "" }}
         {{- $img_dat.Set "description" "" }}
+
+        {{- if $filename_as_phototitle }}
+            {{- $filename := replace (path.Base $elem_val.Name) (path.Ext $elem_val.Name) "" }}
+            {{- $img_dat.Set "phototitle" (humanize $filename) }}
+        {{- else }}
+            {{- $img_dat.Set "phototitle" "" }}
+        {{- end }}
 
         {{- /* Search the resources for a matching image src, save off details */}}
         {{- $img_path := $elem_val.Name }}
