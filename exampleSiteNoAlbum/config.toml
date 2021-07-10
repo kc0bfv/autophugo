@@ -22,6 +22,7 @@ disableKinds = ["taxonomy", "taxonomyTerm"]
     #full_quality = 90
     #column_count = 2
     #filename_as_phototitle = false
+    #images_downloadable = true
     
     # Headerbar links
     # Do not put here too many links,

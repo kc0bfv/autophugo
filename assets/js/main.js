@@ -293,16 +293,19 @@
                     type: "image",
                     image: {
                         titleSrc: function(item) {
-                            let caption = '<div title="Download" ' +
-                                'class="download-button"><a href="' +
-                                item.el.attr("href") + '" download="' +
-                                item.el.attr("orig_name") +
-                                '"><i class="fa fa-download"></i></a></div>' +
-                                '<div class="caption-surround">';
-                            if( item.el.attr("phototitle") ) {
+                            let caption = '';
+                            if(item.el.attr("downloadable") == "true"){
+                                caption += '<div title="Download" ' +
+                                    'class="download-button"><a href="' +
+                                    item.el.attr("href") + '" download="' +
+                                    item.el.attr("orig_name") +
+                                    '"><i class="fa fa-download"></i></a></div>' +
+                                    '<div class="caption-surround">';
+                            }
+                            if( item.el.attr("phototitle") != "" ) {
                                 caption += "<h2>" + item.el.attr("phototitle") + "</h2>";
                             }
-                            if( item.el.attr("description") ) {
+                            if( item.el.attr("description") != "" ) {
                                 caption += '<p class="description">' +
                                     item.el.attr("description") + "</p>";
                             }

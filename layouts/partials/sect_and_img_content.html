@@ -8,6 +8,7 @@
     {{- $thumb_quality := default 50 ($.Param "thumb_quality") }}
     {{- $full_quality := default 90 ($.Param "full_quality") }}
     {{- $filename_as_phototitle := default false ($.Param "filename_as_phototitle") }}
+    {{- $downloadable := default true ($.Param "images_downloadable") }}
 
     {{- $thumb_size := printf "%dx q%d" $thumb_width $thumb_quality }}
     {{- $full_size := printf "%dx q%d" $full_width $full_quality }}
@@ -149,8 +150,9 @@
                 {{- else }}
                     <a class="gallery-item" phototitle="{{ .phototitle }}"
                             description="{{ .description }}"
-                            orig_name="{{ path.Base .image.Name }}"
                             gallery_index="{{ .index }}"
+                            downloadable="{{ cond $downloadable "true" "false" }}"
+                            orig_name="{{ path.Base .image.Name }}"
                             href="{{ .full.RelPermalink }}">
                         <img src="{{ .thumb.RelPermalink }}"
                             {{ with .alt }} alt="{{ . }}"{{ end }}>
