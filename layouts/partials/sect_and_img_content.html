@@ -52,7 +52,11 @@
     {{- $sections := $.Scratch.Get "sections" }}
 
     {{- /* Get and reorder the list of images */}}
-    {{- $imgglob := printf "%s" (path.Join .File.Dir "*") }}
+    {{- if .File }}
+        {{- $imgglob := printf "%s" (path.Join .File.Dir "*") }}
+        {{- $.Scratch.Set "imgglob" $imgglob }}
+    {{- end }}
+    {{- $imgglob := default "*" ($.Scratch.Get "imgglob") }}
     {{- $imageresources := where (resources.Match $imgglob) "ResourceType" "image" }}
     {{- $TODO_DELETE_images := $imageresources }}
 
