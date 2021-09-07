@@ -19,9 +19,6 @@
         {{- $title := .Title }}
         {{- $link := .RelPermalink }}
 
-        {{- /* The path we need under the assets directory */}}
-        {{- $imgpath := path.Join .Params.albumthumb }}
-
         {{- $.Scratch.Delete "image" }}
 
         {{- /* If no albumthumb is set, get the first image*/}}
@@ -33,7 +30,7 @@
 
         {{- /* Otherwise get the albumthumb*/}}
         {{- with .Params.albumthumb }}
-            {{- $image := resources.Get $imgpath }}
+            {{- $image := resources.Get . }}
             {{- $.Scratch.Set "image" $image }}
         {{- end }}
 
