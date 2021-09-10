@@ -125,6 +125,14 @@ You can place images and subalbums together - the `assets` directory would conta
 
 **Watch out!**  This is likely to be confusing to users though.  There's no default delineation when these mixed albums are displayed.  Subalbums display towards the top, and images lower - but otherwise a user will have no clear idea what will happen when they click an image.  Will it display full-sized, or will it open a subalbum?
 
+## Using Custom Weights
+
+When using custom weights (`sort_by_weight: true`) at section level be mindful that Hugo treats a weight of 0 as undefined. This means that an asset with weight 0 is sorted AFTER any non-null weight, positive or negative.
+
+At resource level, the sort order is as expected, with any `weight: 0` resourse sorted below negative and above positive weights.
+
+Setting `sort_by_weight: true` but not specifying any weights (or `weight: 0` only) currently results in the same sort order than `sort_by_weight: false`, but should be avoided to avoid surprises later.
+
 ## Building the Site
 
 Run `hugo` to build your site.  Output will be placed in the `public` directory.  The original images will not be included - only the resized versions.
