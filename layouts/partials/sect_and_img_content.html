@@ -9,13 +9,14 @@
     {{- $full_quality := default 90 ($.Param "full_quality") }}
     {{- $filename_as_phototitle := default false ($.Param "filename_as_phototitle") }}
     {{- $downloadable := default true ($.Param "images_downloadable") }}
+    {{- $sort_by_weight := default true ($.Param "sort_by_weight") }}
 
     {{- $thumb_size := printf "%dx q%d" $thumb_width $thumb_quality }}
     {{- $full_size := printf "%dx q%d" $full_width $full_quality }}
 
     {{- /* Build the list of sections and thumbnails */}}
     {{- $.Scratch.Set "sections" (slice) }}
-    {{- range .Sections.ByDate }}
+    {{- range cond $sort_by_weight .Sections.ByWeight .Sections.ByDate }}
         {{- $title := .Title }}
         {{- $link := .RelPermalink }}
 
@@ -53,6 +54,7 @@
         {{- $img_dat := newScratch }}
         {{- $img_dat.Set "alt" "" }}
         {{- $img_dat.Set "description" "" }}
+        {{- $img_dat.Set "weight" 0 }}
 
         {{- if $filename_as_phototitle }}
             {{- $filename := replace (path.Base $elem_val.Name) (path.Ext $elem_val.Name) "" }}
@@ -68,6 +70,7 @@
                 {{- if isset . "alt" }}{{ $img_dat.Set "alt" .alt }}{{ end }}
                 {{- if isset . "phototitle" }}{{ $img_dat.Set "phototitle" .phototitle }}{{ end }}
                 {{- if isset . "description" }}{{ $img_dat.Set "description" .description }}{{ end }}
+                {{- if isset . "weight" }}{{ $img_dat.Set "weight" .weight }}{{ end }}
             {{- end }}
         {{- end }}
 
@@ -75,14 +78,19 @@
         {{- $alt := $img_dat.Get "alt" }}
         {{- $phototitle := $img_dat.Get "phototitle" }}
         {{- $description := $img_dat.Get "description" }}
+        {{- $weight := $img_dat.Get "weight" }}
         {{- $thumb := $elem_val.Resize $thumb_size }}
         {{- $full := $elem_val.Resize $full_size }}
 
-        {{- $new_img := dict "type" "image" "index" $elem_index "image" $elem_val "thumb" $thumb "full" $full "alt" $alt "phototitle" $phototitle "description" $description }}
+        {{- $new_img := dict "type" "image" "index" $elem_index "image" $elem_val "thumb" $thumb "full" $full "alt" $alt "phototitle" $phototitle "description" $description "weight" $weight }}
 
         {{- $images := $.Scratch.Get "images" }}
         {{- $images := $images | append $new_img }}
         {{- $.Scratch.Set "images" $images }}
+    {{- end }}
+    {{- /* Image list is complete, now resort if necessary */}}
+    {{- if $sort_by_weight }}
+        {{- $.Scratch.Set "images" (sort ($.Scratch.Get "images") "weight") }}
     {{- end }}
     {{- $images := $.Scratch.Get "images" }}
 
