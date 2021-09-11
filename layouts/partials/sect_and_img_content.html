@@ -142,7 +142,7 @@
         {{- $column := $.Scratch.Get $st_name }}
         <div class="flexcol">
         {{- range $column }}
-
+            {{- $filename := path.Base .image.Name }}
             <article class="thumb">
                 {{- if (eq .type "sect") }}
                     <a href="{{ .link }}" class="link" tabindex="0"><img src="{{ .thumb.RelPermalink }}" alt="{{ .title }}" /></a>
@@ -151,9 +151,9 @@
                     <a class="gallery-item" phototitle="{{ .phototitle }}"
                             description="{{ .description }}"
                             gallery_index="{{ .index }}"
-                            id="image_number_{{ .index }}"
+                            id="{{ md5 $filename }}"
                             downloadable="{{ cond $downloadable "true" "false" }}"
-                            orig_name="{{ path.Base .image.Name }}"
+                            orig_name="{{ $filename }}"
                             href="{{ .full.RelPermalink }}">
                         <img src="{{ .thumb.RelPermalink }}"
                             {{ with .alt }} alt="{{ . }}"{{ end }}>
