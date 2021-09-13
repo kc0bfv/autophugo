@@ -1,0 +1,24 @@
+{{- /*
+    Sets retalbumthumb in .Scratch to the correct albumthumb.
+    PLEASE NOTE: partials can only get local "dot" . context, they
+    do not get the global $ context.  Therefore, you must get the returned
+    scratch data from the . context, not from $.
+
+    Requires . to be set to the right section.
+    */}}
+
+{{- .Scratch.Delete "retalbumthumb" }}
+
+{{- /* If no albumthumb is set, get the first image*/}}
+{{- if or (not (isset .Params "albumthumb")) (eq .Params.albumthumb "") }}
+    {{- $imgglob := printf "%s" (path.Join .File.Dir "**") }}
+    {{- $imageresources := where (resources.Match $imgglob) "ResourceType" "image" }}
+    {{- .Scratch.Set "retalbumthumb" (index $imageresources 0) }}
+{{- end }}
+
+{{- /* Otherwise get the albumthumb*/}}
+{{- with .Params.albumthumb }}
+    {{- $image := resources.Get . }}
+    {{- /* The $ here with Scratch means the context outside the with */}}
+    {{- $.Scratch.Set "retalbumthumb" $image }}
+{{- end }}

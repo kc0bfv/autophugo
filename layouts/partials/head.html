@@ -9,17 +9,12 @@
 <link rel="icon" href="{{ .Site.Params.favicon | relURL }}">
 <link rel="shortcut icon" href="{{ .Site.Params.favicon | relURL }}">
 
-{{- template "_internal/opengraph.html" . }}
-{{- template "_internal/twitter_cards.html" . }}
-{{- if not .Params.images }}
-    {{- with .Params.albumthumb }}
-        {{- /* Manually add preview from albumthumb if internal tmplate misses it */}}
-        {{- $image := resources.Get . }}
-        <meta property="og:image" content="{{ $image.Permalink }}">
-        <meta name="twitter:card" content="summary_large_image">
-        <meta name="twitter:image" content="{{ $image.Permalink }}">
-    {{- end }}
-{{- end }}
+{{- partial "scratch_set_retalbumthumb.html" . }}
+{{- /* Note that the Scratch below must come from . context, not $ */}}
+{{- .Scratch.Set "image" (.Scratch.Get "retalbumthumb") }}
+
+{{- partial "opengraph_twittercard.html" . }}
+
 <meta name="robots" content="index,follow">
 <meta name="referrer" content="origin-when-cross-origin">
 {{ with .Site.Params.googlesiteverification }}<meta name="google-site-verification" content="{{ . }}">{{ end }}

@@ -19,22 +19,10 @@
         {{- $title := .Title }}
         {{- $link := .RelPermalink }}
 
-        {{- $.Scratch.Delete "image" }}
+        {{- partial "scratch_set_retalbumthumb.html" . }}
+        {{- /* Note that the Scratch below must come from . context, not $ */}}
+        {{- $image := .Scratch.Get "retalbumthumb" }}
 
-        {{- /* If no albumthumb is set, get the first image*/}}
-        {{- if or (not (isset .Params "albumthumb")) (eq .Params.albumthumb "") }}
-            {{- $imgglob := printf "%s" (path.Join .File.Dir "**") }}
-            {{- $imageresources := where (resources.Match $imgglob) "ResourceType" "image" }}
-            {{- $.Scratch.Set "image" (index $imageresources 0) }}
-        {{- end }}
-
-        {{- /* Otherwise get the albumthumb*/}}
-        {{- with .Params.albumthumb }}
-            {{- $image := resources.Get . }}
-            {{- $.Scratch.Set "image" $image }}
-        {{- end }}
-
-        {{- $image := $.Scratch.Get "image" }}
         {{- if not $image }}
             {{- errorf (printf "When processing '%s', no thumbnail image found for: %s" $.Page.File.Path $title) }}
         {{- else }}

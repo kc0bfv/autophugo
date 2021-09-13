@@ -1,0 +1,19 @@
+{{- $description := $.Param "description" }}
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="{{ (.Scratch.Get "image").Permalink }}"/>
+<meta name="twitter:title" content="{{ with .Title }}{{ . }} - {{ end }}{{ .Site.Title }}"/>
+{{- with $description }}<meta name="twitter:description" content="{{ . }}">{{ end }}
+{{- with .Site.Social.twitter }}<meta name="twitter:site" content="@{{ . }}"/>{{- end }}
+
+
+<meta property="og:title" content="{{ with .Title }}{{ . }} - {{ end }}{{ .Site.Title }}"/>
+{{- with $description }}<meta property="og:description" content="{{ . }}">{{ end }}
+<meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}" />
+<meta property="og:url" content="{{ .Permalink }}" />
+<meta property="og:image" content="{{ (.Scratch.Get "image").Permalink }}"/>
+{{- with .Params.locale }}<meta property="og:locale" content="{{ . }}" />{{ end }}
+{{- with .Site.Title }}<meta property="og:site_name" content="{{ . }}" />{{ end }}
+
+{{- /* Facebook Page Admin ID for Domain Insights */}}
+{{- with .Site.Social.facebook_admin }}<meta property="fb:admins" content="{{ . }}" />{{ end }}
