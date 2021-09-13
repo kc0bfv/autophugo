@@ -11,7 +11,10 @@
 
 {{- /* If no albumthumb is set, get the first image*/}}
 {{- if or (not (isset .Params "albumthumb")) (eq .Params.albumthumb "") }}
-    {{- $imgglob := printf "%s" (path.Join .File.Dir "**") }}
+    {{- with .File }}
+        {{- $.Scratch.Set "imgglob" (printf "%s" (path.Join .Dir "**")) }}
+    {{- end }}
+    {{- $imgglob := default "**" ($.Scratch.Get "imgglob") }}
     {{- $imageresources := where (resources.Match $imgglob) "ResourceType" "image" }}
     {{- .Scratch.Set "retalbumthumb" (index $imageresources 0) }}
 {{- end }}
