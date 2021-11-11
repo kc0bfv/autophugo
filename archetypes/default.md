@@ -1,5 +1,5 @@
 ---
-{{- $imgglob := printf "*%s" (path.Join .File.Dir "**") -}}
+{{- $imgglob := printf "*%s" (path.Join .File.Dir "*") -}}
 {{- $resources := where (resources.Match $imgglob) "ResourceType" "image" }}
 title: "{{ replace .Name "-" " " | title }}"
 date: {{ .Date }}
