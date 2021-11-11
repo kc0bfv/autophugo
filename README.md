@@ -45,8 +45,6 @@ The `exampleSite` demonstrates the features unique to this theme.  In your site 
 * `breadcrumb_use_title` - if true, breadcrumbs (the path-like display at the bottom) will use page titles instead of paths
 * `filename_as_phototitle` - if true, a humanized form of the filename will be used as the phototitle (default false)
 * `images_downloadable` - if true, images have a download button (default true)
-* `sort_by_weight` - resources are sorted by weights which are specified explicitly in the page bundle resource (default false)
-
 
 Additionally, `Author.name` and `Author.email` in the site config will display as the author and webmaster email.
 
@@ -127,11 +125,7 @@ You can place images and subalbums together - the `assets` directory would conta
 
 ## Using Custom Weights
 
-When using custom weights (`sort_by_weight: true`) at section level be mindful that Hugo treats a weight of 0 as undefined. This means that an asset with weight 0 is sorted AFTER any non-null weight, positive or negative.
-
-At resource level, the sort order is as expected, with any `weight: 0` resourse sorted below negative and above positive weights.
-
-Setting `sort_by_weight: true` but not specifying any weights (or `weight: 0` only) currently results in the same sort order than `sort_by_weight: false`, but should be avoided to avoid surprises later.
+Default sorting for subalbums and images sorts by weight.  For subalbums with the same weight it sorts by date, and for images with the same weight it sorts by filename.  If you don't specify a weight for an item, the default is 0.  Therefore - if you don't set any weights you'll sort by date...  Lower weights come first so negative weights get sorted before unspecified weights and positive ones.
 
 ## Building the Site
 

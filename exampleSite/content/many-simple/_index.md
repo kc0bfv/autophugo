@@ -1,6 +1,7 @@
 ---
 title: "Many Simple Images"
-date: 2020-12-21T12:11:50-06:00
+date: 2019-12-21T12:11:50-06:00
+weight: 1
 albumthumb: "many-simple/Jamestown.gif"
 draft: false
 ## Optional additional meta info for resources list
