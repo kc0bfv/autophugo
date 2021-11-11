@@ -141,6 +141,10 @@ If you try multiple sizes or quality settings for your images, you'll start to a
 
 Regardless of the number of resources you have, Hugo will only deploy the ones actually used in a build.  Unused image resources will not be deployed.
 
+## Advanced Features
+
+Image resizing: normally you specify `thumb_width` and `full_width` in your configuration, and the qualities, to modify how Autophugo scales your images.  Autophugo uses these values to build a string for Hugo's Resize function.  You can specify that string directly though...  Set `thumb_size` or `full_size` directly in your config to bypass the other ones.  The format of the string is [documented here](https://gohugo.io/content-management/image-processing/).
+
 ## Comparison to Phugo
 
 Unfortunately the [original Phugo](https://github.com/aerohub/phugo) hasn't been updated in a while, and was dropped from common theme lists.  AutoPhugo implements the pull requests over on Phugo, causing it to work error-free on modern Hugo.  Further, it sets standardized column layout, automatically builds albums based on files alone (Phugo required entering each filename as a shortcode), and automatically resizes photos for display and thumbnail.  Plus, subalbums.
