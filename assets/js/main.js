@@ -302,7 +302,12 @@
                 // If it is, and it's really a gallery_item then click on it
                 let click_hash = function () {
                     let fid = $(window.location.hash);
-                    if( fid.length == 1 && fid[0].classList.contains("gallery-item") ) {
+                    if( fid.length == 1 &&
+                        (
+                            fid[0].classList.contains("gallery-item") ||
+                            fid[0].classList.contains("gallery-item-marker")
+                        )
+                    ) {
                         let curr_item = $.magnificPopup.instance.currItem;
                         if( curr_item &&
                             curr_item.el.attr("id") == fid[0].id )

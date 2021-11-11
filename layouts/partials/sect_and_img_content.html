@@ -153,6 +153,7 @@
                             downloadable="{{ cond $downloadable "true" "false" }}"
                             orig_name="{{ $filename }}"
                             href="{{ .full.RelPermalink }}">
+                        <div id="image_number_{{ .index }}" class="gallery-item-marker"></div>
                         <img src="{{ .thumb.RelPermalink }}"
                             {{ with .alt }} alt="{{ . }}"{{ end }}>
                     </a>
