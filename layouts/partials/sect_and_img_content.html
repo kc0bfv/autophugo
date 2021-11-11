@@ -10,19 +10,9 @@
     {{- $filename_as_phototitle := default false ($.Param "filename_as_phototitle") }}
     {{- $downloadable := default true ($.Param "images_downloadable") }}
 
-    {{- /* Calculate thumb_size string from params unless a finished string is provided in the config. */}}
-    {{- $.Scratch.Set "thumb_size" (default "" ($.Param "thumb_size")) }}
-    {{ if  (eq  ($.Scratch.Get "thumb_size") "") }}
-        {{- $.Scratch.Set "thumb_size" (printf "%dx q%d" $thumb_width $thumb_quality) }}
-    {{ end }}
-    {{- $thumb_size := $.Scratch.Get "thumb_size" }}
-
-    {{- /* Same for full_size string */}}
-    {{- $.Scratch.Set "full_size" (default "" ($.Param "full_size")) }}
-    {{ if  (eq  ($.Scratch.Get "full_size") "") }}
-        {{- $.Scratch.Set "full_size" (printf "%dx q%d" $full_width $full_quality) }}
-    {{ end }}
-    {{- $full_size := $.Scratch.Get "full_size" }}
+    {{- /* Calculate thumb_ and full_size from params, unless one is provided in the config. */}}
+    {{- $thumb_size := default (printf "%dx q%d" $thumb_width $thumb_quality) ($.Param "thumb_size") }}
+    {{- $full_size := default (printf "%dx q%d" $full_width $full_quality) ($.Param "full_size") }}
 
     {{- /* Build the list of sections and thumbnails */}}
     {{- $.Scratch.Set "sections" (slice) }}
