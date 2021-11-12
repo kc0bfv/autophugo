@@ -21,11 +21,13 @@ disableKinds = ["taxonomy", "taxonomyTerm"]
     #full_width = 960
     #full_quality = 90
     #column_count = 2
+    #breadcrumb_use_title = false
     #filename_as_phototitle = false
     #images_downloadable = true
+    #images_downloadable_use_orig = false
 
     # Headerbar links
-    # Do not put here too many links,
+    # Do not put too many links here,
     # it will break mobile appearance
 
     [[params.header.links]]

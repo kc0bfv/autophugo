@@ -45,6 +45,7 @@ The `exampleSite` demonstrates the features unique to this theme.  In your site 
 * `breadcrumb_use_title` - if true, breadcrumbs (the path-like display at the bottom) will use page titles instead of paths
 * `filename_as_phototitle` - if true, a humanized form of the filename will be used as the phototitle (default false)
 * `images_downloadable` - if true, images have a download button (default true)
+* `images_downloadable_use_orig` - if true, the download button will download the original image instead of the full size image - this will likely greatly increase the size of your site (default false)
 
 Additionally, `Author.name` and `Author.email` in the site config will display as the author and webmaster email.
 

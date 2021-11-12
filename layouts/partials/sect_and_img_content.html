@@ -9,6 +9,7 @@
     {{- $full_quality := default 90 ($.Param "full_quality") }}
     {{- $filename_as_phototitle := default false ($.Param "filename_as_phototitle") }}
     {{- $downloadable := default true ($.Param "images_downloadable") }}
+    {{- $orig_download := default false ($.Param "images_downloadable_use_orig") }}
 
     {{- /* Calculate thumb_ and full_size from params, unless one is provided in the config. */}}
     {{- $thumb_size := default (printf "%dx q%d" $thumb_width $thumb_quality) ($.Param "thumb_size") }}
@@ -85,7 +86,7 @@
         {{- $thumb := $elem_val.Resize $thumb_size }}
         {{- $full := $elem_val.Resize $full_size }}
 
-        {{- $new_img := dict "type" "image" "index" $elem_index "image" $elem_val "thumb" $thumb "full" $full "alt" $alt "phototitle" $phototitle "description" $description "weight" $weight }}
+        {{- $new_img := dict "type" "image" "index" $elem_index "image" $elem_val "thumb" $thumb "full" $full "alt" $alt "phototitle" $phototitle "description" $description "weight" $weight  "orig" $elem_val }}
 
         {{- $images := $.Scratch.Get "images" }}
         {{- $images := $images | append $new_img }}
@@ -151,6 +152,9 @@
                             gallery_index="{{ .index }}"
                             id="{{ md5 $filename }}"
                             downloadable="{{ cond $downloadable "true" "false" }}"
+                            {{- if $downloadable }}
+                                download_file="{{ (cond $orig_download .orig .full).RelPermalink }}"
+                            {{- end }}
                             orig_name="{{ $filename }}"
                             href="{{ .full.RelPermalink }}">
                         <div id="image_number_{{ .index }}" class="gallery-item-marker"></div>

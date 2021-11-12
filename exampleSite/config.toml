@@ -24,6 +24,7 @@ disableKinds = ["taxonomy", "taxonomyTerm"]
     #breadcrumb_use_title = false
     #filename_as_phototitle = false
     #images_downloadable = true
+    #images_downloadable_use_orig = false
 
     # Headerbar links
     # Do not put too many links here,
