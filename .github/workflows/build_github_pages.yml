@@ -2,7 +2,7 @@ name: Build GitHub Pages
 on:
     push:
         branches:
-            - master
+            - main
             - cur_ver_release
 jobs:
     build-github-pages:
