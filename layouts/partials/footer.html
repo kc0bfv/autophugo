@@ -28,7 +28,8 @@
                             <h2>View all:</h2>
                             <div>
                             {{- range $taxname, $taxterms := $.Site.Taxonomies }}
-                                <div class="tax_term"><a href="/{{ $taxname | urlize }}/">{{ $taxname | humanize }}</a></div>
+                                {{- $url := ( printf "/%s/" ($taxname | urlize) ) | relURL }}
+                                <div class="tax_term"><a href="{{ $url }}">{{ $taxname | humanize }}</a></div>
                             {{- end }}
                             </div>
                         </section>
@@ -47,7 +48,8 @@
                             <div>
                             {{- range $taxname, $taxterms := $.Site.Taxonomies }}
                                 {{- range ($.Param $taxname) }}
-                                    <div class="tax_term"><a href="/{{ $taxname | urlize }}/#{{ . | urlize }}">{{ . | humanize }}</a></div>
+                                    {{- $url := ( printf "/%s/#%s" ($taxname | urlize) ( . | urlize ) ) | relURL }}
+                                    <div class="tax_term"><a href="{{ $url }}">{{ . | humanize }}</a></div>
                                 {{- end }}
                             {{- end }}
                             </div>

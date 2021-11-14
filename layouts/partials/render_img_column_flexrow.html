@@ -83,7 +83,8 @@
                             {{- range $taxname, $terms := .taxonomies }}
                                 {{- range $terms }}
                                     <div class="tax_term">
-                                        <a href="/{{ $taxname | urlize }}/#{{ . | urlize }}">{{ . | humanize }}</a>
+                                        {{- $url := ( printf "/%s/#%s" ($taxname | urlize) ( . | urlize ) ) | relURL }}
+                                        <a href="{{ $url }}">{{ . | humanize }}</a>
                                     </div>
                                 {{- end }}
                             {{- end }}
