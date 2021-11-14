@@ -11,10 +11,18 @@ resources:
   alt: A clownfish poking around in some sea anemone or something
   phototitle: Class Clown
   description: There's one in every school
+- src: fish/fish_03.jpg
+  tags:
+    - water
+- src: fish/fish_04.jpg
+  tags:
+    - not friendly
 - src: fish/fish_05.jpg
   alt: A lion fish near the sea floor
   phototitle: Lion Fish Time!
   description: A poisonish lion fish
+  tags:
+    - not friendly
 - src: fish/fish_07.jpg
   alt: Blue fish in front of yellow coral
   phototitle: Swimming Blue Fish

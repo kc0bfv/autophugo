@@ -1,0 +1,98 @@
+{{- /* This partial requires input context to have a Scratch with "content"
+
+    $.Scratch.Get "content" must return a slice (array) of object maps
+
+    Those objects need a "type" key, which can be "link" or something else.
+
+    See below to see what needs to be in those different types
+    */}}
+
+<div class="flexrow">
+
+    {{- $column_count := default 2 ($.Param "column_count") }}
+    {{- $downloadable := default true ($.Param "images_downloadable") }}
+    {{- $orig_download := default false ($.Param "images_downloadable_use_orig") }}
+
+    {{- /* Initialize the column storage */}}
+    {{- range $column_ind := seq $column_count }}
+        {{- $st_name := printf "col-%d" $column_ind }}
+        {{- $st_height_name := printf "col-height-%d" $column_ind }}
+        {{- $.Scratch.Set $st_name (slice) }}
+        {{- $.Scratch.Set $st_height_name 0 }}
+    {{- end }}
+
+
+    {{- /* Add the sections into the columns followed by images */}}
+    {{- range $elem_index, $elem_val := $.Scratch.Get "content" }}
+        {{- /* Find the least-filled column */}}
+        {{- $.Scratch.Set "min_height" -1 }}
+        {{- $.Scratch.Set "min_col" -1 }}
+        {{- range $column_ind := seq $column_count }}
+            {{- $st_height_name := printf "col-height-%d" $column_ind }}
+            {{- $col_height := $.Scratch.Get $st_height_name }}
+            {{- $min_height := $.Scratch.Get "min_height" }}
+            {{- if (or (eq $min_height -1) (lt $col_height $min_height)) }}
+                {{- $.Scratch.Set "min_height" $col_height }}
+                {{- $.Scratch.Set "min_col" $column_ind }}
+            {{- end }}
+        {{- end }}
+
+        {{- /* column_ind becomes the least-filled column */}}
+        {{- $column_ind := $.Scratch.Get "min_col" }}
+        {{- if eq $column_ind -1 }}
+            {{- errorf (printf "When processing '%s', failed to find a least-filled column!" $.Page.File.Path) }}
+        {{- end }}
+        {{- $st_name := printf "col-%d" $column_ind }}
+        {{- $st_height_name := printf "col-height-%d" $column_ind }}
+
+        {{- $column := $.Scratch.Get $st_name }}
+        {{- $column := $column | append $elem_val }}
+        {{- $.Scratch.Set $st_name $column }}
+
+        {{- $.Scratch.Set $st_height_name (add ($.Scratch.Get $st_height_name) $elem_val.thumb.Height) }}
+    {{- end }}
+
+    {{- /* Output the images in columns */}}
+    {{- range $column_ind := seq $column_count }}
+        {{- $st_name := printf "col-%d" $column_ind }}
+        {{- $column := $.Scratch.Get $st_name }}
+        <div class="flexcol">
+        {{- range $column }}
+            {{- $filename := path.Base .image.Name }}
+            <article class="thumb">
+                {{- if (eq .type "link") }}
+                    <a href="{{ .link }}" class="link" tabindex="0"><img src="{{ .thumb.RelPermalink }}" alt="{{ .title }}" /></a>
+                    <h2>{{ .title }}</h2>
+                {{- else }}
+                    <a class="gallery-item" phototitle="{{ .phototitle }}"
+                            description="{{ .description }}"
+                            gallery_index="{{ .index }}"
+                            id="{{ md5 $filename }}"
+                            downloadable="{{ cond $downloadable "true" "false" }}"
+                            {{- if $downloadable }}
+                                download_file="{{ (cond $orig_download .orig .full).RelPermalink }}"
+                            {{- end }}
+                            orig_name="{{ $filename }}"
+                            href="{{ .full.RelPermalink }}">
+                        <div id="image_number_{{ .index }}" class="gallery-item-marker"></div>
+                        <img src="{{ .thumb.RelPermalink }}"
+                            {{ with .alt }} alt="{{ . }}"{{ end }}>
+                    </a>
+                    {{- if (default false ($.Param "taxonomies_links")) }}
+                        <div class="caption_tax">
+                            {{- range $taxname, $terms := .taxonomies }}
+                                {{- range $terms }}
+                                    <div class="tax_term">
+                                        <a href="/{{ $taxname | urlize }}/#{{ . | urlize }}">{{ . | humanize }}</a>
+                                    </div>
+                                {{- end }}
+                            {{- end }}
+                        </div>
+                    {{- end }}
+                    <h2>{{ .phototitle }}</h2>
+                {{- end }}
+            </article>
+        {{- end }}
+        </div>
+    {{- end }}
+</div>

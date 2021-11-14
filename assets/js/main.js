@@ -277,8 +277,12 @@
                                 caption += "<h2>" + item.el.attr("phototitle") + "</h2>";
                             }
                             if( item.el.attr("description") != "" ) {
-                                caption += '<p class="description">' +
-                                    item.el.attr("description") + "</p>";
+                                caption += '<div class="description">' +
+                                    item.el.attr("description") + "</div>";
+                            }
+                            let tax_elem = item.el.parent().find(".caption_tax");
+                            if( tax_elem.length > 0 ) {
+                                caption += tax_elem[0].outerHTML;
                             }
                             caption += "</div>";
                             return caption;
@@ -313,16 +317,19 @@
                             curr_item.el.attr("id") == fid[0].id )
                         {
                             // Nothing needs to happen in this case...
+                            return false;
                         } else
                         {
                             // Otherwise we need to update the popup, so click it
                             fid.click();
+                            return false;
                         }
                     } else {
-                        // Here there was an invalid hash...
+                        // Some other hash was present, let the browser handle it
                         $.magnificPopup.close();
-                        window.location.hash = "";
+                        return true;
                     }
+                    return true;
                 }
 
                 // Check the fragment id at load

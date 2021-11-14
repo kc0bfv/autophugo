@@ -1,0 +1,71 @@
+{{ define "main" }}
+    {{- $thumb_width := default 480 ($.Param "thumb_width") }}
+    {{- $thumb_quality := default 50 ($.Param "thumb_quality") }}
+
+    {{- $thumb_size := default (printf "%dx q%d" $thumb_width $thumb_quality) ($.Param "thumb_size") }}
+
+    {{- $.Scratch.Set "tags" (dict) }}
+
+    {{- range $.Site.Pages }}
+        {{- $page := . }}
+
+        {{- /* Enumerate the tags on the page */}}
+        {{- range (index $page.Params $.Data.Plural) }}
+            {{- $tag := . }}
+
+            {{- partial "scratch_set_retalbumthumb.html" $page }}
+            {{- /* Note that the Scratch below must come from $page context, not $ */}}
+            {{- $image := $page.Scratch.Get "retalbumthumb" }}
+
+            {{- if not $image }}
+                {{- errorf (printf "When processing '%s', no thumbnail image found for: %s" $page.Path $tag) }}
+            {{- end }}
+
+            {{- $thumb := $image.Resize $thumb_size }}
+            
+            {{- /* Create an object representing this tag term entry */}}
+            {{- $page_desc := dict "type" "link" "link" $page.RelPermalink "title" $page.Title "thumb" $thumb }}
+
+            {{- /* Add this object to the list */}}
+            {{- $cur_entry := (index ($.Scratch.Get "tags") $tag) }}
+            {{- $new_list := $cur_entry | append $page_desc }}
+            {{- $.Scratch.Set "tags" (merge ($.Scratch.Get "tags") (dict $tag $new_list)) }}
+        {{ end }}
+
+        {{- /* Enumerate the tags on the resource images */}}
+        {{- with $page.File }}
+            {{- range resources.Match (path.Join $page.File.Dir "*") }}
+                {{- $img := . }}
+                {{- $filename := path.Base $img.Name }}
+                {{- $filedir := path.Dir $img.Name }}
+
+                {{- with $page.Params.resources }}
+                    {{- range first 1 (where . "src" $img.Name) }}
+                        {{- $resource := . }}
+                        {{- range (index . $.Data.Plural) }}
+                            {{- $tag := . }}
+
+                            {{- $thumb := $img.Resize $thumb_size }}
+
+                            {{- /* Create an object representing this tag term entry */}}
+                            {{- $img_desc := dict "type" "link" "link" (printf "/%s/#%s" $filedir (md5 $filename)) "title" $resource.phototitle "thumb" $thumb }}
+                            {{- /* Add this object to the list */}}
+                            {{- $cur_entry := (index ($.Scratch.Get "tags") $tag) }}
+                            {{- $new_list := $cur_entry | append $img_desc }}
+                            {{- $.Scratch.Set "tags" (merge ($.Scratch.Get "tags") (dict $tag $new_list)) }}
+                        {{- end }}
+                    {{- end }}
+                {{- end }}
+            {{- end }}
+        {{- end }}
+    {{- end }}
+
+
+    {{- range $term, $term_list := $.Scratch.Get "tags" }}
+
+        <h1 id="{{ $term | urlize }}">{{ $term }}</h1>
+        {{- $.Scratch.Set "content" $term_list }}
+        {{- partial "render_img_column_flexrow.html" $ }}
+
+    {{ end }}
+{{ end }}

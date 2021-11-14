@@ -4,7 +4,10 @@ languageCode = "en-us"
 title = "AutoPhugo"
 theme = "autophugo"
 #googleAnalytics = ""
-disableKinds = ["taxonomy", "taxonomyTerm"]
+disableKinds = ["taxonomy", "term"]
+#[taxonomies]
+#    tag = "tags"
+#    category = "categories"
 
 [Author]
     name = "Karl Sickendick"
@@ -25,6 +28,7 @@ disableKinds = ["taxonomy", "taxonomyTerm"]
     #filename_as_phototitle = false
     #images_downloadable = true
     #images_downloadable_use_orig = false
+    #taxonomies_links = false
 
     # Headerbar links
     # Do not put too many links here,

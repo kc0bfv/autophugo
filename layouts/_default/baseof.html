@@ -1,28 +1,22 @@
 <!DOCTYPE HTML>
-{{ partial "lang.html" . }}
+{{- partial "lang.html" . }}
 <head>
     <title>
     {{- block "title" . }}
         {{- with .Title }}{{ . }} - {{ end }}{{ .Site.Title -}}
     {{- end -}}
     </title>
-{{ partial "head.html" . }}
+{{- partial "head.html" . }}
 </head>
 <body class="loading">
-        
     <div id="wrapper">
-
-    {{ partial "header.html" . }}
-        
-        {{ block "main" . }}
-            {{ partial "sect_and_img_content.html" . }}
-        {{ end }}
-
-    {{ partial "footer.html" . }}
-
+        {{- partial "header.html" . }}
+        <div id="main">
+            {{ block "main" . }}
+            {{ end }}
+        </div>
+        {{- partial "footer.html" . }}
     </div>
-
-{{ partial "scripts.html" . }}
-
+{{- partial "scripts.html" . }}
 </body>
 </html>

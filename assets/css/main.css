@@ -315,3 +315,11 @@ body.loading #main .thumb { -moz-pointer-events: none; -webkit-pointer-events: n
 .mfp-bottom-bar .download-button a:hover, .mfp-figure .mfp-close:hover { opacity: 1; }
 
 article.thumb a:focus img { border: solid 1px #ffffff; }
+
+
+/* Other */
+.taxonomy_list div { display: flex; flex-wrap: wrap; padding: 0; }
+.tax_term { margin: 0 5px 0 0; height: fit-content; }
+.taxonomy_list h2 { margin-right: 5px; }
+.caption_tax { display: none; }
+.caption-surround .caption_tax { display: flex; flex-wrap: wrap; padding: 0; }

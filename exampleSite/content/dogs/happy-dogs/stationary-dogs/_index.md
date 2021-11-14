@@ -7,6 +7,8 @@ resources:
   alt: Two dogs in a field looking to the left past the photographer.
   phototitle: Field of Dogs
   description: Taken in some moor somewhere
+  categories:
+    - dark colored
 - src: dogs/happy-dogs/stationary-dogs/dog_06.jpg
   alt: A dog leaning out a window, as seen from a rear-view mirror.
   phototitle: Dog Retrospective

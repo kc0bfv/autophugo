@@ -17,6 +17,43 @@
                 <p class="copyright">
                     &copy; {{ with .Site.Params.footer.copyright.name }}{{ . | markdownify }}{{ end }}. Code generated with <a href="https://gohugo.io/">Hugo</a>, theme based on <a href="https://github.com/kc0bfv/autophugo/">AutoPhugo</a>.
                 </p>
+
+                {{- /* Unfortunately I cannot find a way to determine if disableKinds
+                       is turned on, so I cannot check that for taxonomy or term.
+                       Instead I have to use this new parameter */}}
+                {{- if (default false ($.Param "taxonomies_links")) }}
+
+                    {{- with $.Site.Taxonomies }}
+                        <section class="taxonomy_list flexrow">
+                            <h2>View all:</h2>
+                            <div>
+                            {{- range $taxname, $taxterms := $.Site.Taxonomies }}
+                                <div class="tax_term"><a href="/{{ $taxname | urlize }}/">{{ $taxname | humanize }}</a></div>
+                            {{- end }}
+                            </div>
+                        </section>
+                    {{- end }}
+
+                    {{- /* Only display the terms list if this page has some */}}
+                    {{- $.Scratch.Set "terms_present" false }}
+                    {{- range $taxname, $taxterms := $.Site.Taxonomies }}
+                        {{- range ($.Param $taxname) }}
+                            {{- $.Scratch.Set "terms_present" true }}
+                        {{- end }}
+                    {{- end }}
+                    {{- if $.Scratch.Get "terms_present" }}
+                        <section class="taxonomy_list flexrow">
+                            <h2>Terms:</h2>
+                            <div>
+                            {{- range $taxname, $taxterms := $.Site.Taxonomies }}
+                                {{- range ($.Param $taxname) }}
+                                    <div class="tax_term"><a href="/{{ $taxname | urlize }}/#{{ . | urlize }}">{{ . | humanize }}</a></div>
+                                {{- end }}
+                            {{- end }}
+                            </div>
+                        </section>
+                    {{- end }}
+                {{- end }}
             </div>
             {{ if not .Site.Params.footer.contact.hide }}
                 <div>

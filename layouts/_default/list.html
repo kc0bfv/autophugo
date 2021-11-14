@@ -1,1 +1,110 @@
-{{ define "anything" }}{{ end }}
+{{ define "main" }}
+
+    {{- /* Things in site config */}}
+    {{- $thumb_width := default 480 ($.Param "thumb_width") }}
+    {{- $full_width := default 960 ($.Param "full_width") }}
+    {{- $thumb_quality := default 50 ($.Param "thumb_quality") }}
+    {{- $full_quality := default 90 ($.Param "full_quality") }}
+    {{- $filename_as_phototitle := default false ($.Param "filename_as_phototitle") }}
+
+    {{- /* Calculate thumb_ and full_size from params, unless one is provided in the config. */}}
+    {{- $thumb_size := default (printf "%dx q%d" $thumb_width $thumb_quality) ($.Param "thumb_size") }}
+    {{- $full_size := default (printf "%dx q%d" $full_width $full_quality) ($.Param "full_size") }}
+
+    {{- /* Build the list of sections and thumbnails */}}
+    {{- $.Scratch.Set "sections" (slice) }}
+    {{- range .Sections.ByDate }}
+        {{- $title := .Title }}
+        {{- $link := .RelPermalink }}
+        {{- $weight := default 0 (.Param "weight") }}
+
+        {{- partial "scratch_set_retalbumthumb.html" . }}
+        {{- /* Note that the Scratch below must come from . context, not $ */}}
+        {{- $image := .Scratch.Get "retalbumthumb" }}
+
+        {{- if not $image }}
+            {{- errorf (printf "When processing '%s', no thumbnail image found for: %s" $.Page.File.Path $title) }}
+        {{- else }}
+            {{- $thumb := $image.Resize $thumb_size }}
+            {{- $new_sect := dict "type" "link" "title" $title "link" $link "thumb" $thumb "weight" $weight }}
+
+            {{- $sections := $.Scratch.Get "sections" }}
+            {{- $sections := $sections | append $new_sect }}
+            {{- $.Scratch.Set "sections" $sections }}
+        {{- end }}
+    {{- end }}
+    {{- /* Section list is complete, now resort */}}
+    {{- $.Scratch.Set "sections" (sort ($.Scratch.Get "sections") "weight") }}
+    {{- $sections := $.Scratch.Get "sections" }}
+
+    {{- /* Get and reorder the list of images */}}
+    {{- if .File }}
+        {{- $imgglob := printf "%s" (path.Join .File.Dir "*") }}
+        {{- $.Scratch.Set "imgglob" $imgglob }}
+    {{- end }}
+    {{- $imgglob := default "*" ($.Scratch.Get "imgglob") }}
+    {{- $imageresources := where (resources.Match $imgglob) "ResourceType" "image" }}
+    {{- $TODO_DELETE_images := $imageresources }}
+
+    {{- /* Build some image objects */}}
+    {{- $.Scratch.Set "images" (slice) }}
+    {{- range $elem_index, $elem_val := $imageresources }}
+
+        {{- /* Build some scratch for upcoming search... */}}
+        {{- $img_dat := newScratch }}
+        {{- $img_dat.Set "alt" "" }}
+        {{- $img_dat.Set "description" "" }}
+        {{- $img_dat.Set "weight" 0 }}
+        {{- $img_dat.Set "taxonomies" dict }}
+
+        {{- if $filename_as_phototitle }}
+            {{- $filename := replace (path.Base $elem_val.Name) (path.Ext $elem_val.Name) "" }}
+            {{- $img_dat.Set "phototitle" (humanize $filename) }}
+        {{- else }}
+            {{- $img_dat.Set "phototitle" "" }}
+        {{- end }}
+
+        {{- /* Search the resources for a matching image src, save off details */}}
+        {{- $img_path := $elem_val.Name }}
+        {{- with $.Params.resources }}
+            {{- range first 1 (where . "src" $img_path) }}
+                {{- $found := . }}
+                {{- if isset . "alt" }}{{ $img_dat.Set "alt" .alt }}{{ end }}
+                {{- if isset . "phototitle" }}{{ $img_dat.Set "phototitle" .phototitle }}{{ end }}
+                {{- if isset . "description" }}{{ $img_dat.Set "description" .description }}{{ end }}
+                {{- if isset . "weight" }}{{ $img_dat.Set "weight" .weight }}{{ end }}
+                
+                {{- /* Build an dict of arrays - the keys are taxonomy name, values are an array of terms in that taxonomy */}}
+                {{- range $taxname, $taxterms := $.Site.Taxonomies }}
+                    {{- if isset $found $taxname }}
+                        {{- $newentry := dict $taxname (index $found $taxname) }}
+                        {{- $newvals := merge ($img_dat.Get "taxonomies") $newentry }}
+                        {{- $img_dat.Set "taxonomies" $newvals }}
+                    {{- end }}
+                {{- end }}
+            {{- end }}
+        {{- end }}
+
+        {{- /* Save off the image object */}}
+        {{- $alt := $img_dat.Get "alt" }}
+        {{- $phototitle := $img_dat.Get "phototitle" }}
+        {{- $description := $img_dat.Get "description" }}
+        {{- $weight := $img_dat.Get "weight" }}
+        {{- $taxonomies := $img_dat.Get "taxonomies" }}
+        {{- $thumb := $elem_val.Resize $thumb_size }}
+        {{- $full := $elem_val.Resize $full_size }}
+
+        {{- $new_img := dict "type" "image" "index" $elem_index "image" $elem_val "thumb" $thumb "full" $full "alt" $alt "phototitle" $phototitle "description" $description "weight" $weight  "orig" $elem_val "taxonomies" $taxonomies }}
+
+        {{- $images := $.Scratch.Get "images" }}
+        {{- $images := $images | append $new_img }}
+        {{- $.Scratch.Set "images" $images }}
+    {{- end }}
+    {{- /* Image list is complete, now resort */}}
+    {{- $.Scratch.Set "images" (sort ($.Scratch.Get "images") "weight") }}
+    {{- $images := $.Scratch.Get "images" }}
+
+    {{- $.Scratch.Set "content" ($sections | append $images) }}
+    {{- partial "render_img_column_flexrow.html" $ }}
+
+{{ end }}

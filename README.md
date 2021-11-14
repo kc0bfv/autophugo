@@ -46,6 +46,7 @@ The `exampleSite` demonstrates the features unique to this theme.  In your site 
 * `filename_as_phototitle` - if true, a humanized form of the filename will be used as the phototitle (default false)
 * `images_downloadable` - if true, images have a download button (default true)
 * `images_downloadable_use_orig` - if true, the download button will download the original image instead of the full size image - this will likely greatly increase the size of your site (default false)
+* `taxonomies_links` - if true, links to the taxonomy pages will be present in the footer and on the tagged items (default false)
 
 Additionally, `Author.name` and `Author.email` in the site config will display as the author and webmaster email.
 
@@ -127,6 +128,18 @@ You can place images and subalbums together - the `assets` directory would conta
 ## Using Custom Weights
 
 Default sorting for subalbums and images sorts by weight.  For subalbums with the same weight it sorts by date, and for images with the same weight it sorts by filename.  If you don't specify a weight for an item, the default is 0.  Therefore - if you don't set any weights you'll sort by date...  Lower weights come first so negative weights get sorted before unspecified weights and positive ones.
+
+## Tagging and Categorizing (taxonomies)
+
+You can tag and categorize your images and subalbums, and you can create other taxonomies and use those too!  There are a couple site configurations to understand...
+
+`disableKinds = ["taxonomy", "term"]`
+
+If you want tags or categories do *not* have this line in your site config.  If you specify these values for disableKinds in your site config you will disable all taxonomy pages.  Term pages are not generated as part of this theme - the terms all appear on their taxonomy page.  Regardless, if you want to have tags or categories, do *not* have the above line.
+
+You can use the `[taxonomies]` site config section to create new taxonomies or remove the defaults.  More information is in the [Hugo documentation](https://gohugo.io/content-management/taxonomies/#default-taxonomies).
+
+The `taxonomies_links` parameter defaults to false, disabling links to the taxonomies pages even if they get generated...  Set it to true in your site config and links will show up in the page footers and on tagged items.
 
 ## Building the Site
 
