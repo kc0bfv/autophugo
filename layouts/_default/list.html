@@ -25,7 +25,25 @@
         {{- if not $image }}
             {{- errorf (printf "When processing '%s', no thumbnail image found for: %s" $.Page.File.Path $title) }}
         {{- else }}
-            {{- $thumb := $image.Resize $thumb_size }}
+            {{- $.Scratch.Set "orientation" 1 }}
+            {{- with $image.Exif }}
+                {{- $.Scratch.Set "orientation" .Tags.Orientation }}
+            {{- end }}
+            {{- $orientation := $.Scratch.Get "orientation" }}
+            {{- /* TODO: handle flipped orientations */}}
+            {{- $.Scratch.Set "rotation" "" }}
+            {{- if (eq $orientation 1) }}
+                {{- $.Scratch.Set "rotation" "" }}
+            {{- else if (eq $orientation 8) }}
+                {{- $.Scratch.Set "rotation" " r90" }}
+            {{- else if (eq $orientation 3) }}
+                {{- $.Scratch.Set "rotation" " r180" }}
+            {{- else if (eq $orientation 6) }}
+                {{- $.Scratch.Set "rotation" " r270" }}
+            {{- end }}
+            {{- $rotation := $.Scratch.Get "rotation" }}
+            {{- $resize_cmd := printf "%s%s" $thumb_size $rotation }}
+            {{- $thumb := $image.Resize $resize_cmd }}
             {{- $new_sect := dict "type" "link" "title" $title "link" $link "thumb" $thumb "weight" $weight }}
 
             {{- $sections := $.Scratch.Get "sections" }}
@@ -85,14 +103,34 @@
             {{- end }}
         {{- end }}
 
+        {{- $.Scratch.Set "orientation" 1 }}
+        {{- with $elem_val.Exif }}
+            {{- $.Scratch.Set "orientation" .Tags.Orientation }}
+        {{- end }}
+        {{- $orientation := $.Scratch.Get "orientation" }}
+        {{- /* TODO: handle flipped orientations */}}
+        {{- $.Scratch.Set "rotation" "" }}
+        {{- if (eq $orientation 1) }}
+            {{- $.Scratch.Set "rotation" "" }}
+        {{- else if (eq $orientation 8) }}
+            {{- $.Scratch.Set "rotation" " r90" }}
+        {{- else if (eq $orientation 3) }}
+            {{- $.Scratch.Set "rotation" " r180" }}
+        {{- else if (eq $orientation 6) }}
+            {{- $.Scratch.Set "rotation" " r270" }}
+        {{- end }}
+        {{- $rotation := $.Scratch.Get "rotation" }}
+        {{- $thumb_resize_cmd := printf "%s%s" $thumb_size $rotation }}
+        {{- $full_resize_cmd := printf "%s%s" $full_size $rotation }}
+
         {{- /* Save off the image object */}}
         {{- $alt := $img_dat.Get "alt" }}
         {{- $phototitle := $img_dat.Get "phototitle" }}
         {{- $description := $img_dat.Get "description" }}
         {{- $weight := $img_dat.Get "weight" }}
         {{- $taxonomies := $img_dat.Get "taxonomies" }}
-        {{- $thumb := $elem_val.Resize $thumb_size }}
-        {{- $full := $elem_val.Resize $full_size }}
+        {{- $thumb := $elem_val.Resize $thumb_resize_cmd }}
+        {{- $full := $elem_val.Resize $full_resize_cmd }}
 
         {{- $new_img := dict "type" "image" "index" $elem_index "image" $elem_val "thumb" $thumb "full" $full "alt" $alt "phototitle" $phototitle "description" $description "weight" $weight  "orig" $elem_val "taxonomies" $taxonomies }}
 
