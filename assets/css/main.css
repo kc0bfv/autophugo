@@ -317,6 +317,11 @@ body.loading #main .thumb { -moz-pointer-events: none; -webkit-pointer-events: n
 article.thumb a:focus img { border: solid 1px #ffffff; }
 
 
+/* TODO: implement flexible, changing multicolumn layout, in Javascript */
+/* For now - max-width of 1200px */
+body, #footer, #header { max-width: 1200px; margin: 0 auto; left: auto; }
+
+
 /* Other */
 .taxonomy_list div { display: flex; flex-wrap: wrap; padding: 0; }
 .tax_term { margin: 0 5px 0 0; height: fit-content; }
