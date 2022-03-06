@@ -9,6 +9,7 @@
 
     {{- /* Calculate thumb_ and full_size from params, unless one is provided in the config. */}}
     {{- $thumb_size := default (printf "%dx q%d" $thumb_width $thumb_quality) ($.Param "thumb_size") }}
+    {{- $full_resize_method := lower (default "resize" ($.Param "full_resize_method")) -}}
     {{- $full_size := default (printf "%dx q%d" $full_width $full_quality) ($.Param "full_size") }}
 
     {{- /* Build the list of sections and thumbnails */}}
@@ -130,7 +131,16 @@
         {{- $weight := $img_dat.Get "weight" }}
         {{- $taxonomies := $img_dat.Get "taxonomies" }}
         {{- $thumb := $elem_val.Resize $thumb_resize_cmd }}
-        {{- $full := $elem_val.Resize $full_resize_cmd }}
+
+        {{- $.Scratch.Set "full_resized" $thumb }}
+        {{- if (eq $full_resize_method "resize") }}
+            {{- $.Scratch.Set "full_resized" ($elem_val.Resize $full_resize_cmd) }}
+        {{- else if (eq $full_resize_method "fit") }}
+            {{- $.Scratch.Set "full_resized" ($elem_val.Fit $full_resize_cmd) }}
+        {{- else }}
+            {{- errorf "Invalid 'full_resize_method' specified!  Must be resize or fit." }}
+        {{- end }}
+        {{- $full := $.Scratch.Get "full_resized" }}
 
         {{- $new_img := dict "type" "image" "index" $elem_index "image" $elem_val "thumb" $thumb "full" $full "alt" $alt "phototitle" $phototitle "description" $description "weight" $weight  "orig" $elem_val "taxonomies" $taxonomies }}
 
