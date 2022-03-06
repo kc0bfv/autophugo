@@ -65,7 +65,7 @@
                     <h2>{{ .title }}</h2>
                 {{- else }}
                     <a class="gallery-item" phototitle="{{ .phototitle }}"
-                            description="{{ .description }}"
+                            {{ printf "description='%s'" (.description | markdownify) | safeHTMLAttr }}
                             gallery_index="{{ .index }}"
                             id="{{ md5 $filename }}"
                             downloadable="{{ cond $downloadable "true" "false" }}"

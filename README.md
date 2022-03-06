@@ -34,7 +34,7 @@ Follow [Hugo's standard instructions](https://gohugo.io/getting-started/quick-st
 The `exampleSite` demonstrates the features unique to this theme.  In your site config params section the following extra parameters are supported:
 
 * `favicon` - the favicon URL, relative to your site (placed in header meta tag)
-* `description` - the description for the header meta tag
+* `description` - the description for the header meta tag.  This will be interpreted as markdown, and some markdown will require the string to be enclosed in quotes.
 * `msvalidate` - MS validation tag
 * `googlesiteverification` - Google site verification tag
 * `thumb_width` - thumbnail width after resizing (default 480 pixels)

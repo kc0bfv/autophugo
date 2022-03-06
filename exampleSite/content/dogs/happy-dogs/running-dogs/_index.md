@@ -5,7 +5,7 @@ albumthumb: "dogs/happy-dogs/running-dogs/dog_05.jpg"
 resources:
 - src: dogs/happy-dogs/running-dogs/dog_05.jpg
   alt: Two dogs running down a grassy trail towards the photographer
-  description: Clearly a dog day afternoon!
+  description: Clearly a [dog day afternoon](https://en.wikipedia.org/wiki/Dog_Day_Afternoon)!
   categories:
     - dark colored
 - src: dogs/happy-dogs/running-dogs/dog_09.jpg
