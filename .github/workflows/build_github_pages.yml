@@ -3,7 +3,7 @@ on:
     push:
         branches:
             - main
-            - cur_ver_release
+            #- cur_ver_release
 jobs:
     build-github-pages:
         runs-on: ubuntu-latest
