@@ -47,6 +47,7 @@ The `exampleSite` demonstrates the features unique to this theme.  In your site 
 * `images_downloadable` - if true, images have a download button (default true)
 * `images_downloadable_use_orig` - if true, the download button will download the original image instead of the full size image - this will likely greatly increase the size of your site (default false)
 * `taxonomies_links` - if true, links to the taxonomy pages will be present in the footer and on the tagged items (default false)
+* `sort_order` - if "newest_first", the most recent album will be displayed first with others in descending order (default "oldest_first")
 
 Additionally, `Author.name` and `Author.email` in the site config will display as the author and webmaster email.
 

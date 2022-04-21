@@ -6,6 +6,7 @@
     {{- $thumb_quality := default 50 ($.Param "thumb_quality") }}
     {{- $full_quality := default 90 ($.Param "full_quality") }}
     {{- $filename_as_phototitle := default false ($.Param "filename_as_phototitle") }}
+    {{- $sort_order := default "oldest_first" ($.Param "sort_order") }}
 
     {{- /* Calculate thumb_ and full_size from params, unless one is provided in the config. */}}
     {{- $thumb_size := default (printf "%dx q%d" $thumb_width $thumb_quality) ($.Param "thumb_size") }}
@@ -14,7 +15,7 @@
 
     {{- /* Build the list of sections and thumbnails */}}
     {{- $.Scratch.Set "sections" (slice) }}
-    {{- range .Sections.ByDate }}
+    {{- range (cond (eq $sort_order "newest_first") .Sections.ByDate.Reverse .Sections.ByDate) }}
         {{- $title := .Title }}
         {{- $link := .RelPermalink }}
         {{- $weight := default 0 (.Param "weight") }}

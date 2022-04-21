@@ -29,6 +29,7 @@ disableKinds = ["taxonomy", "term"]
     #images_downloadable = true
     #images_downloadable_use_orig = false
     #taxonomies_links = false
+    #sort_order = "newest_first"
 
     # Headerbar links
     # Do not put too many links here,
