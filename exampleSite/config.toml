@@ -29,7 +29,6 @@ disableKinds = ["taxonomy", "term"]
     #images_downloadable = true
     #images_downloadable_use_orig = false
     #taxonomies_links = false
-    #custom_css = ["css/custom.css"]
 
     # Headerbar links
     # Do not put too many links here,

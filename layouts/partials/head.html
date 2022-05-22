@@ -31,9 +31,6 @@
 {{- $google_font := resources.Get "css/source-sans-pro.css" -}}
 {{- $main_css := resources.Get "css/main.css" -}}
 {{- $mg_pop_css := resources.Get "css/magnific-popup.css" -}}
-{{- $custom_css := slice $font_awesome $google_font $main_css $mg_pop_css | resources.Concat "css/custom.css" | resources.Minify | resources.Fingerprint -}}
+{{- $user_css := resources.Get "css/user.css" -}}
+{{- $custom_css := slice $font_awesome $google_font $main_css $mg_pop_css $user_css | resources.Concat "css/custom.css" | resources.Minify | resources.Fingerprint -}}
 <link rel="stylesheet" href="{{ $custom_css.RelPermalink }}" integrity="{{ $custom_css.Data.Integrity }}"/>
-
-{{ range .Site.Params.custom_css -}}
-    <link rel="stylesheet" href="{{ . | absURL }}">
-{{- end }}
