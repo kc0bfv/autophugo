@@ -45,11 +45,14 @@
         {{- $st_name := printf "col-%d" $column_ind }}
         {{- $st_height_name := printf "col-height-%d" $column_ind }}
 
+        {{- /* Create a new version of the elem_val with an index reflecting position now, well after sorting is complete, and as we're placing things */}}
+        {{- $reind_val := merge $elem_val (dict "index" $elem_index) }}
+
         {{- $column := $.Scratch.Get $st_name }}
-        {{- $column := $column | append $elem_val }}
+        {{- $column := $column | append $reind_val }}
         {{- $.Scratch.Set $st_name $column }}
 
-        {{- $.Scratch.Set $st_height_name (add ($.Scratch.Get $st_height_name) $elem_val.thumb.Height) }}
+        {{- $.Scratch.Set $st_height_name (add ($.Scratch.Get $st_height_name) $reind_val.thumb.Height) }}
     {{- end }}
 
     {{- /* Output the images in columns */}}

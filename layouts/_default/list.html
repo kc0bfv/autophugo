@@ -143,7 +143,7 @@
         {{- end }}
         {{- $full := $.Scratch.Get "full_resized" }}
 
-        {{- $new_img := dict "type" "image" "index" $elem_index "image" $elem_val "thumb" $thumb "full" $full "alt" $alt "phototitle" $phototitle "description" $description "weight" $weight  "orig" $elem_val "taxonomies" $taxonomies }}
+        {{- $new_img := dict "type" "image" "image" $elem_val "thumb" $thumb "full" $full "alt" $alt "phototitle" $phototitle "description" $description "weight" $weight  "orig" $elem_val "taxonomies" $taxonomies }}
 
         {{- $images := $.Scratch.Get "images" }}
         {{- $images := $images | append $new_img }}
