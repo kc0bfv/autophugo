@@ -3,6 +3,7 @@
 {{- $resources := where (resources.Match $imgglob) "ResourceType" "image" }}
 title: "{{ replace .Name "-" " " | title }}"
 date: {{ .Date }}
+weight: 0
 albumthumb: "{{ cond (gt (len $resources) 0) (index $resources 0) "" }}"
 draft: false
 ## Optional additional meta info for resources list
