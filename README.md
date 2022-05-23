@@ -159,10 +159,11 @@ Regardless of the number of resources you have, Hugo will only deploy the ones a
 
 Image resizing: normally you specify `thumb_width` and `full_width` in your configuration, and the qualities, to modify how Autophugo scales your images.  Autophugo uses these values to build a string for Hugo's Resize function.  You can specify that string directly though...  Set `thumb_size` or `full_size` directly in your config to bypass the other ones.  The format of the string is [documented here](https://gohugo.io/content-management/image-processing/).  You can specify `full_size` and `thumb_size` for the entire site, or in the `_index.md` for a specific subalbum.
 
-You can also change the method Hugo uses to resize your full-sized images (the option is not available for thumbnails).  Hugo has both `Resize` and `Fit` methods that are appropriate for resizing the full-sized images.  By default Autophugo uses `Resize`.  By setting `full_resize_method` to `Fit` or `Resize` you can change that.  You must also specify a `full_size` if you change to the `Fit` method.  That's because both the height and width must be specified, and with `Resize` you only need one or the other.  Again, the format of the `full_size` string is [documented here](https://gohugo.io/content-management/image-processing/).  Here are some examples:
+You can also change the method Hugo uses to resize your full-sized images (the option is not available for thumbnails).  Hugo has both `Resize` and `Fit` methods that are appropriate for resizing the full-sized images.  By default Autophugo uses `Resize`.  By setting `full_resize_method` to `Fit`, `Resize`, or `None`, you can change that.  You must also specify a `full_size` if you change to the `Fit` method.  That's because both the height and width must be specified, and with `Resize` you only need one or the other.  Again, the format of the `full_size` string is [documented here](https://gohugo.io/content-management/image-processing/).  Here are some examples:
 
 * Scale an image down, keeping aspect ratio, to a max height of 960px and a max width of 960px, with a 90% quality: `full_resize_method = "fit"`, `full_size = "960x960 q90"`
 * Scale an image to a width of 960px, allowing whatever height is required for the original aspect ratio, with a 90% quality: `full_resize_method = "resize"`, `full_size = "960x q90"`
+* Do no scaling or quality change of the full-sized version of the image: `full_resize_method = "none"`
 
 ## Comparison to Phugo
 

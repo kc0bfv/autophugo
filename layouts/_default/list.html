@@ -136,6 +136,8 @@
             {{- $.Scratch.Set "full_resized" ($elem_val.Resize $full_resize_cmd) }}
         {{- else if (eq $full_resize_method "fit") }}
             {{- $.Scratch.Set "full_resized" ($elem_val.Fit $full_resize_cmd) }}
+        {{- else if (eq $full_resize_method "none") }}
+            {{- $.Scratch.Set "full_resized" $elem_val }}
         {{- else }}
             {{- errorf "Invalid 'full_resize_method' specified!  Must be resize or fit." }}
         {{- end }}
