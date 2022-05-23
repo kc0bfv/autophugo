@@ -63,7 +63,6 @@
     {{- end }}
     {{- $imgglob := default "*" ($.Scratch.Get "imgglob") }}
     {{- $imageresources := where (resources.Match $imgglob) "ResourceType" "image" }}
-    {{- $TODO_DELETE_images := $imageresources }}
 
     {{- /* Build some image objects */}}
     {{- $.Scratch.Set "images" (slice) }}
