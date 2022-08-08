@@ -15,7 +15,7 @@ table { border-collapse: collapse; border-spacing: 0; }
 
 body { -webkit-text-size-adjust: none; }
 
-.thumb img { width: 100%; display: block; }
+.thumb img { width: 100%; display: block; padding: 10px; background: #FFFFFF;}
 
 .flexrow { display: flex; flex-wrap: wrap; padding: 0; width: 100%; }
 .flexcol { flex: 1; padding: 0px 2px 0px 2px; }
