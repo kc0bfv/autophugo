@@ -8,7 +8,7 @@
 
         // Add (and later, on load, remove) "loading" class.
             $body.addClass('loading');
-            if( document.readyState != "loading ) {
+            if( document.readyState != 'loading' ) {
                 window.setTimeout(function() {
                     $body.removeClass('loading');
                 }, 100);
