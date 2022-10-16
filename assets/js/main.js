@@ -8,12 +8,17 @@
 
         // Add (and later, on load, remove) "loading" class.
             $body.addClass('loading');
-
-            $window.on('load', function() {
+            if( document.readyState != "loading ) {
                 window.setTimeout(function() {
                     $body.removeClass('loading');
                 }, 100);
-            });
+            } else {
+                $window.on('load', function() {
+                    window.setTimeout(function() {
+                        $body.removeClass('loading');
+                    }, 100);
+                });
+            }
 
         // Prevent transitions/animations on resize.
             var resizeTimeout;
