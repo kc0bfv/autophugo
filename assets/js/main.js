@@ -169,10 +169,10 @@
 
                     skel
                         .on('+medium', function() {
-                            $this.appendTo($lastParent);
+                            //$this.appendTo($lastParent);
                         })
                         .on('-medium', function() {
-                            $this.appendTo($parent);
+                            //$this.appendTo($parent);
                         });
 
                 });

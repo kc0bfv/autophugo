@@ -14,9 +14,6 @@
                     {{ end }}
                     </ul>
                 </section>
-                <p class="copyright">
-                    &copy; {{ with .Site.Params.footer.copyright.name }}{{ . | markdownify }}{{ end }}. Code generated with <a href="https://gohugo.io/">Hugo</a>, theme based on <a href="https://github.com/kc0bfv/autophugo/">AutoPhugo</a>.
-                </p>
 
                 {{- /* Unfortunately I cannot find a way to determine if disableKinds
                        is turned on, so I cannot check that for taxonomy or term.
@@ -80,4 +77,7 @@
                 </div>
             {{ end }}
         </div>
+        <p class="copyright">
+            &copy; {{ with .Site.Params.footer.copyright.name }}{{ . | markdownify }}{{ end }}. Code generated with <a href="https://gohugo.io/">Hugo</a>, theme based on <a href="https://github.com/kc0bfv/autophugo/">AutoPhugo</a>.
+        </p>
     </footer>
