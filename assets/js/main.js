@@ -1,55 +1,38 @@
 (function($) {
 
-    skel.breakpoints({
-        xlarge: '(max-width: 1680px)',
-        large: '(max-width: 1280px)',
-        medium: '(max-width: 980px)',
-        small: '(max-width: 736px)',
-        xsmall: '(max-width: 480px)'
-    });
-
     $(function() {
 
         var $window = $(window),
             $body = $('body'),
             $wrapper = $('#wrapper');
 
-        // Hack: Enable IE workarounds.
-            if (skel.vars.IEVersion < 12)
-                $body.addClass('ie');
-
         // Touch?
             if (skel.vars.mobile)
                 $body.addClass('touch');
 
-        // Transitions supported?
-            if (skel.canUse('transition')) {
+        // Add (and later, on load, remove) "loading" class.
+            $body.addClass('loading');
 
-                // Add (and later, on load, remove) "loading" class.
-                    $body.addClass('loading');
+            $window.on('load', function() {
+                window.setTimeout(function() {
+                    $body.removeClass('loading');
+                }, 100);
+            });
 
-                    $window.on('load', function() {
-                        window.setTimeout(function() {
-                            $body.removeClass('loading');
-                        }, 100);
-                    });
+        // Prevent transitions/animations on resize.
+            var resizeTimeout;
 
-                // Prevent transitions/animations on resize.
-                    var resizeTimeout;
+            $window.on('resize', function() {
 
-                    $window.on('resize', function() {
+                window.clearTimeout(resizeTimeout);
 
-                        window.clearTimeout(resizeTimeout);
+                $body.addClass('resizing');
 
-                        $body.addClass('resizing');
+                resizeTimeout = window.setTimeout(function() {
+                    $body.removeClass('resizing');
+                }, 100);
 
-                        resizeTimeout = window.setTimeout(function() {
-                            $body.removeClass('resizing');
-                        }, 100);
-
-                    });
-
-            }
+            });
 
         // Scroll back to top.
             $window.scrollTop(0);
@@ -158,25 +141,6 @@
         // Footer.
             var $footer = $('#footer');
 
-            // Copyright.
-            // This basically just moves the copyright line to the end of the *last* sibling of its current parent
-            // when the "medium" breakpoint activates, and moves it back when it deactivates.
-                $footer.find('.copyright').each(function() {
-
-                    var $this = $(this),
-                        $parent = $this.parent(),
-                        $lastParent = $parent.parent().children().last();
-
-                    skel
-                        .on('+medium', function() {
-                            //$this.appendTo($lastParent);
-                        })
-                        .on('-medium', function() {
-                            //$this.appendTo($parent);
-                        });
-
-                });
-
         // Main.
             var $main = $('#main');
 
@@ -205,16 +169,6 @@
                         // Hide original img.
                             $image_img.hide();
 
-                    // Hack: IE<11 doesn't support pointer-events, which means clicks to our image never
-                    // land as they're blocked by the thumbnail's caption overlay gradient. This just forces
-                    // the click through to the image.
-                        if (skel.vars.IEVersion < 11)
-                            $this
-                                .css('cursor', 'pointer')
-                                .on('click', function() {
-                                    $image.trigger('click');
-                                });
-
                 });
 
             // Thumbs Index.
@@ -241,17 +195,6 @@
 
                         // Hide original img.
                             $link_img.hide();
-
-                    // Hack: IE<11 doesn't support pointer-events, which means clicks to our link never
-                    // land as they're blocked by the thumbnail's caption overlay gradient. This just forces
-                    // the click through to the link.
-                        if (skel.vars.IEVersion < 11)
-                            $this
-                                .css('cursor', 'pointer')
-                                .on('click', function() {
-                                    $link.trigger('click');
-                                });
-
                 });
 
                 var gallery_items = $(".gallery-item").sort(
