@@ -6,10 +6,6 @@
             $body = $('body'),
             $wrapper = $('#wrapper');
 
-        // Touch?
-            if (skel.vars.mobile)
-                $body.addClass('touch');
-
         // Add (and later, on load, remove) "loading" class.
             $body.addClass('loading');
 
