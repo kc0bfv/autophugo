@@ -206,6 +206,7 @@
                     );
                 gallery_items.magnificPopup({
                     type: "image",
+                    mainClass: "mfp-img-mobile",
                     image: {
                         titleSrc: function(item) {
                             let caption = '';
