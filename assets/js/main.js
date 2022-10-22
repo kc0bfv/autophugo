@@ -244,6 +244,7 @@
                             window.location.hash = "";
                         },
                     },
+                    fixedContentPos: true,
                 });
 
                 // If there's a fragment id, see if it's an image index
