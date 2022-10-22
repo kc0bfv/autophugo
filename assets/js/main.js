@@ -239,10 +239,23 @@
                     },
                     callbacks: {
                         change: function() {
-                            window.location.hash = this.currItem.el.attr("id");
+                            // Replace the current history state with a URL with
+                            // a new hash part.  The hash part tells the site to load
+                            // a specific image in fullscreen.  Replacing the history
+                            // causes the back and forward buttons to now go to the
+                            // URL with the hash version...  Simply changing the URL
+                            // will instead cause a browser to add a new URL to the
+                            // history with the hash part.  Then if you look at a ton
+                            // of images on one page, they'll all clutter up your history
+                            // and you'll have to back through them all to get back to
+                            // what seems like the previous page.  I think this
+                            // replaceState version is a better behavior.
+                            const hash = "#" + this.currItem.el.attr("id");
+                            window.history.replaceState(undefined, undefined, hash);
                         },
                         close: function() {
-                            window.location.hash = "";
+                            // Clear the hash part without adding new things to the history
+                            window.history.replaceState(undefined, undefined, "");
                         },
                     },
                     fixedContentPos: true,
