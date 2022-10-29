@@ -297,7 +297,7 @@ img.mfp-img {
 .mfp-gallery .mfp-image-holder .mfp-figure {
   cursor: pointer; }
 
-@media screen and (max-width: 800px) and (orientation: landscape), screen and (max-height: 300px) {
+@media screen and (max-width: 800px) and (orientation: landscape), screen and (max-height: 500px) {
   /**
        * Remove all paddings around the image on small screen
        */
@@ -313,7 +313,7 @@ img.mfp-img {
     display: inline;
     margin-left: 5px; }
   .mfp-img-mobile .mfp-bottom-bar {
-    background: rgba(0, 0, 0, 0.6);
+    background: rgba(0, 0, 0, 0.4);
     bottom: 0;
     margin: 0;
     top: auto;
@@ -331,7 +331,7 @@ img.mfp-img {
     width: 35px;
     height: 35px;
     line-height: 35px;
-    background: rgba(0, 0, 0, 0.6);
+    background: rgba(0, 0, 0, 0.2);
     position: fixed;
     text-align: center;
     padding: 0; } }
