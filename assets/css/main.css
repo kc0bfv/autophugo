@@ -328,3 +328,4 @@ body, #footer, #header { max-width: 1200px; margin: 0 auto; left: auto; }
 .taxonomy_list h2 { margin-right: 5px; }
 .caption_tax { display: none; }
 .caption-surround .caption_tax { display: flex; flex-wrap: wrap; padding: 0; }
+.invis_desc { display: none; }
