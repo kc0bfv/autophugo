@@ -276,19 +276,19 @@ body.ie #main:before { background: rgba(36, 38, 41, 0.55); }
 body.content-active #main { -moz-filter: blur(6px); -webkit-filter: blur(6px); -ms-filter: blur(6px); filter: blur(6px); }
 body.content-active #main:after { -moz-pointer-events: auto; -webkit-pointer-events: auto; -ms-pointer-events: auto; pointer-events: auto; opacity: 1; visibility: visible; }
 body.loading #main .thumb { -moz-pointer-events: none; -webkit-pointer-events: none; -ms-pointer-events: none; pointer-events: none; opacity: 0; visibility: hidden;}
-#main .thumb { -moz-transition-delay: 2.525s; -webkit-transition-delay: 2.525s; -ms-transition-delay: 2.525s; transition-delay: 2.525s; width: 100%; padding: 0px 0px 4px 0px; }
-#main .thumb:nth-child(1) { -moz-transition-delay: 0.65s; -webkit-transition-delay: 0.65s; -ms-transition-delay: 0.65s; transition-delay: 0.65s; }
-#main .thumb:nth-child(2) { -moz-transition-delay: 0.8s; -webkit-transition-delay: 0.8s; -ms-transition-delay: 0.8s; transition-delay: 0.8s; }
-#main .thumb:nth-child(3) { -moz-transition-delay: 0.95s; -webkit-transition-delay: 0.95s; -ms-transition-delay: 0.95s; transition-delay: 0.95s; }
-#main .thumb:nth-child(4) { -moz-transition-delay: 1.1s; -webkit-transition-delay: 1.1s; -ms-transition-delay: 1.1s; transition-delay: 1.1s; }
-#main .thumb:nth-child(5) { -moz-transition-delay: 1.25s; -webkit-transition-delay: 1.25s; -ms-transition-delay: 1.25s; transition-delay: 1.25s; }
-#main .thumb:nth-child(6) { -moz-transition-delay: 1.4s; -webkit-transition-delay: 1.4s; -ms-transition-delay: 1.4s; transition-delay: 1.4s; }
-#main .thumb:nth-child(7) { -moz-transition-delay: 1.55s; -webkit-transition-delay: 1.55s; -ms-transition-delay: 1.55s; transition-delay: 1.55s; }
-#main .thumb:nth-child(8) { -moz-transition-delay: 1.7s; -webkit-transition-delay: 1.7s; -ms-transition-delay: 1.7s; transition-delay: 1.7s; }
-#main .thumb:nth-child(9) { -moz-transition-delay: 1.85s; -webkit-transition-delay: 1.85s; -ms-transition-delay: 1.85s; transition-delay: 1.85s; }
-#main .thumb:nth-child(10) { -moz-transition-delay: 2s; -webkit-transition-delay: 2s; -ms-transition-delay: 2s; transition-delay: 2s; }
-#main .thumb:nth-child(11) { -moz-transition-delay: 2.15s; -webkit-transition-delay: 2.15s; -ms-transition-delay: 2.15s; transition-delay: 2.15s; }
-#main .thumb:nth-child(12) { -moz-transition-delay: 2.3s; -webkit-transition-delay: 2.3s; -ms-transition-delay: 2.3s; transition-delay: 2.3s; }
+#main .thumb { transition-delay: 1.5s; width: 100%; padding: 0px 0px 4px 0px; }
+#main .thumb:nth-child(1) { transition-delay: 0.3s; }
+#main .thumb:nth-child(2) { transition-delay: 0.4s; }
+#main .thumb:nth-child(3) { transition-delay: 0.5s; }
+#main .thumb:nth-child(4) { transition-delay: 0.6s; }
+#main .thumb:nth-child(5) { transition-delay: 0.7s; }
+#main .thumb:nth-child(6) { transition-delay: 0.8s; }
+#main .thumb:nth-child(7) { transition-delay: 0.9s; }
+#main .thumb:nth-child(8) { transition-delay: 1.0s; }
+#main .thumb:nth-child(9) { transition-delay: 1.1s; }
+#main .thumb:nth-child(10) { transition-delay: 1.2s; }
+#main .thumb:nth-child(11) { transition-delay: 1.3s; }
+#main .thumb:nth-child(12) { transition-delay: 1.4s; }
 
 /* Footer */
 #footer .copyright { color: #505051; font-size: 0.9em; }
