@@ -58,7 +58,7 @@
                 <div>
                     <section>
                         <h2>{{ with .Site.Params.footer.contact.headline }}{{ . | markdownify }}{{ end }}</h2>
-                        <form method="post" action="//formspree.io/f/{{ with .Site.Params.footer.contact.formspreeID }}{{.}}{{ end }}" novalidate>
+                        <form method="post" action="{{ with .Site.Params.footer.contact.formspreeID }}{{.}}{{ end }}" novalidate>
                             <div class="field half first">
                                 <input type="text" name="name" required data-validation-required-message="{{ with .Site.Params.footer.contact.name.warning }}{{ . | markdownify}}{{ end }}" id="name" placeholder="{{ with .Site.Params.footer.contact.name.text }}{{ .  | markdownify }}{{ end }}" />
                             </div>
