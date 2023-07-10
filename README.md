@@ -64,10 +64,16 @@ The `exampleSiteNoAlbum` directory demonstrates a no-album layout, where all pho
 
 Inside your project create the directory `assets/NAME-OF-YOUR-ALBUM`.  Place all of one album's photos inside that directory.
 
-Inside your project run:
+***Please Note!*** If you have not previously, make sure hugo uses the theme's [archetype file](https://gohugo.io/content-management/archetypes/) by deleting the default site one. The archetype file is responsible for the `hugo new` hook.
 
 ```
-$ hugo new NAME-OF-YOUR-ALBUM/_index.md
+rm archetypes/default.md
+```
+
+Now, inside your project run:
+
+```
+hugo new NAME-OF-YOUR-ALBUM/_index.md
 ```
 
 It will create an index file for your first album.  Open `content/NAME-OF-YOUR-ALBUM/_index.md` with your text editor. You'll see something like this:
