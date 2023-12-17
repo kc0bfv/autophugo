@@ -14,7 +14,7 @@
 
     {{- /* Build the list of sections and thumbnails */}}
     {{- $.Scratch.Set "sections" (slice) }}
-    {{- range .Sections.ByDate }}
+    {{- range .Sections.ByDate.Reverse }}
         {{- $title := .Title }}
         {{- $link := .RelPermalink }}
         {{- $weight := default 0 (.Param "weight") }}
