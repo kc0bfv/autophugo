@@ -95,6 +95,8 @@ Change the title of your album if you wish, and set the filename of album's cove
 
 In addition to those frontmatter options, you can also specify metadata for some or all of your images.  Do that by modifying the `resources` array with map elements.  The maps specify the image they apply to with the `src` key, as `src: "album/image.jpg"`.  You can then specify some or all of the following items: `alt`, `phototitle`, and `description`.  Demonstration of this is in the `exampleSite` directory albums.
 
+You can now also specify a `description` for the whole album.  `exampleSite/content/cats/_index.md` and `exampleSite/content/_index.md` display this option.
+
 ### Sub-Albums
 
 If you'd like to create an album that contains other albums - you can do that!  The following command creates an album called "dogs", for instance:

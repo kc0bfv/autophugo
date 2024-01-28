@@ -4,6 +4,7 @@
             <div>
                 <section>
                     <h2>{{ with .Site.Params.footer.paragraph.headline }}{{ . | markdownify }}{{ end }}</h2>
+                    <p>{{ with .Site.Params.footer.paragraph.text }}{{ . | markdownify }}{{ end }}</p>
                     <p>{{ with .Description }}{{ . | markdownify }}{{ end }}</p>
                 </section>
                 <section>
