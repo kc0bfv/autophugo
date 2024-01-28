@@ -3,11 +3,14 @@ baseurl = "https://kc0bfv.github.io/autophugo/"
 languageCode = "en-us"
 title = "AutoPhugo"
 theme = "autophugo"
-#googleAnalytics = ""
 disableKinds = ["taxonomy", "term"]
 #[taxonomies]
 #    tag = "tags"
 #    category = "categories"
+
+[services]
+    [services.googleAnalytics]
+        #ID = 'G-MEASUREMENT_ID'
 
 [Author]
     name = "Karl Sickendick"

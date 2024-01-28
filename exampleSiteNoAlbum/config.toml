@@ -3,11 +3,14 @@ baseurl = "http://example.org/"
 languageCode = "en-us"
 title = "AutoPhugo"
 theme = "autophugo"
-#googleAnalytics = ""
 disableKinds = ["taxonomy", "term"]
 #[taxonomies]
 #    tag = "tags"
 #    category = "categories"
+
+[services]
+    [services.googleAnalytics]
+        #ID = 'G-MEASUREMENT_ID'
 
 [Author]
     name = "Karl Sickendick"
