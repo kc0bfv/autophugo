@@ -19,11 +19,7 @@ Preview at <https://kc0bfv.github.io/autophugo>
 
 **PLEASE NOTE**
 
-On 10 Jul 2021 clicking an image now updates the location bar hash (fragment id).  That way, the URL represents the open image too...  This required some javascript changes.  If these cause a problem for you, please let me know so I can make changes to this functionality.
-
-On 23 Jan 2020 subalbum and noalbum support no longer requires specifying a `type` in the metadata.  Furthermore, images and subalbums can be mixed within albums - including on the homepage (although mixing can be confusing for users).  Simply build an `assets` directory structure by placing images and directories wherever you want, then mirror the directory structure in `content`.
-
-On 19 Dec 2020 `albumthumb` file paths work differently.  You must specify the path relative to the assets directory.  So - where before the `fish/_index.md` example content specified `fish_02.jpg` as the `albumthumb`, now it specifies `fish/fish_02.jpg`.  I apologize for the breaking change, but it really should've worked this way from the start.  It brings things in-line with the resources src, and the subalbum path specifications.
+On 28 Jan 2024 you now must specify site author name and email differently.  Hugo changed the site parameters for this, and we have followed-suit.  The `exampleSite` configs demonstrate the change.
 
 ## Installation
 
@@ -48,7 +44,7 @@ The `exampleSite` demonstrates the features unique to this theme.  In your site 
 * `images_downloadable_use_orig` - if true, the download button will download the original image instead of the full size image - this will likely greatly increase the size of your site (default false)
 * `taxonomies_links` - if true, links to the taxonomy pages will be present in the footer and on the tagged items (default false)
 
-Additionally, `Author.name` and `Author.email` in the site config will display as the author and webmaster email.
+Additionally, `params.author.name` and `params.author.email` in the site config will display as the author and webmaster email.
 
 Header and footer customization is possible with the following site parameters.  These are a little more complex to implement in TOML - check out the `exampleSite` configuration for a demonstration and comments:
 

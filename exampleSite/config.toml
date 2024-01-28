@@ -12,10 +12,6 @@ disableKinds = ["taxonomy", "term"]
     [services.googleAnalytics]
         #ID = 'G-MEASUREMENT_ID'
 
-[Author]
-    name = "Karl Sickendick"
-    email = "kc0bfv@gmail.com"
-
 [params]
     # Meta
     description = "AutoPhugo - Photo Gallery on Hugo"
@@ -32,6 +28,10 @@ disableKinds = ["taxonomy", "term"]
     #images_downloadable = true
     #images_downloadable_use_orig = false
     #taxonomies_links = false
+
+    [params.author]
+    name = "Karl Sickendick"
+    email = "kc0bfv@gmail.com"
 
     # Headerbar links
     # Do not put too many links here,

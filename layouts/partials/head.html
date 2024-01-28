@@ -4,8 +4,9 @@
 
 {{ $description := $.Param "description" }}
 {{- with $description }}<meta name="description" content="{{ . }}">{{ end }}
-{{ $author := .Params.author.name | default .Site.Author.name }}
-{{- with $author }}<meta name="author" content="{{ . }}">{{ end }}
+{{ $author := .Params.author.name | default .Site.Params.author.name }}
+{{ $authorEmail := .Params.author.email | default .Site.Params.author.email }}
+{{- with $author }}<meta name="author" content="{{ . }}{{- with $authorEmail }} <{{ . }}>{{end}}">{{ end }}
 <link rel="icon" href="{{ .Site.Params.favicon | relURL }}">
 <link rel="shortcut icon" href="{{ .Site.Params.favicon | relURL }}">
 
