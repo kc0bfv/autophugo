@@ -81,15 +81,14 @@ disableKinds = ["taxonomy", "term"]
     #
     # What you need to do for the setup?
     #
-    # - set your email address under 'realEmail' below
-    # - upload the generated site to your server
-    # - send a dummy email yourself to confirm your account
-    # - click the confirm link in the email from www.formspree.io
+    # - set your integration endpoint address under 'formspreeID' below
+    # - create a formspree account and a simple form 
+    # - then get the integration endpoint generated to you form
     # - you're done. Happy mailing!
 
     [params.footer.contact]
     hide = false # Set this to true if you don't want to have a contact form on your site
-    realEmail = "example@example.org"
+    formspreeID = "myuniqueID" # Getting value from Formspree integration endpoint (eg. https://formspree.io/f/myuniqueID)
     headline = "Get in touch"
     buttonText = "Send"
     resetText = "Reset"
