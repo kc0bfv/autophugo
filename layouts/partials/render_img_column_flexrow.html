@@ -64,7 +64,7 @@
             {{- $filename := path.Base .image.Name }}
             <article class="thumb">
                 {{- if (eq .type "link") }}
-                    <a href="{{ .link }}" class="link" tabindex="0"><img src="{{ .thumb.RelPermalink }}" alt="{{ .title }}" /></a>
+                    <a href="{{ .link }}" class="link" tabindex="0"><img src="{{ .thumb.RelPermalink }}" alt="{{ .title }}"></a>
                     <h2>{{ .title }}</h2>
                 {{- else }}
                     <a class="gallery-item" phototitle="{{ .phototitle }}"

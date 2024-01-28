@@ -1,5 +1,5 @@
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="keywords" content="{{ with .Site.Params.keywords }}{{ . }}{{ end }}">
 
 {{ $description := $.Param "description" }}
@@ -22,8 +22,8 @@
 {{ with .Site.Params.msvalidate }}<meta name="msvalidate.01" content="{{ . }}">{{ end }}
 {{ hugo.Generator }}
 {{ with .OutputFormats.Get "RSS" }}
-<link href="{{ .RelPermalink }}" rel="alternate" type="application/rss+xml" title="{{ $.Site.Title }}" />
-<link href="{{ .RelPermalink }}" rel="feed" type="application/rss+xml" title="{{ $.Site.Title }}" />
+<link href="{{ .RelPermalink }}" rel="alternate" type="application/rss+xml" title="{{ $.Site.Title }}">
+<link href="{{ .RelPermalink }}" rel="feed" type="application/rss+xml" title="{{ $.Site.Title }}">
 {{ end }}
 
 {{ template "_internal/google_analytics.html" . }}
@@ -34,4 +34,4 @@
 {{- $mg_pop_css := resources.Get "css/magnific-popup.css" -}}
 {{- $user_css := resources.Get "css/user.css" -}}
 {{- $custom_css := slice $font_awesome $google_font $main_css $mg_pop_css $user_css | resources.Concat "css/custom.css" | resources.Minify | resources.Fingerprint -}}
-<link rel="stylesheet" href="{{ $custom_css.RelPermalink }}" integrity="{{ $custom_css.Data.Integrity }}"/>
+<link rel="stylesheet" href="{{ $custom_css.RelPermalink }}" integrity="{{ $custom_css.Data.Integrity }}">
