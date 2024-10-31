@@ -4,7 +4,7 @@
 <meta name="twitter:image" content="{{ (.Scratch.Get "image").Permalink }}">
 <meta name="twitter:title" content="{{ with .Title }}{{ . }} - {{ end }}{{ .Site.Title }}">
 {{- with $description }}<meta name="twitter:description" content="{{ . }}">{{ end }}
-{{- with .Site.Social.twitter }}<meta name="twitter:site" content="@{{ . }}">{{- end }}
+{{- with .Site.Params.Social.twitter }}<meta name="twitter:site" content="@{{ . }}">{{- end }}
 
 
 <meta property="og:title" content="{{ with .Title }}{{ . }} - {{ end }}{{ .Site.Title }}">
@@ -16,4 +16,4 @@
 {{- with .Site.Title }}<meta property="og:site_name" content="{{ . }}">{{ end }}
 
 {{- /* Facebook Page Admin ID for Domain Insights */}}
-{{- with .Site.Social.facebook_admin }}<meta property="fb:admins" content="{{ . }}">{{ end }}
+{{- with .Site.Params.Social.facebook_admin }}<meta property="fb:admins" content="{{ . }}">{{ end }}
