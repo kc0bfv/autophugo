@@ -70,7 +70,7 @@
                     <a class="gallery-item" phototitle="{{ .phototitle }}"
                             {{ printf "description='%s'" (.description | markdownify) | safeHTMLAttr }}
                             gallery_index="{{ .index }}"
-                            id="{{ md5 $filename }}"
+                            id="{{ strings.TrimSuffix (path.Ext $filename) $filename }}"
                             downloadable="{{ cond $downloadable "true" "false" }}"
                             {{- if $downloadable }}
                             download_file="{{ (cond $orig_download .orig .full).RelPermalink }}"

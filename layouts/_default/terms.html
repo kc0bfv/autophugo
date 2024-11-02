@@ -48,7 +48,7 @@
                             {{- $thumb := $img.Resize $thumb_size }}
 
                             {{- /* Create an object representing this tag term entry */}}
-                            {{- $url := ( printf "%s/#%s" $filedir ( md5 $filename ) ) | relURL }}
+                            {{- $url := ( printf "%s/#%s" $filedir ( strings.TrimSuffix (path.Ext $filename) $filename ) ) | relURL }}
                             {{- $img_desc := dict "type" "link" "link" $url "title" $resource.phototitle "thumb" $thumb }}
                             {{- /* Add this object to the list */}}
                             {{- $cur_entry := (index ($.Scratch.Get "tags") $tag) }}
