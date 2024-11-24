@@ -3,8 +3,13 @@ CONFIG_GH_PAGES := config_for_github_pages.toml
 CONFIG := config.toml
 THEMES := ../../
 
-public:
+default: check_github_pages
+
+github_pages:
 	hugo -s ${EXAMPLE_SITE} --config ${CONFIG_GH_PAGES} --themesDir ${THEMES}
+
+check_github_pages: github_pages
+	diff -I 'name="generator"' exampleSite/public/index.html test_reference/index.html
 
 server:
 	hugo -s ${EXAMPLE_SITE} --themesDir ${THEMES} server
