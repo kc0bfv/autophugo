@@ -29,6 +29,10 @@ disableKinds = ["taxonomy", "term"]
     #images_downloadable_use_orig = false
     #taxonomies_links = false
 
+    #[params.social]
+    #twitter = "twitter_example"
+    #facebook_admin = "facebook_example"
+
     [params.author]
     name = "Karl Sickendick"
     email = "kc0bfv@gmail.com"
