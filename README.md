@@ -19,7 +19,7 @@ Preview at <https://kc0bfv.github.io/autophugo>
 
 **PLEASE NOTE**
 
-On 28 Jan 2024 you now must specify site author name and email differently.  Hugo changed the site parameters for this, and we have followed-suit.  The `exampleSite` configs demonstrate the change.
+On 2 Mar 2025 if you are specifying metadata about an image you must preface the filename, in `src`, with a `/`.  This is due (I believe) to a change in Hugo's handling of resource lookups.  The examples and documentation are updated to show this.
 
 ## Installation
 
@@ -81,15 +81,15 @@ date: "2020-03-15T00:00:00+00:00"
 albumthumb: "NAME-OF-YOUR-ALBUM/photo00.jpg"
 draft: false
 resources:
-- src: "NAME-OF-YOUR-ALBUM/photo00.jpg"
-- src: "NAME-OF-YOUR-ALBUM/photo01.jpg"
-- src: "NAME-OF-YOUR-ALBUM/photo02.jpg"
+- src: "/NAME-OF-YOUR-ALBUM/photo00.jpg"
+- src: "/NAME-OF-YOUR-ALBUM/photo01.jpg"
+- src: "/NAME-OF-YOUR-ALBUM/photo02.jpg"
 ---
 ```
 
 Change the title of your album if you wish, and set the filename of album's cover thumbnail.  The filename is relative to the assets folder, so if your album is named `dogs` and one of your images there is named `dog_01.jpg` you can put `dogs/dog_01.jpg` in `albumthumb` to select it.
 
-In addition to those frontmatter options, you can also specify metadata for some or all of your images.  Do that by modifying the `resources` array with map elements.  The maps specify the image they apply to with the `src` key, as `src: "album/image.jpg"`.  You can then specify some or all of the following items: `alt`, `phototitle`, and `description`.  Demonstration of this is in the `exampleSite` directory albums.
+In addition to those frontmatter options, you can also specify metadata for some or all of your images.  Do that by modifying the `resources` array with map elements.  The maps specify the image they apply to with the `src` key, as `src: "/album/image.jpg"`.  You can then specify some or all of the following items: `alt`, `phototitle`, and `description`.  Demonstration of this is in the `exampleSite` directory albums.
 
 You can now also specify a `description` for the whole album.  `exampleSite/content/cats/_index.md` and `exampleSite/content/_index.md` display this option.
 

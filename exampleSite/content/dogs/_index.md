@@ -11,17 +11,17 @@ tags:
 #  phototitle: A title for the photo
 #  description: A sub-title or description for the photo
 resources:
-- src: "dogs/jumping_dog_01.jpg"
+- src: "/dogs/jumping_dog_01.jpg"
   weight: 10
-- src: "dogs/jumping_dog_02.jpg"
+- src: "/dogs/jumping_dog_02.jpg"
   weight: 20
   tags:
     - water
   categories:
     - dark colored
-- src: "dogs/jumping_dog_03.jpg"
+- src: "/dogs/jumping_dog_03.jpg"
   weight: 30
-- src: "dogs/jumping_dog_04.jpg"
+- src: "/dogs/jumping_dog_04.jpg"
   weight: 40
   tags:
     - water

@@ -9,7 +9,7 @@ draft: false
 #  phototitle: A title for the photo
 #  description: A sub-title or description for the photo
 resources:
-- src: many-simple/Janine.gif
+- src: /many-simple/Janine.gif
   tags:
     - not friendly
 ---
