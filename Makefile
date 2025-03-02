@@ -29,5 +29,7 @@ no_canonify_server_short_url_test:
 canonify_server_short_url_test:
 	export HUGO_CANONIFYURLS=true && hugo -s ${EXAMPLE_SITE} --themesDir ${THEMES} server -b http://localhost:1313/
 
+clean:
+	rm -rf exampleSite/resources exampleSite/public exampleSiteNoAlbum/resources exampleSiteNoAlbum/public
 
-.PHONY: public server
+.PHONY: public server clean
