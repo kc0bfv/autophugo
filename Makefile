@@ -9,7 +9,7 @@ github_pages:
 	hugo -s ${EXAMPLE_SITE} --config ${CONFIG_GH_PAGES} --themesDir ${THEMES}
 
 check_github_pages: github_pages
-	sed -E 's/<meta name="generator" content="Hugo [0-9.]+">/<meta name="generator" content="Hugo VERSION">/g; s/custom.min.[a-fA-F0-9]{64}./custom.min.HASH./g; s/"sha256-[a-zA-Z0-9=/]*"/"sha256-HASH"/g; s/_hu_[a-fA-F0-9]{16}./_hu_HASH./g' exampleSite/public/index.html | diff -I 'name="generator"' - test_reference/index.html
+	sed -E 's/<meta name="generator" content="Hugo [0-9.]+">/<meta name="generator" content="Hugo VERSION">/g; s/custom.min.[a-fA-F0-9]{64}./custom.min.HASH./g; s/"sha256-.*"/"sha256-HASH"/g; s/_hu_[a-fA-F0-9]{16}./_hu_HASH./g' exampleSite/public/index.html | diff -I 'name="generator"' - test_reference/index.html
 
 server:
 	hugo -s ${EXAMPLE_SITE} --themesDir ${THEMES} server
