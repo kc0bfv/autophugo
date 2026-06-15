@@ -85,6 +85,14 @@
         {{- /* Search the resources for a matching image src, save off details */}}
         {{- $img_path := $elem_val.Name }}
         {{- with $.Params.resources }}
+            {{- /* Warn the user if they start an image source without a "/" */}}
+            {{- range . }}
+                {{- if isset . "src" }}
+                    {{- if ne (substr .src 0 1) "/" }}
+                        {{- fmt.Warnf "When attaching metadata to images, the image \"src\" must begin with a \"/\".  Offending page: %s Offending image: %s" $.Page .src }}
+                    {{- end }}
+                {{- end }}
+            {{- end }}
             {{- range first 1 (where . "src" $img_path) }}
                 {{- $found := . }}
                 {{- if isset . "alt" }}{{ $img_dat.Set "alt" .alt }}{{ end }}
