@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Happy Dogs on AutoPhugo</title>
-    <link>https://kc0bfv.github.io/autophugo/dogs/happy-dogs/</link>
-    <description>Recent content in Happy Dogs on AutoPhugo</description>
-    <generator>Hugo</generator>
-    <language>en-us</language>
-    <managingEditor>kc0bfv@gmail.com (Karl Sickendick)</managingEditor>
-    <webMaster>kc0bfv@gmail.com (Karl Sickendick)</webMaster>
-    <lastBuildDate></lastBuildDate>
-    <atom:link href="https://kc0bfv.github.io/autophugo/dogs/happy-dogs/index.xml" rel="self" type="application/rss+xml" />
-  </channel>
+	<channel>
+		<title>Happy Dogs on AutoPhugo</title>
+		<link>https://kc0bfv.github.io/autophugo/dogs/happy-dogs/</link>
+		<description>Recent content in Happy Dogs on AutoPhugo</description>
+		<generator>Hugo</generator>
+		<language>en-us</language>
+		
+			<managingEditor>kc0bfv@gmail.com (Karl Sickendick)</managingEditor>
+		
+		
+			<webMaster>kc0bfv@gmail.com (Karl Sickendick)</webMaster>
+		
+		
+		
+			<lastBuildDate></lastBuildDate>
+		
+			<atom:link href="https://kc0bfv.github.io/autophugo/dogs/happy-dogs/index.xml" rel="self" type="application/rss+xml" />
+	</channel>
 </rss>
