@@ -10,7 +10,7 @@ resources:
 - src: /cats/cat_01.jpg
   weight: 1
   alt: Cat in the grass
-  phototitle: Grass cat
+  phototitle: TEST Grass cat
   description: This cat stalks through the grass
   categories:
     - dark colored

@@ -1,6 +1,6 @@
 # Settings
 baseurl = "https://kc0bfv.github.io/autophugo/"
-title = "TEST AutoPhugo"
+title = "AutoPhugo"
 theme = "autophugo"
 disableKinds = ["taxonomy", "term"]
 #[taxonomies]
