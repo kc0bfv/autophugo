@@ -27,7 +27,7 @@ jobs:
             - name: Build Pages
               run: make
             - name: Upload Artifact
-              uses: actions/upload-pages-artifact@v7
+              uses: actions/upload-pages-artifact@v5
               with:
                   path: exampleSite/public
     deploy:
