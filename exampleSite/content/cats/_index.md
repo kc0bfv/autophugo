@@ -2,6 +2,7 @@
 title: "Cats"
 date: 2020-03-15T10:06:11-06:00
 description: "This album is about cats."
+albumthumb: "cats/cat_03.jpg"
 weight: 0
 tags:
 - friendly

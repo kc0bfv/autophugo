@@ -1,6 +1,5 @@
 # Settings
 baseurl = "https://kc0bfv.github.io/autophugo/"
-languageCode = "en-us"
 title = "AutoPhugo"
 theme = "autophugo"
 disableKinds = ["taxonomy", "term"]

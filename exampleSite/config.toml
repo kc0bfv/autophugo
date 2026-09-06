@@ -1,6 +1,5 @@
 # Settings
 baseurl = "http://example.org/"
-languageCode = "en-us"
 title = "AutoPhugo"
 theme = "autophugo"
 disableKinds = ["taxonomy", "term"]

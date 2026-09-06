@@ -27,8 +27,12 @@
             {{- errorf (printf "When processing '%s', no thumbnail image found for: %s" $.Page.File.Path $title) }}
         {{- else }}
             {{- $.Scratch.Set "orientation" 1 }}
-            {{- with $image.Exif }}
-                {{- $.Scratch.Set "orientation" .Tags.Orientation }}
+            {{- if reflect.IsImageResourceWithMeta $image }}
+                {{- with $image.Meta }}
+                    {{- with .Orientation }}
+                        {{- $.Scratch.Set "orientation" . }}
+                    {{- end }}
+                {{- end }}
             {{- end }}
             {{- $orientation := $.Scratch.Get "orientation" }}
             {{- /* TODO: handle flipped orientations */}}
@@ -112,8 +116,12 @@
         {{- end }}
 
         {{- $.Scratch.Set "orientation" 1 }}
-        {{- with $elem_val.Exif }}
-            {{- $.Scratch.Set "orientation" .Tags.Orientation }}
+        {{- if reflect.IsImageResourceWithMeta $elem_val }}
+            {{- with $elem_val.Meta }}
+                {{- with .Orientation }}
+                    {{- $.Scratch.Set "orientation" . }}
+                {{- end }}
+            {{- end }}
         {{- end }}
         {{- $orientation := $.Scratch.Get "orientation" }}
         {{- /* TODO: handle flipped orientations */}}
